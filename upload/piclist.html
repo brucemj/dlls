@@ -29,8 +29,8 @@
 			"gongji" : true
 		}//或者["id","make","model"]
 	}
-	var appId = 'A6945538805012';
-	var key = '773C1DFC-70B6-9E94-D966-44DB0E16898B';
+	var appId = 'A6945894366912';
+	var key = '0D7660A8-5615-F246-E865-7CDD772B1653';
 	var now = Date.now();
 	var appKey = SHA1(appId + "UZ" + key + "UZ" + now) + "." + now;
 	call_jq();
@@ -38,13 +38,13 @@
 	//ajaxRequest()定义
 	function call_jq() {
 		$.ajax({
-			"url" : "https://d.apicloud.com/mcm/api/weapons?filter=%7B%22where%22%3A%7B%7D%2C%22skip%22%3A0%2C%22limit%22%3A20%7D",
-			//"url" : "https://d.apicloud.com/mcm/api/weapons?filter=" + encodeURIComponent(JSON.stringify(filter)),
+			//"url" : "https://d.apicloud.com/mcm/api/weapons?filter=%7B%22where%22%3A%7B%7D%2C%22skip%22%3A0%2C%22limit%22%3A20%7D",
+			"url" : "https://d.apicloud.com/mcm/api/weapons?filter=" + encodeURIComponent(JSON.stringify(filter)),
 			"cache" : false,
 			"timeout" : 1200,
 			"headers" : {
 				"Content-type" : "application/json;charset=UTF-8",
-				"X-APICloud-AppId" : "A6945538805012",
+				"X-APICloud-AppId" : appId,
 				"X-APICloud-AppKey" : appKey
 			},
 			"type" : "GET"
@@ -57,7 +57,7 @@
 				var item = '<img src="' + data[i].pic.url + '" />';
 				item = item + data[i].name;
 				item = "<div>" + item + "</div>";
-				//$(".list").append(item)
+				$(".list").append(item)
 			}
 		}).fail(function(header, status, errorThrown) {//fail body
 			console.log('fail = ' + JSON.stringify(header));
@@ -70,7 +70,7 @@
 			"url" : "https://d.apicloud.com/mcm/api/weapons",
 			"cache" : false,
 			"headers" : {
-				"X-APICloud-AppId" : "A6945538805012",
+				"X-APICloud-AppId" : appId,
 				"X-APICloud-AppKey" : appKey
 			},
 			"data" : {
@@ -99,7 +99,7 @@
 	}
 
 	function call_jssdk() {
-		var client = new Resource("A6945538805012", "773C1DFC-70B6-9E94-D966-44DB0E16898B");
+		var client = new Resource(appId , key);
 		var Weapons = client.Factory("weapons");
 		Weapons.query({
 			"filter" : {
