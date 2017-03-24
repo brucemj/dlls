@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>文件上传测试</title>
+		<style>
+			.empty {
+				text-align: center;
+				padding: 120px 0;
+			}
+		</style>
+		<!--引入CSS-->
+		<link rel="stylesheet" type="text/css" href="webuploader.css">
+		<!--引入JS-->
+	</head>
+	<body>
+		<div class="empty">
+			文件上传测试
+		</div>
+		<!--dom结构部分-->
+		<div id="uploader-demo">
+			<!--用来存放item-->
+			<div id="fileList" class="uploader-list"></div>
+			<div id="filePicker">
+				选择图片
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div id="picker"></div>
+	</body>
+</html>
+<script src="SHA1.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="webuploader.js"></script>
+<script>
+	var appId = 'A6945538805012';
+	var key = '773C1DFC-70B6-9E94-D966-44DB0E16898B';
+	var now = Date.now();
+	var appKey = SHA1(appId + "UZ" + key + "UZ" + now) + "." + now;
+	//	var uploadurl = WebUploader.create({
+	//		pick: "#picker",
+	//		swf: 'js/Uploader.swf',
+	//		server: 'http://d.apicloud.com/mcm/api/file',
+	//		resize: false,
+	//		auto: true
+	//	});
+	function startup() {
+		uploadurl.upload();
+	}
+
+	// 初始化Web Uploader
+	var uploadurl = WebUploader.create({
+		// 选完文件后，是否自动上传。
+		auto : false,
+		// swf文件路径
+		swf : 'js/Uploader.swf',
+		// 文件接收服务端。
+		server : 'http://d.apicloud.com/mcm/api/file',
+		// 选择文件的按钮。可选。
+		// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		pick : '#filePicker',
+		// 只允许选择图片文件。
+		accept : {
+			title : 'Images',
+			extensions : 'gif,jpg,jpeg,bmp,png',
+			mimeTypes : 'image/*'
+		}
+	});
+	uploadurl.on("fileQueued", function(file) {
+		uploadurl.option('formData', {
+			filename : file.name,
+			type : file.type
+		});
+		$("#uploader-demo").append('<button onclick="startup()">开始上传</button>');
+		var $li = $('<div id="' + file.id + '" class="file-item thumbnail">' + '<img>' + '<div class="info">' + file.name + '</div>' + '</div>'), $img = $li.find('img');
+		// $list为容器jQuery实例
+		$("#fileList").append($li);
+		// 创建缩略图
+		// 如果为非图片文件，可以不用调用此方法。
+		// thumbnailWidth x thumbnailHeight 为 100 x 100
+		var thumbnailWidth = 400;
+		var thumbnailHeight = 400;
+		uploadurl.makeThumb(file, function(error, src) {
+			if (error) {
+				$img.replaceWith('<span>不能预览</span>');
+				return;
+			}
+			$img.attr('src', src);
+		}, thumbnailWidth, thumbnailHeight);
+	});
+	//文件上传成功
+	uploadurl.on('uploadSuccess', function(file, res) {
+		if (res && res.id) {
+			alert("成功")
+			console.log('res = ' + JSON.stringify(res));
+			console.log('file = ' + JSON.stringify(file));
+		} else if (res && res.status == 0) {
+			alert("失败")
+		} else {
+			alert("失败")
+		}
+	});
+	//文件上传失败
+	uploadurl.on('uploadError', function(file, reason) {
+		alert("失败")
+	});
+	//上传完成，不管成功失败
+	uploadurl.on('uploadComplete', function(file) {
+		uploadurl.removeFile(file);
+	});
+	uploadurl.on('uploadBeforeSend', function(block, data, headers) {
+		headers["X-APICloud-AppKey"] = appKey;
+		headers["X-APICloud-AppId"] = appId;
+	});
+	//上传中
+	uploadurl.on('uploadProgress', function(file, percentage) {
+	}); 
+</script>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>weapons测试</title>
+		<style>
+			.empty {
+				text-align: center;
+				padding: 120px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="empty">
+			weapons List
+		</div>
+		<div class="list"></div>
+	</body>
+</html>
+<script src="SHA1.js"></script>
+<script src="jquery.min.js"></script>
+<script>
+	var filter = {
+		fields : {
+			"id" : true,
+			"level" : true,
+			"gongji" : true
+		}//或者["id","make","model"]
+	}
+	var appId = 'A6945538805012';
+	var key = '773C1DFC-70B6-9E94-D966-44DB0E16898B';
+	var now = Date.now();
+	var appKey = SHA1(appId + "UZ" + key + "UZ" + now) + "." + now;
+	call_jq();
+	//upfile()
+	//ajaxRequest()定义
+	function call_jq() {
+		$.ajax({
+			"url" : "https://d.apicloud.com/mcm/api/weapons?filter=%7B%22where%22%3A%7B%7D%2C%22skip%22%3A0%2C%22limit%22%3A20%7D",
+			//"url" : "https://d.apicloud.com/mcm/api/weapons?filter=" + encodeURIComponent(JSON.stringify(filter)),
+			"cache" : false,
+			"timeout" : 1200,
+			"headers" : {
+				"Content-type" : "application/json;charset=UTF-8",
+				"X-APICloud-AppId" : "A6945538805012",
+				"X-APICloud-AppKey" : appKey
+			},
+			"type" : "GET"
+		}).success(function(data, status, header) {//success body
+			console.log('success= ' + JSON.stringify(data));
+			//console.log('success= ' + data[0].id);
+			//console.log('status= ' + JSON.stringify(status));
+			//console.log('header= ' + JSON.stringify(header));
+			for (var i = 0; i < data.length; i++) {
+				var item = '<img src="' + data[i].pic.url + '" />';
+				item = item + data[i].name;
+				item = "<div>" + item + "</div>";
+				//$(".list").append(item)
+			}
+		}).fail(function(header, status, errorThrown) {//fail body
+			console.log('fail = ' + JSON.stringify(header));
+			//alert( JSON.stringify(data)  ) ;
+		})
+	}
+
+	function call_jq_upfile(files) {
+		$.ajax({
+			"url" : "https://d.apicloud.com/mcm/api/weapons",
+			"cache" : false,
+			"headers" : {
+				"X-APICloud-AppId" : "A6945538805012",
+				"X-APICloud-AppKey" : appKey
+			},
+			"data" : {
+				"{{file}}" : files
+			},
+			"type" : "POST"
+		}).success(function(data, status, header) {
+			//success body
+		}).fail(function(header, status, errorThrown) {
+			//fail body
+		})
+	}
+
+	function upfile() {
+		var control = document.getElementById("your-files");
+		control.addEventListener("change", function(event) {
+			// 当 control 改变的时候
+			files = control.files;
+			for (var i = 0; i < files.length; i++) {
+				console.log("Filename: " + files[i].name);
+				console.log("Type: " + files[i].type);
+				console.log("Size: " + files[i].size + " bytes");
+			}
+			call_jq_upfile(files[0]);
+		}, false);
+	}
+
+	function call_jssdk() {
+		var client = new Resource("A6945538805012", "773C1DFC-70B6-9E94-D966-44DB0E16898B");
+		var Weapons = client.Factory("weapons");
+		Weapons.query({
+			"filter" : {
+				"where" : {},
+				"skip" : 0,
+				"limit" : 20
+			}
+		}, function(ret, err) {
+			//return body
+			console.log('success= ' + JSON.stringify(ret));
+		})
+	}
+</script>

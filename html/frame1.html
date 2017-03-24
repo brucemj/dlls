@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link rel="stylesheet" href="../css/idangerous.swiper.css">
+	<style>
+		html, body {
+			width: 100%;
+			min-height: 100%;
+			background: #f0f0f0;
+		}
+		.h80 {
+			height: 80px;
+		}
+		.h40 {
+			height: 40px;
+		}
+		.h20 {
+			height: 20px;
+		}
+		.h10 {
+			height: 10px;
+			background: #f0f0f0;
+		}
+		.h1 {
+			height: 1px;
+			margin-left: 15px;
+			background: #f0f0f0;
+		}
+		.fr {
+			float: right;
+		}
+		.fl {
+			float: left;
+		}
+		.hightitem {
+			background-color: #fff;
+		}
+		.inwrap {
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+	</style>
+</head>
+<body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	window.onload = function  () {
+		//				
+		//		var query = api.require('query');
+		//query.createQuery(function( ret, err ){
+		//  if( ret ){
+		//       alert( "ret" + JSON.stringify( ret ) );   
+		//  }else{
+		//       alert( "err" + JSON.stringify( err ) );
+		//  }
+		//});
+	}
+	
+	
+	var wuqiList = [] ;
+	
+	function mcmsend(  ){
+			var model = api.require('model');
+			var query = api.require("query");
+			
+			model.config({
+	            appKey:'773C1DFC-70B6-9E94-D966-44DB0E16898B'
+            });			
+//			
+			query.createQuery(function(ret, err) {
+				if (ret ) {
+					var queryId = ret.qid;
+					query.whereEqual({
+						qid: queryId,
+						column: "",
+						value: ""
+					});
+					query.limit({
+						qid:queryId,
+						value:"20"
+					});
+
+					model.findAll({
+						class: "weapons",
+						qid: queryId
+					}, function(ret, err){//							
+							console.log( JSON.stringify(ret)  )
+							
+							//for(var p in ret){ //遍历json数组时，这么写p为索引，0,1
+							for(var i = 0; i < ret.length; i++){
+								wuqiList[i] = {
+								imgPath : ret[i].pic.url , 
+								title : ret[i].name , 
+								subTitle : ret[i].gongji 
+								}								
+							}
+							showList(wuqiList) ;
+							console.log( JSON.stringify(wuqiList)  )							
+					});
+				}
+			});
+	}
+	
+	// js-sdk 方式, 没有成功
+	function jssend(){
+		var client = new Resource("A6945538805012", "com.brucemj1.ays");
+		var Weapons= client.Factory("weapons");
+		Weapons.query({
+		  "filter": {
+		    "where": {},
+		    "skip": 0,
+		    "limit": 20
+		  }
+		},function(ret,err){
+		  	alert("ret: " + JSON.stringify(ret) + "\nerr: " + JSON.stringify(err));
+		})
+	}
+	
+	function showList(list){
+		var UIListView = api.require('UIListView');
+			UIListView.open({
+				rect : {
+					x : 0,
+					y : 0,
+					w : api.winWidth,
+					h : api.frameHeight
+				},
+				data : list ,
+				rightBtns : [{
+					bgColor : '#388e8e',
+					activeBgColor : '',
+					width : 70,
+					title : '按钮',
+					titleSize : 12,
+					titleColor : '#fff',
+					icon : '',
+					iconWidth : 20
+				}],
+				styles : {
+					borderColor : '#3D2528',
+					item : {
+						bgColor : '#1A1E1C',
+						activeBgColor : '#24271F',
+						height : 150.0,
+						imgWidth : 250,
+						imgHeight : 140,
+						imgCorner : 4,
+						placeholderImg : '',
+						titleSize : 12.0,
+						titleColor : '#A09266',
+						subTitleSize : 12.0,
+						subTitleColor : '#A09266',
+						remarkColor : '#A09266',
+						remarkSize : 16,
+						remarkIconWidth : 30
+					}
+				},
+				fixedOn : api.frameName
+			}, function(ret, err) {
+//				if (ret) {
+//					alert(JSON.stringify(ret));
+//				} else {
+//					alert(JSON.stringify(err));
+//				}
+			});
+	}
+	apiready = function() {
+			//wuqiList = [];			
+			mcmsend( ) ;
+			//jssend() ;
+			console.log( 'wuqilist = ' + JSON.stringify(wuqiList)  )
+			
+		}
+	</script>
