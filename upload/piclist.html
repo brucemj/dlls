@@ -24,9 +24,9 @@
 <script>
 	var filter = {
 		fields : {
-			"id" : true,
-			"level" : true,
-			"gongji" : true
+			"gongji" : true,
+			"sx" : true,
+			"oo" : true
 		}//或者["id","make","model"]
 	}
 	var appId = 'A6945894366912';
@@ -53,12 +53,12 @@
 			//console.log('success= ' + data[0].id);
 			//console.log('status= ' + JSON.stringify(status));
 			//console.log('header= ' + JSON.stringify(header));
-			for (var i = 0; i < data.length; i++) {
-				var item = '<img src="' + data[i].pic.url + '" />';
-				item = item + data[i].name;
-				item = "<div>" + item + "</div>";
-				$(".list").append(item)
-			}
+//			for (var i = 0; i < data.length; i++) {
+//				var item = '<img src="' + data[i].pic.url + '" />';
+//				item = item + data[i].name;
+//				item = "<div>" + item + "</div>";
+//				$(".list").append(item)
+//			}
 		}).fail(function(header, status, errorThrown) {//fail body
 			console.log('fail = ' + JSON.stringify(header));
 			//alert( JSON.stringify(data)  ) ;

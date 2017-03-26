@@ -45,7 +45,18 @@
 		}
 	</style>
 </head>
-<body>
+	<body>
+		<div id="firstHeader" class="titlebar activebar" onclick="search()">
+            攻 －－ 击
+          </div>
+          
+          <div id="firstHeader" class="titlebar activebar" onclick="search2()">
+            fangyu
+          </div>
+          
+	</body>
+</html>
+
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 	window.onload = function  () {
@@ -60,15 +71,40 @@
 		//});
 	}
 	
+	function search(){
+	//var UIListView = api.require('UIListView');
+	  //  console.log("call search") ;
+	    console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
+	   //console.log( JSON.stringify(UIListView) ) ; 
+	    //console.log( JSON.stringify(api) ) ; 
+	//mcmsend( ) ;
+	}
+	
+	function search2(){
+	//var UIListView = api.require('UIListView');
+	  //  console.log("call search") ;
+	    $api.setStorage('uill','Tom');
+	    console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
+	    console.log( JSON.stringify( $api.getStorage('wuqilist') ) ) ; 
+	    
+	    console.log( 'UIListView = ' + JSON.stringify( $api.getStorage('UIListView') ) ) ; 
+	   
+	   //console.log( JSON.stringify(UIListView) ) ; 
+	    //console.log( JSON.stringify(api) ) ; 
+	//mcmsend( ) ;
+	}
+	
 	
 	var wuqiList = [] ;
+	var UIL ;
+	
 	
 	function mcmsend(  ){
 			var model = api.require('model');
 			var query = api.require("query");
 			
 			model.config({
-	            appKey:'773C1DFC-70B6-9E94-D966-44DB0E16898B'
+	            appKey : '0D7660A8-5615-F246-E865-7CDD772B1653' 
             });			
 //			
 			query.createQuery(function(ret, err) {
@@ -93,13 +129,16 @@
 							//for(var p in ret){ //遍历json数组时，这么写p为索引，0,1
 							for(var i = 0; i < ret.length; i++){
 								wuqiList[i] = {
-								imgPath : ret[i].pic.url , 
-								title : ret[i].name , 
-								subTitle : ret[i].gongji 
+								// imgPath : ret[i].pic.url , 
+								title : ret[i].namecn + ' ; ' + ret[i].nameen
+									+ '\n 攻击: ' + ret[i].gongji + ' ; 防御: ' + ret[i].fangyu 
+									, 
+								//subTitle : ret[i].gongji 
 								}								
 							}
 							showList(wuqiList) ;
-							console.log( JSON.stringify(wuqiList)  )							
+							console.log( 'wuqilist=' + JSON.stringify(wuqiList)  )							
+							$api.setStorage('wuqilist', wuqiList );
 					});
 				}
 			});
@@ -125,7 +164,7 @@
 			UIListView.open({
 				rect : {
 					x : 0,
-					y : 0,
+					y : 100,
 					w : api.winWidth,
 					h : api.frameHeight
 				},
@@ -159,19 +198,25 @@
 						remarkIconWidth : 30
 					}
 				},
-				fixedOn : api.frameName
+				fixedOn : 'frame1'
 			}, function(ret, err) {
 //				if (ret) {
 //					alert(JSON.stringify(ret));
 //				} else {
 //					alert(JSON.stringify(err));
 //				}
+				
 			});
+			console.log( ' 1 UIListView = ' + JSON.stringify(UIListView)  )
+			$api.setStorage('UIListView', UIListView );
+			$api.setStorage('uill','uill');
 	}
 	apiready = function() {
+//	var UIListView = api.require('UIListView');
 			//wuqiList = [];			
 			mcmsend( ) ;
 			//jssend() ;
+			//console.log( ' 2 UIListView = ' + JSON.stringify(UIListView)  )
 			console.log( 'wuqilist = ' + JSON.stringify(wuqiList)  )
 			
 		}
