@@ -69,29 +69,84 @@
 		//       alert( "err" + JSON.stringify( err ) );
 		//  }
 		//});
+		
+		wuqiList1 = [ { title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111'	} ,
+					 { title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'	} ]
+		wuqiList2 = [ { title : ' 武器12 ; wuqi12 ' + '\n 攻击: 1112 ; 防御: 1112'	} ,
+					 { title : ' 武器22 ; wuqi22 ' + '\n 攻击: 1122 ; 防御: 1122'	} ,
+					 { title : ' 武器23 ; wuqi23 ' + '\n 攻击: 1123 ; 防御: 1123'	} ]
+		
+		styles = {
+					borderColor : '#3D2528',
+					item : {
+						bgColor : '#1A1E1C',
+						activeBgColor : '#24271F',
+						height : 150.0,
+						imgWidth : 250,
+						imgHeight : 140,
+						imgCorner : 4,
+						placeholderImg : '',
+						titleSize : 12.0,
+						titleColor : '#A09266',
+						subTitleSize : 12.0,
+						subTitleColor : '#A09266',
+						remarkColor : '#A09266',
+						remarkSize : 16,
+						remarkIconWidth : 30
+					}
+				}
 	}
 	
 	function search(){
-	//var UIListView = api.require('UIListView');
-	  //  console.log("call search") ;
-	    console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
-	   //console.log( JSON.stringify(UIListView) ) ; 
-	    //console.log( JSON.stringify(api) ) ; 
-	//mcmsend( ) ;
+		var UIListView = api.require('UIListView');
+			UIListView.open({
+				rect : {
+					x : 0,
+					y : 100,
+					w : api.winWidth,
+					h : api.frameHeight
+				},
+				data : [
+					{	rightBtns: [{
+    bgColor: '#388e8e', //（可选项）字符串类型；按钮背景色，支持 rgb、rgba、#；默认：'#388e8e'
+    activeBgColor: '',  //（可选项）字符串类型；按钮按下时的背景色，支持 rgb、rgba、#
+    width: 70,          //（可选项）数字类型；按钮的宽度；默认：w / 4       
+    title: '',          //（可选项）字符串类型；按钮标题，水平、垂直居中
+    titleSize: 12,      //（可选项）数字类型；按钮标题文字大小；默认：12
+    titleColor: '#fff', //（可选项）字符串类型；按钮标题文字颜色，支持 rgb、rgba、#；默认：'#ffffff'
+    icon: '',           //（可选项）字符串类型；按钮标题前的图标路径（本地路径，支持fs://、widget://），水平、垂直居中，图标为正方形
+    iconWidth: 20       //（可选项）数字类型；按钮标题前的图标宽度，图标为正方形；默认：20
+}]
+					
+					}
+				] ,
+				
+				styles : styles ,
+				fixedOn : 'frame1'
+			}, function(ret, err) {
+				
+			});	
 	}
 	
 	function search2(){
-	//var UIListView = api.require('UIListView');
-	  //  console.log("call search") ;
-	    $api.setStorage('uill','Tom');
-	    console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
-	    console.log( JSON.stringify( $api.getStorage('wuqilist') ) ) ; 
-	    
-	    console.log( 'UIListView = ' + JSON.stringify( $api.getStorage('UIListView') ) ) ; 
-	   
-	   //console.log( JSON.stringify(UIListView) ) ; 
-	    //console.log( JSON.stringify(api) ) ; 
-	//mcmsend( ) ;
+		var UIListView = api.require('UIListView');
+			UIListView.open({
+				rect : {
+					x : 0,
+					y : 100,
+					w : api.winWidth,
+					h : api.frameHeight
+				},
+				data : wuqiList2 ,
+				
+				styles : styles ,
+				fixedOn : 'frame1'
+			}, function(ret, err) {
+				
+			});			
+	    //console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
+	    //console.log( JSON.stringify( $api.getStorage('wuqilist') ) ) ; 	    
+	    //console.log( 'UIListView = ' + JSON.stringify( $api.getStorage('UIListView') ) ) ; 
 	}
 	
 	
@@ -168,36 +223,9 @@
 					w : api.winWidth,
 					h : api.frameHeight
 				},
-				data : list ,
-				rightBtns : [{
-					bgColor : '#388e8e',
-					activeBgColor : '',
-					width : 70,
-					title : '按钮',
-					titleSize : 12,
-					titleColor : '#fff',
-					icon : '',
-					iconWidth : 20
-				}],
-				styles : {
-					borderColor : '#3D2528',
-					item : {
-						bgColor : '#1A1E1C',
-						activeBgColor : '#24271F',
-						height : 150.0,
-						imgWidth : 250,
-						imgHeight : 140,
-						imgCorner : 4,
-						placeholderImg : '',
-						titleSize : 12.0,
-						titleColor : '#A09266',
-						subTitleSize : 12.0,
-						subTitleColor : '#A09266',
-						remarkColor : '#A09266',
-						remarkSize : 16,
-						remarkIconWidth : 30
-					}
-				},
+				data : wuqiList1 ,
+				
+				styles : styles ,
 				fixedOn : 'frame1'
 			}, function(ret, err) {
 //				if (ret) {
@@ -207,13 +235,15 @@
 //				}
 				
 			});
-			console.log( ' 1 UIListView = ' + JSON.stringify(UIListView)  )
+			console.log( ' 1 UIListView = ' + UIListView  )
+			console.log( JSON.stringify(UIListView.data)  )
+			console.log( UIListView.data )
 			$api.setStorage('UIListView', UIListView );
 			$api.setStorage('uill','uill');
 	}
 	apiready = function() {
-//	var UIListView = api.require('UIListView');
-			//wuqiList = [];			
+			//	var UIListView = api.require('UIListView');
+			//	wuqiList = [];
 			mcmsend( ) ;
 			//jssend() ;
 			//console.log( ' 2 UIListView = ' + JSON.stringify(UIListView)  )

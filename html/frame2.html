@@ -1,17 +1,244 @@
 <!DOCTYPE html>
-<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>开发</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-    <style>
-        .empty{ text-align: center; padding: 120px 0; }
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link rel="stylesheet" href="../css/idangerous.swiper.css">
+	<style>
+		html, body {
+			width: 100%;
+			min-height: 100%;
+			background: #f0f0f0;
+		}
+		.h80 {
+			height: 80px;
+		}
+		.h40 {
+			height: 40px;
+		}
+		.h20 {
+			height: 20px;
+		}
+		.h10 {
+			height: 10px;
+			background: #f0f0f0;
+		}
+		.h1 {
+			height: 1px;
+			margin-left: 15px;
+			background: #f0f0f0;
+		}
+		.fr {
+			float: right;
+		}
+		.fl {
+			float: left;
+		}
+		.hightitem {
+			background-color: #fff;
+		}
+		.inwrap {
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+	</style>
 </head>
 <body>
-    <div class="empty">开发</div>
+	<div class="c1" onclick="callSelect()">
+		属性>
+	</div>
+	<div class="c1" onclick="callSelect2()">
+		属性2>
+	</div>
 </body>
-</html>
+</html> <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		wuqiList1 = [{
+			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111'
+		}, {
+			title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'
+		}]
+		wuqiList2 = [{
+			title : ' 武器12 ; wuqi12 ' + '\n 攻击: 1112 ; 防御: 1112'
+		}, {
+			title : ' 武器22 ; wuqi22 ' + '\n 攻击: 1122 ; 防御: 1122'
+		}, {
+			title : ' 武器23 ; wuqi23 ' + '\n 攻击: 1123 ; 防御: 1123'
+		}]
+		styles = {
+			borderColor : '#3D2528',
+			item : {
+				bgColor : '#1A1E1C',
+				activeBgColor : '#24271F',
+				height : 150.0,
+				imgWidth : 250,
+				imgHeight : 140,
+				imgCorner : 4,
+				placeholderImg : '',
+				titleSize : 12.0,
+				titleColor : '#A09266',
+				subTitleSize : 12.0,
+				subTitleColor : '#A09266',
+				remarkColor : '#A09266',
+				remarkSize : 16,
+				remarkIconWidth : 30
+			}
+		}
+	}
+	function switchBtnF() {
+		var switchBtn = api.require('UISwitchButton');
+		switchBtn.open({
+			id : '123',
+			state : true,
+			rect : {
+				x : 100,
+				y : 100,
+				w : 80,
+				h : 30
+			},
+			styles : {
+				bgCorner : 15,
+				active : '#EEE',
+				inActive : '#0F0',
+				thumb : {
+					active : '#F00',
+					inActive : '#F0F',
+					size : 30,
+					corner : 15
+				}
+			},
+			fixedOn : '',
+			fixed : true
+		}, function(ret) {
+			JSON.stringify(ret);
+		});
+	}
+
+	function testF() {
+		var UIMultiSelector = api.require('UIMultiSelector');
+		UIMultiSelector.open({
+			rect : {
+				x : 0,
+				y : 0,
+				h : 600
+			},
+			text : {
+				title : '属性选择',
+				leftBtn : '清 空',
+				rightBtn : '完 成',
+			},
+			max : 6,
+			maskClose : false,
+			singleSelection : false,
+			styles : {
+				//mask: '#656565',
+				title : {
+					bg : '#656565',
+					color : '#EAEEEC',
+					size : 16,
+					h : 44
+				},
+				leftButton : {
+					w : 80,
+					h : 35,
+					marginT : 5,
+					marginL : 8,
+					bg : '#885D5D',
+					color : '#EAEEEC',
+					size : 14
+				},
+				rightButton : {
+					w : 80,
+					h : 35,
+					marginT : 5,
+					marginR : 8,
+					bg : '#4C776E',
+					color : '#EAEEEC',
+					size : 14
+				},
+				item : {
+					h : 35,
+					bg : '#EAEAEA',
+					bgActive : '#7FCECE',
+					bgHighlight : '#163773',
+					color : 'rgb(22,112,233)',
+					active : 'rgb(201,118,126)',
+					highlight : 'rgb(255,255,0)',
+					size : 14,
+					lineColor : 'rgb(78,57,255)',
+					textAlign : 'center'
+				},
+				icon : {
+					w : 20,
+					h : 20,
+					marginT : 11,
+					marginH : 8,
+					bg : '#fff',
+					align : 'left'
+				}
+			},
+			animation : true,
+			items : [{
+				text : '攻击加成',
+				status : 'normal',
+				size : 19
+			}, {
+				text : '护甲加成',
+				status : 'normal'
+			}, {
+				text : '暴击率',
+				status : 'normal'
+			}, {
+				text : '暴击伤害',
+				status : 'normal'
+			}, {
+				text : '闪避',
+				status : 'normal'
+			}, {
+				text : '生命/攻击',
+				status : 'normal'
+			}, {
+				text : '生命/击杀',
+				status : 'normal'
+			}, {
+				text : '加速',
+				status : 'normal'
+			}]
+		}, function(ret, err) {
+			if (ret) {
+				console.log(JSON.stringify(ret));
+				if (ret.eventType == 'clickMask') {// 点击其他区域
+					UIMultiSelector.hide();
+				} else if (ret.eventType == 'clickRight') {// 完成
+					UIMultiSelector.close();
+				} else if (ret.eventType == 'clickLeft') {// 清空
+					UIMultiSelector.close();
+				} else if (ret.eventType == 'overflow') {// 超过条数
+					alert('属性条数超过数量');
+				}
+			} else {
+				console.log(JSON.stringify(err));
+			}
+		});
+	}
+
+	function callSelect() {
+		//		var UIMultiSelector = api.require('UIMultiSelector');
+		//		UIMultiSelector.show();
+		testF()
+	}
+	
+	function callSelect2() {
+		//		var UIMultiSelector = api.require('UIMultiSelector');
+		//		UIMultiSelector.show();
+		switchBtnF()
+	}
+	
+
+	apiready = function() {
+		//testF()
+	}
+</script>
