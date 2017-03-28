@@ -50,14 +50,24 @@
 		属性>
 	</div>
 	<div class="c1" onclick="callSelect2()">
-		属性2>
+		sql>
+	</div>
+	<div class="c1" onclick="callSelect3()">
+		sql del>
+	</div>
+	<div class="c1" onclick="openuilist1()">
+		list1
 	</div>
 </body>
-</html> <script type="text/javascript" src="../script/api.js"></script>
+</html> <script type="text/javascript" src="../script/public.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/db.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
 		wuqiList1 = [{
-			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111'
+			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111' ,
+			subTitle: ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111',
+        	remark: ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111',
 		}, {
 			title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'
 		}]
@@ -88,32 +98,32 @@
 			}
 		}
 	}
-	function switchBtnF() {
-		var switchBtn = api.require('UISwitchButton');
-		switchBtn.open({
-			id : '123',
-			state : true,
+	function openUIList() {
+		var UIListView = api.require('UIListView');
+		UIListView.open({
 			rect : {
-				x : 100,
+				x : 0,
 				y : 100,
-				w : 80,
-				h : 30
+				w : api.winWidth,
+				h : api.frameHeight
 			},
-			styles : {
-				bgCorner : 15,
-				active : '#EEE',
-				inActive : '#0F0',
-				thumb : {
-					active : '#F00',
-					inActive : '#F0F',
-					size : 30,
-					corner : 15
-				}
-			},
-			fixedOn : '',
-			fixed : true
+			data : wuqiList2,
+			styles : styles,
+			fixedOn : 'frame2'
+		}, function(ret, err) {
+		});
+	}
+
+	function reloadUIList(data) {
+		var UIListView = api.require('UIListView');
+		UIListView.reloadData({
+			data : data
 		}, function(ret) {
-			JSON.stringify(ret);
+			if (ret) {
+				console.log('reloadUIList ret = ' + JSON.stringify(ret));
+			} else {
+				console.log('reloadUIList err = ' + JSON.stringify(ret));
+			}
 		});
 	}
 
@@ -121,8 +131,8 @@
 		var UIMultiSelector = api.require('UIMultiSelector');
 		UIMultiSelector.open({
 			rect : {
-				x : 0,
-				y : 0,
+				x : 20,
+				y : 90,
 				h : 600
 			},
 			text : {
@@ -230,15 +240,24 @@
 		//		UIMultiSelector.show();
 		testF()
 	}
-	
+
 	function callSelect2() {
-		//		var UIMultiSelector = api.require('UIMultiSelector');
-		//		UIMultiSelector.show();
-		switchBtnF()
+		initVer();
+		readWeapons()
+		var weaponslist = $api.getStorage("weaponslist");
+		console.log( 'weaponslist = ' + JSON.stringify(weaponslist)) ;
+		
+		reloadUIList( weaponslist )
 	}
-	
+
+	function callSelect3() {
+		delTable('version');
+		delTable('weapons');
+	}
 
 	apiready = function() {
 		//testF()
+		//initDB()
+		openUIList()
 	}
 </script>

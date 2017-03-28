@@ -13,6 +13,7 @@
 /A6945894366912/html/frame3.html
 /A6945894366912/upload/piclist.html
 /A6945894366912/image/bottombtn0401.png
+/A6945894366912/script/db.js
 /A6945538805012/upload/picup.html
 /A6945894366912/res/weapons/fire/f1.jpg
 /A6945894366912/upload/webuploader.js
@@ -28,6 +29,7 @@
 /A6945894366912/index.html
 /A6945894366912/upload/SHA1.js
 /A6945894366912/upload/new_file.txt
+/A6945894366912/script/public.js
 /A6945894366912/image/bottombtn0102.png
 /A6945894366912/upload/picup.html
 /A6945538805012/res/weapons/fire/f1.jpg

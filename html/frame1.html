@@ -70,8 +70,8 @@
 		//  }
 		//});
 		
-		wuqiList1 = [ { title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111'	} ,
-					 { title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'	} ]
+		
+		
 		wuqiList2 = [ { title : ' 武器12 ; wuqi12 ' + '\n 攻击: 1112 ; 防御: 1112'	} ,
 					 { title : ' 武器22 ; wuqi22 ' + '\n 攻击: 1122 ; 防御: 1122'	} ,
 					 { title : ' 武器23 ; wuqi23 ' + '\n 攻击: 1123 ; 防御: 1123'	} ]
@@ -90,11 +90,44 @@
 						titleColor : '#A09266',
 						subTitleSize : 12.0,
 						subTitleColor : '#A09266',
+						//subTitleLocation : 'right' ,
+						//remarkLocation : 'left' ,
+						
 						remarkColor : '#A09266',
 						remarkSize : 16,
 						remarkIconWidth : 30
 					}
 				}
+				
+		style2 = {
+		        borderColor: '#696969', // 单元格间分割线颜色，支持 rgb，rgba，#，默认#696969
+		        bgColor: '#AFEEEE', // 单元格背景色，支持 rgb，rgba，#，默认#AFEEEE
+		        selectedColor: '#f5f5f5', // item背景选中色,支持 rgb，rgba，#，默认#f5f5f5
+		        height: 65, // 单元格高度，默认55
+		        avatarH: 45, //头像的高度，默认45
+		        avatarW: 45, //头像的宽度，默认45
+		        placeholderImg: 'widget://image/messageList/placeholder.png', //头像为网络资源时的占位图,仅支持本地路径协议,有默认图标，可为空
+		        titleSize: 15, //标题字体大小，默认13
+		        titleColor: '#000000', // 标题字体颜色，支持 rgb,rgba,#，默认：#696969
+		        subTitleSize: 10, // 子标题字体大小，默认13
+		        subTitleColor: '#696969', // 子标题字体颜色，支持 rgb,rgba,#，默认：#000000
+		        badge: {
+		            bg: '#ff0000',
+		            size: 12,
+		            color: '#ffffff'
+		        },
+		        itemSlipDistance: 80
+		    }
+		    
+		    data2 = [{
+			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111' ,
+			subTitle: ' 武器1 ; wuqi1 ' + "<br/>" +' 攻击: 111 ; 防御: 111',
+        	remark: ' <div style="text-align: left;"> 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111 </div>',
+        	
+		}, {
+			title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'
+		}]
+		
 	}
 	
 	function search(){
@@ -129,24 +162,7 @@
 	}
 	
 	function search2(){
-		var UIListView = api.require('UIListView');
-			UIListView.open({
-				rect : {
-					x : 0,
-					y : 100,
-					w : api.winWidth,
-					h : api.frameHeight
-				},
-				data : wuqiList2 ,
-				
-				styles : styles ,
-				fixedOn : 'frame1'
-			}, function(ret, err) {
-				
-			});			
-	    //console.log( JSON.stringify( $api.getStorage('uill') ) ) ; 
-	    //console.log( JSON.stringify( $api.getStorage('wuqilist') ) ) ; 	    
-	    //console.log( 'UIListView = ' + JSON.stringify( $api.getStorage('UIListView') ) ) ; 
+		showmessageList() ; 
 	}
 	
 	
@@ -241,10 +257,46 @@
 			$api.setStorage('UIListView', UIListView );
 			$api.setStorage('uill','uill');
 	}
+	
+	function showmessageList(){
+		var wuqiList1 = [{
+			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111' ,
+			//subTitle: ' 武器1 ; wuqi1 ' + ' \n 攻击: 111 ; 防御: 111',
+        	remark: '  武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111 ' 
+        		+ '\n 攻击: 111 ; 防御: 111 '
+        		+ '\n 攻击: 111 ; 防御: 111 '
+        		+ '\n 攻击: 111 ; 防御: 111 '
+        	,
+        	
+		}, 
+		{
+			title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'
+		}
+		] ;
+		
+		    var UIListView = api.require('UIListView') ;
+			UIListView.open({
+				rect : {
+					x : 80,
+					y : 100,
+					w : api.winWidth,
+					h : api.frameHeight
+				},
+				data : wuqiList1 ,
+				
+				styles : styles ,
+				fixedOn : 'frame1'
+			}, function(ret, err) {
+				
+			});
+		    
+	}
+	
 	apiready = function() {
 			//	var UIListView = api.require('UIListView');
 			//	wuqiList = [];
-			mcmsend( ) ;
+			//showList() ;
+			//showmessageList() ;
 			//jssend() ;
 			//console.log( ' 2 UIListView = ' + JSON.stringify(UIListView)  )
 			console.log( 'wuqilist = ' + JSON.stringify(wuqiList)  )
