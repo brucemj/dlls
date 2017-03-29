@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css" />
+    <style>
+		header {
+			height: 60px;
+		}
+        #headbak {
+            text-align: left;
+            color: #F6DF99;
+            display: block;
+            float: left;
+        }
+
+        .nav .navselect{
+            text-align: center ;
+            border-right: 1px ; 
+            width: 88px;
+            color: #F6DF99;
+            display: block;
+            float: left;
+        }
+        .option{
+            height: 157px;
+            border-bottom: 1px solid #CCC;
+            margin-top: 1em;
+            /*background-color: #FFF;*/
+        }
+        .option:active,.option.tap-active{
+            /*background-color: #EEEEEE;*/
+        }
+        .option .option-left{
+            width: 250px;
+            height: 157px;
+            position: relative;
+            float: left;
+        }
+        .option img{
+            position: absolute;
+            left: 5%;
+            /*top: 50%;*/
+            width: 230px;
+/*            -webkit-transform: translate(-50%,-50%);
+                    transform: translate(-50%,-50%);*/
+        }
+        .option .text{
+            height: 157px;
+            line-height: 28px;
+            text-align: left;
+            color: #F6DF99;
+            display: block;
+            float: left;
+        }
+        .option:active .text,.option.tap-active .text{
+            color: #737373;
+        }
+        /* 标题 */
+        #firstHeader { background : #274043 url(../image/bg/bg_1.jpg) repeat fixed center ; }
+        .header1-bak img { height: 30px;padding: 5px; float: left; }
+        .header1-title { height: 30px; padding: 5px; line-height: 30px; text-align: center; }
+        /* 查询条件 */
+        .navbar { background : #274043 ; display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 40px; box-sizing: border-box; border-bottom: 1px solid #e0e0e0;  }
+        .navbar-item {display: block; -webkit-box-flex: 1; width: 100%; line-height: 40px;  font-size: 16px; text-align: center; border-right: solid #fff 1px;}
+        #navmark {position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; height: 2px;background-color: #D43C33;}
+
+
+
+    </style>
+</head>
+<body>
+    <div id="firstHeader" class="titlebar activebar">
+            <div class="egret-header topbar normalHeader">
+                <div class="header1-bak" onclick="gobak()"><img src="../res/gobak.png" alt=""></div>
+                <div class="header1-title">
+                    z  b
+                </div>
+            </div>
+
+            <nav class="navbar" id="firstHeaderIndex">
+                <div id="recommend" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="shownav(0);">推荐</div>
+                <div id="rank" class="navbar-item" tapmode="navbar-item-hov" onclick="shownav(1);">属性</div>
+                <div id="favorite" class="navbar-item" tapmode="navbar-item-hov" onclick="shownav(2);">计算</div>
+                <div id="ranklist" class="navbar-item" tapmode="navbar-item-hov" onclick="shownav(3);">排行榜</div>
+                <mark id="navmark"></mark>
+            </nav>
+            <div id="selectview" >
+                
+            </div>
+
+    </div>
+    
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+
+<script type="text/javascript">
+
+	window.onload = function() {
+        //console.log(  ) 
+	}
+
+    function gobak(){
+        api.closeWin(); // 关闭当前窗口
+        console.log( 'closeWin = ' + api.winName  )
+    }
+
+    // nav 条件选择
+    function shownav( tick ){
+        if(tick==0){
+            var selectview = $api.dom( '#selectview' );
+            //$api.append( selectview , '<div>生命</div> <div>回复</div>' );
+
+            api.openFrame({
+            name: 'page3_nav1',
+            url: './frame3_nav1.html',
+            rect: {
+                x: 0,
+                y: $api.dom('#firstHeader').offsetHeight ,
+                w: api.winWidth, 
+                h: 90
+            }
+        });
+
+            
+            console.log("shownav = 0")
+        }
+    }
+	
+
+    // 页面初始化
+    apiready = function(){
+        $api.fixStatusBar( $api.dom('#firstHeader') );
+        funIniGroup()
+    }
+
+    function funIniGroup(){
+        api.openFrame({
+            name: 'page3',
+            url: './frame3_list.html',
+            rect: {
+                x: 0,
+                y: $api.dom('#firstHeader').offsetHeight + 50,
+                w: api.winWidth, 
+                h: 'auto'
+            },
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+</script>
+</html>

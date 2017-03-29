@@ -1,17 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>文档</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-    <style>
-        .empty{ text-align: center; padding: 120px 0; }
+    <title>APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css" />
+    <style>		
+        #headbak {
+            height: 157px;
+            line-height: 28px;
+            text-align: left;
+            color: #F6DF99;
+            display: block;
+            float: left;
+        }
+        
     </style>
 </head>
 <body>
-    <div class="empty">文档</div>
+    <div id="headbak" onclick="openWin3()"> List </div> 
 </body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+
+<script type="text/javascript">
+
+	window.onload = function() {
+        //console.log(  ) 
+	}
+
+    function openWin3(){
+        api.openWin({
+            name: 'page3',
+            url: './frame3_head.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+	
+    apiready = function(){
+        
+    }    
+
+</script>
 </html>

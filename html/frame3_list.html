@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css" />
+    <style>		
+        #main{
+            padding: 0;            
+            padding-top: 1em;
+        }
+        .option{
+            height: 157px;
+            border-bottom: 1px solid #CCC;
+            margin-top: 1em;
+            /*background-color: #FFF;*/
+        }
+        .option:active,.option.tap-active{
+            /*background-color: #EEEEEE;*/
+        }
+        .option .option-left{
+            width: 250px;
+            height: 157px;
+            position: relative;
+            float: left;
+        }
+        .option img{
+            position: absolute;
+            left: 5%;
+            /*top: 50%;*/
+            width: 230px;
+/*            -webkit-transform: translate(-50%,-50%);
+                    transform: translate(-50%,-50%);*/
+        }
+        .option .text{
+            height: 157px;
+            line-height: 28px;
+            text-align: left;
+            color: #F6DF99;
+            display: block;
+            float: left;
+        }
+        .option:active .text,.option.tap-active .text{
+            color: #737373;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="main">
+            <div class="option" tapmode="tap-active" onclick="">
+                <div class="option-left">
+                    <img src="../res/weapons/fire/f1_demo.jpg" alt="">
+                </div>
+                <div class="text">
+                	<div>推荐</div>
+                	<div>	天猫推荐  aa2</div>
+                </div>                
+            </div>
+            
+    	</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+
+<script type="text/javascript">
+
+	window.onload = function() {
+		//$api.css($api.dom('body') ,'background-image : url(../image/bg/bg_2.jpg)');
+		//$api.css($api.dom('body') ,'background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center');
+        //$api.css($api.dom('html') ,'background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center');
+
+        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
+        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
+        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
+        //console.log( $api.html( $api.dom('.option') ) ) 
+	}
+	
+    apiready = function(){
+
+    }
+</script>
+</html>

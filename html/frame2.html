@@ -3,14 +3,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<title>首页</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css" />
-	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css" />
 	<link rel="stylesheet" href="../css/idangerous.swiper.css">
 	<style>
 		html, body {
 			width: 100%;
 			min-height: 100%;
-			background: #f0f0f0;
+			/*background: #f0f0f0;*/
 		}
 		.h80 {
 			height: 80px;
@@ -64,6 +65,9 @@
 <script type="text/javascript" src="../script/db.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
+
+		$api.css($api.dom('body') ,'background-image : url(../image/bj.png)');
+
 		wuqiList1 = [{
 			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111' ,
 			subTitle: ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111',
@@ -133,7 +137,7 @@
 			rect : {
 				x : 20,
 				y : 90,
-				h : 600
+				h : 200
 			},
 			text : {
 				title : '属性选择',
@@ -190,7 +194,7 @@
 					align : 'left'
 				}
 			},
-			animation : true,
+			animation : false,
 			items : [{
 				text : '攻击加成',
 				status : 'normal',
