@@ -69,34 +69,27 @@ function wtDB() {
 		sql : ' delete from weapons '
 	})
 
-	var dataWeapons = "( ";
-	var d1 = {
-		"filename" : "a1",
-		"namecn" : "辉耀陨石佩剑",
-		"namepy" : "hyyspj",
-		"nametype" : "双刀",
-		"weight" : 30,
-		"panel" : 1843,
-		"element" : "fire",
-		"profile" : '{"暴击伤害":30,"攻击速度":13,"暴击率":15,"生命/击杀":172,"3秒持续伤害":600}'
-	};
+	var dataWeapons = "( ";		
+	var dataall = [
+			{ "filename":"a1", "namecn":"辉耀陨石佩剑", "namepy":"hyyspj", "nametype":"双刀", "weight":30, "panel":1843, "element":"fire", "profile":'{"暴击伤害":30,"攻击速度":13,"暴击率":15,"生命/击杀":172,"3秒持续伤害":600}' } ,
+			{ "filename":"a2", "namecn":"辉耀流星之弩", "namepy":"hylxzn", "nametype":"双弩", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击率":15,"暴击伤害":36,"3秒持续伤害":480,"生命/击杀":172,"攻击速度":13}' } ,
+			{ "filename":"a3", "namecn":"辉耀灼痕法杖", "namepy":"hyzhfz", "nametype":"法杖", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击伤害":36,"暴击率":15,"3秒持续伤害":480,"攻击速度":13,"生命/击杀":172}' }
+	]
 
-	//for (var i = 0; i <= weapons_col.length; i++) {
-//		var p = weapons_col[i]
-//		if (i == weapons_col.length) {
-//			dataWeapons = dataWeapons + '"' + d1.p + '"' + ' )';
-//		} else {
-//			dataWeapons = dataWeapons + '"' + d1.p + '"' + ', ';
-//		}
-		dataWeapons = dataWeapons + '"' + d1.filename + '"' + ', ' ;
-		dataWeapons = dataWeapons + '"' + d1.namecn + '"' + ', ' ;
-		dataWeapons = dataWeapons + '"' + d1.namepy + '"' + ', ' ;
-		dataWeapons = dataWeapons + '"' + d1.nametype + '"' + ', ' ;
-		dataWeapons = dataWeapons + d1.weight + ', ' ;
-		dataWeapons = dataWeapons + d1.panel  + ', ' ;
-		dataWeapons = dataWeapons + '"' + d1.element + '"' + ', ' ;
-		dataWeapons = dataWeapons + "'" + d1.profile + "'" + ') ' ;
-	//}
+	for (var i = 0; i < dataall.length; i++) {
+		var endstr = '), (' ;
+		if ( i == (dataall.length-1) ) {
+			endstr = ' )' ;
+		}		
+		dataWeapons = dataWeapons + '"' + dataall[i].filename + '"' + ', ' ;
+		dataWeapons = dataWeapons + '"' + dataall[i].namecn + '"' + ', ' ;
+		dataWeapons = dataWeapons + '"' + dataall[i].namepy + '"' + ', ' ;
+		dataWeapons = dataWeapons + '"' + dataall[i].nametype + '"' + ', ' ;
+		dataWeapons = dataWeapons + dataall[i].weight + ', ' ;
+		dataWeapons = dataWeapons + dataall[i].panel  + ', ' ;
+		dataWeapons = dataWeapons + '"' + dataall[i].element + '"' + ', ' ;
+		dataWeapons = dataWeapons + "'" + dataall[i].profile + "'" + endstr ;		
+	}
 	console.log('dataWeapons = ' + dataWeapons );
 
 	ret = db.executeSqlSync({
@@ -105,14 +98,16 @@ function wtDB() {
 	}) ;
 	console.log('weapons execute into = ' + JSON.stringify(ret));
 
-	db.selectSqlSync({
+	ret = db.selectSqlSync({
 		name : dbname,
-		sql : 'select *  weapons '
-	}, function(ret, err) {
-		console.log('weapons select = ' + JSON.stringify(ret));
-	})
+		sql : 'select * from  weapons '
+	}) ;
+	console.log('weapons select = ' + JSON.stringify(ret));
 }
 
+function sql_str(){
+
+}
 function readWeapons() {
 	var db = api.require('db');
 	db.openDatabaseSync({
@@ -126,38 +121,37 @@ function readWeapons() {
 		console.log('weapons select = ' + JSON.stringify(ret));
 	})
 	if (ret.status) {
-		console.log('readWeapons ret = ' + JSON.stringify(ret));
-		
-//		var retss = [] ;
-//		var namecn = "namecn"
-//		var dd = {"namecn":""} ;
-//		var data = ret.data ;
-//		for ( var i=0 ; i<=data.length ; i++ ) {
-//			dd = data[i] ;
-//			console.log('dataFormat dd = ' + JSON.stringify(dd));
-//			retss[i] = {"title":""} ;
-//			retss[i].title = dd.namecn + '\n' ;
-//				//ret[i].title = ret[i].title + data[i]."nametype" + ' 攻击: ' + data[i]."panel" + '\n' ;
-//				//ret[i].title = ret[i].title + data[i]."profile" + '\n' ;
-//		}
-//		console.log('readWeapons retss = ' + JSON.stringify(retss));
+		console.log('readWeapons ret = ' + JSON.stringify(ret));		
 		$api.setStorage("weaponslist", dataFormat( ret.data ) );
 	}else{
 		console.log('readWeapons err = ' + JSON.stringify(ret));
 	}	
 }
 
-function dataFormat( data ) {
-	var ret = [] ;
-	
-	for ( var i=0 ; i<data.length ; i++ ) {
-		ret[i] = {"title":""}
-		ret[i].title = data[i].namecn + '\n /n' ;
-		ret[i].title = ret[i].title + data[i].nametype + ' 攻击: ' + data[i].panel + '\n' ;
-		ret[i].title = ret[i].title + data[i].profile + '\n' ;
+function mergeJson (jsonbject1, jsonbject2){
+	var resultJsonObject={};
+	for(var attr in jsonbject1){
+		resultJsonObject[attr]=jsonbject1[attr];
 	}
-	return ret
+	for(var attr in jsonbject2){
+		resultJsonObject[attr]=jsonbject2[attr];
+	}
+   	return resultJsonObject;
 }
+function dataFormat( data ) {
+	for ( var i=0 ; i<data.length ; i++ ) {
+		var profile = $api.strToJson( data[i].profile )
+		data[i] = mergeJson(data[i] , profile )
+		//data[i].profile = "" ;
+		delete data[i].profile ; 
+		//ret[i] = {"title":""}
+		//ret[i].title = data[i].namecn + '\n /n' ;
+		//ret[i].title = ret[i].title + data[i].nametype + ' 攻击: ' + data[i].panel + '\n' ;
+		//ret[i].title = ret[i].title + data[i].profile + '\n' ;
+	}
+	return data
+}
+
 
 function delTable(tablename) {
 	var db = api.require('db');

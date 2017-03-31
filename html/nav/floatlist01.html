@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <title>HTML</title>
+  
+  <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+
+	<style>
+		html {width: 100%;height: 100%;background:transparent;}
+		body {background: rgba(0,0,0,0) ;width: 100%;height: 100%;overflow: hidden;}
+
+		/*.floatbox {position: relative; background: #fff; top: 100px; left: 10px; border: 1px solid #e0e0e0; width: 60%;}*/
+		.floatbox { background-color : #F6F4EC;  border: 1px solid #e0e0e0; width: 100%;}
+		.floatheader {height: 40px; line-height: 40px; font-size: 14px; color: #999; text-align: left; margin-left: 20px;}
+		.floatbody {border-bottom: 1px solid #D0D2D6;}
+		.floatbodybtn {width: 20px;height: 20px;background: #0fc;}
+		.floatfooter {height: 40px; line-height: 40px; font-size: 18px;}
+
+		/* 水平等宽样式 */
+		.floatbox .item { float: left ; width: 16% ; height: 50px;line-height: 50px;font-size: 16px; padding:3px; text-align:center ; color: #241A15 ;border-bottom: 1px solid #e0e0e0;}
+		.floatbox .actionbtn { float: right ; width: 40% ; height: 50px;line-height: 50px;font-size: 18px; padding:10px; text-align:center ; color: #241A15 ;border-bottom: 2px solid #e0e0e0;}
+		.floatbox .item:last-child {border-bottom: 0;}
+		.floatbox .checkmark {width: 20px; float: right; margin-top: 18px; margin-right: 10px;}
+		
+		/* 悬浮样式 */
+		.btnhover {background-color: #FF9600 ; color: #FFF;}
+		.dlslc1 {background-color: #FF9600 ; color: #FFF;}
+
+	</style>
+</head>
+
+<body>
+	<div id="topbar"></div>
+	<div class="floatbox">
+		<!--<div class="item" tapmode="btnhover" onclick="">全部口味<img src="../image/icon_check.png" alt="" class="checkmark"></div>-->
+		<div class="item" onclick="togglebtn(this)">全部</div>
+		<div class="item" onclick="togglebtn(this)">持续伤害</div>
+		<div class="item" onclick="togglebtn(this)">暴击伤害</div>
+		<div class="item" onclick="togglebtn(this)">暴击率</div>
+		<div class="item" onclick="togglebtn(this)">晕眩几率</div>
+		<div class="item" onclick="togglebtn(this)">攻击速度</div>
+		<div class="item" onclick="togglebtn(this)">护甲加成</div>
+		<div class="clearfix"></div>
+		
+		<div class="actionbtn cleanslc" tapmode="btnhover" onclick="actionbtn(this)">清空</div>
+		<div class="actionbtn commitslc" tapmode="btnhover" onclick="actionbtn(this)">查询</div>
+		<div class="clearfix"></div>		
+	</div>
+	
+	
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/db.js"></script>
+<script>
+	function emptyopt () {
+	}
+	
+	
+	
+	function togglebtn(obj){
+		$api.toggleCls( obj , 'dlslc1' )
+	}
+	
+	// 处理数据
+	function filterData( arrfilter ){
+		var weaponslist = $api.getStorage("weaponslist");
+		var ret = [] ;
+		var ret_index = 0 ;
+		//console.info(datas["key"] != undefined); //此方式不严谨，如果key定义了 并就是赋值为undefined 则会出问题
+        //console.info("key" in datas);
+        //console.info(datas.hasOwnProperty("key"));     
+        console.log( 'weaponslist 所有 = ' + JSON.stringify(weaponslist)) ;   
+        console.log( '过滤条件   = ' + JSON.stringify(arrfilter)) ;   
+        
+        for(var i=0 ; i<weaponslist.length ; i++ ){
+        	var ishit = false ;
+        	for(var j=0 ; j<arrfilter.length ; j++){
+//      		if( weaponslist[i].hasOwnProperty( arrfilter[j] ) ){
+				if( arrfilter[j] in weaponslist[i] ){
+        			ishit = true ;
+        		}else{
+        			ishit = false ;
+        			break;
+        		}
+        	}
+        	
+        	if(ishit){
+        		ret[ret_index] = weaponslist[i] ;
+        		ret_index ++ ;
+        	}
+        }
+        return ret ;
+        
+		
+	}
+	function actionbtn( obj ){
+		var dlslc1 = $api.domAll('.floatbox .dlslc1');
+		
+		if( $api.hasCls(obj , 'cleanslc')){
+			for(var i=0 ; i< dlslc1.length ; i++ ){
+				$api.removeCls(dlslc1[i], 'dlslc1');
+			}
+			
+		}else if( $api.hasCls(obj , 'commitslc') ){
+			api.setFrameAttr({name:'floatlist01' , hidden:true}); // 隐藏选择界面
+			
+			var arrfilter = []
+			for(var i=0 ; i< dlslc1.length ; i++ ){
+				var text = $api.html( dlslc1[i] );
+				arrfilter[i] = text
+				console.log( text )
+			}
+			
+			// 根据条件，过滤数据
+			var data = filterData( arrfilter ) ;
+			
+			api.openFrame({
+				name : 'page3',
+				//url : '../frame3_list.html',				
+				reload : true ,
+				pageParam : {
+					name : 'test' , 
+					num : dlslc1.length ,
+					data : data
+				}
+			});
+			
+		}
+		
+	}
+
+	function goback()
+	{
+		api.closeFrame({name: 'floatlist01'});
+	}
+
+	function match(src, target)
+    {
+        var mark = false;
+        if(src === target){
+            mark = true;
+            return mark;
+        }else{
+            do{
+                src = src.parentNode;
+                if(src === target){
+                    mark = true;
+                    return mark;
+                }
+            }while(src !== document.body && src !== document.documentElement);
+
+            return mark;
+        }
+    }
+    apiready = function(){
+    	var header = $api.byId('topbar');
+    	$api.fixIos7Bar(header); 
+
+        var body = $api.dom('body');
+        $api.addEvt(body,'touchend',function(e){
+
+            var main = $api.dom('.floatbox');
+            
+            if(!match(e.target, main))
+            {
+                //api.closeFrame({name:'floatlist01'});
+                api.setFrameAttr({name:'floatlist01' , hidden:true});
+            }
+            
+
+        });
+
+    }
+
+
+</script>
+</html>

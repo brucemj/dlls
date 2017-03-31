@@ -73,34 +73,29 @@
 				line-height: 30px;
 				text-align: center;
 			}
-			/* 查询条件 */
+			/* 查询条件 
 			.navbar {
-				background: #274043;
-				display: -webkit-box;
-				-webkit-box-orient: horizontal;
-				position: relative;
-				height: 40px;
-				box-sizing: border-box;
-				border-bottom: 1px solid #e0e0e0;
+				background: #274043; display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 40px; box-sizing: border-box; border-bottom: 1px solid #e0e0e0;
 			}
-			.navbar-item {
-				display: block;
-				-webkit-box-flex: 1;
-				width: 100%;
-				line-height: 40px;
-				font-size: 16px;
-				text-align: center;
-				border-right: solid #fff 1px;
+			.navbar-item { display: block; -webkit-box-flex: 1; width: 100%; line-height: 40px; font-size: 16px; text-align: center; border-right: solid #fff 1px;
 			}
-			#navmark {
-				position: absolute;
-				left: 0px;
-				bottom: 0px;
-				-webkit-transition: 300ms;
-				text-align: center;
-				height: 2px;
-				background-color: #D43C33;
-			}
+			#navmark { position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; height: 2px; background-color: #D43C33;
+			}  
+			*/
+			
+			/* framegroup 头部样式 */
+	        .navbar {display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 50px; box-sizing: border-box; background: #3F4147; border-bottom: 1px solid #e0e0e0; }
+	        .navbar-item {display: block; -webkit-box-flex: 1; width: 100%; line-height: 50px; /*color: rgb(148,127,119);*/ font-size: 16px; text-align: center;color: #7E7E7E; position: relative;}
+	        .navbar-item img {width: 8px; position: absolute; bottom: 4px;right: 5px;}
+	        .navbar-item-hov {color: #fff; }
+	        .navbar-item-active {color: #fff; }
+	        #navmark {position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; background-color: #3993CF;height: 3px;}
+	
+	        .vdvidider {height: 30px;width: 1px;background-color: #55575D;margin-top: 10px;}
+	        /* 悬浮样式 */
+	        .itemhover {background-color: #eee !important;}
+	        .headerhover {background-color: #36A8DC;}
+        
 		</style>
 	</head>
 	<body>
@@ -112,7 +107,16 @@
 					z  b
 				</div>
 			</div>
-			<nav class="navbar" id="firstHeaderIndex">
+			
+			<!-- framegroup 头部指示块 -->
+    <nav class="navbar">
+        <a id="navbar-item-recommend" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist01')">属性</a><div class="vdvidider"></div>
+        <a id="navbar-item-rank" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist02')">元素</a><div class="vdvidider"></div>
+        <a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型</a>
+        <!--<a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型<img src="../image/pager_tab_menu_indicator.png" alt=""></a>-->
+    </nav>
+			
+			<!--<nav class="navbar" id="firstHeaderIndex">
 				<div id="recommend" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="shownav(0);">
 					推荐
 				</div>
@@ -126,11 +130,14 @@
 					排行榜
 				</div>
 				<mark id="navmark"></mark>
-			</nav>
-			<div id="selectview" ></div>
+			</nav>			
+			
+			<div id="selectview" ></div>-->
+			
 		</div>
 	</body>
 	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/db.js"></script>
 	<script type="text/javascript">
 		window.onload = function() {
 			//console.log(  )
@@ -142,6 +149,16 @@
 		}
 
 		// nav 条件选择
+		function openNewFrame (type) {
+	        api.openFrame({
+	            name:type,
+	            url: './nav/'+type+'.html',
+	            rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'},
+	            bounces:false,
+	            delay:100
+	        })
+	    }
+    
 		function shownav(tick) {
 			if (tick == 0) {
 				// var selectview = $api.dom( '#selectview' );
@@ -262,6 +279,10 @@ UICustomPicker.open({
 		apiready = function() {
 			$api.fixStatusBar($api.dom('#firstHeader'));
 			funIniGroup()
+			
+			readWeapons()
+			var weaponslist = $api.getStorage("weaponslist");
+			console.log( 'weaponslist = ' + JSON.stringify(weaponslist)) ;
 		}
 		function funIniGroup() {
 			api.openFrame({
@@ -269,35 +290,16 @@ UICustomPicker.open({
 				url : './frame3_list.html',
 				rect : {
 					x : 0,
-					y : $api.dom('#firstHeader').offsetHeight + 50,
+					y : $api.dom('#firstHeader').offsetHeight ,
 					w : api.winWidth,
 					h : 'auto'
 				},
+				reload : true ,
 				pageParam : {
-					name : 'test'
+					name : 'test' ,
+					num : 1
 				}
-			});
-			// api.openFrameGroup({
-			//     name: 'group3',
-			//     rect: {
-			//         x: 0,
-			//         y: $api.dom('#firstHeader').offsetHeight + 50,
-			//         w: api.winWidth,
-			//         h: 'auto'
-			//     },
-			//     frames: [{
-			//         name: 'frame3list',
-			//         url: './frame3_list.html',
-			//     }, {
-			//         name: 'frame3nav1',
-			//         url: './frame3_nav1.html',
-			//     }]
-			// }, function(ret, err) {
-			//     var index = ret.index;
-			//     console.log( "framegroup index = " + index)
-			// });
-			
-			// https://github.com/apicloudcom/Eleme-Source
+			});			
 		}
 	</script>
 </html>

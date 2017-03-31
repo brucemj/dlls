@@ -66,19 +66,30 @@
 
 <script type="text/javascript">
 
-	window.onload = function() {
-		//$api.css($api.dom('body') ,'background-image : url(../image/bg/bg_2.jpg)');
-		//$api.css($api.dom('body') ,'background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center');
-        //$api.css($api.dom('html') ,'background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center');
-
-        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
-        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
-        $api.append($api.dom('#main'), $api.html( $api.dom('#main') ) );
-        //console.log( $api.html( $api.dom('.option') ) ) 
+	window.onload = function() {         
 	}
 	
+	// 数据
+	
+	
     apiready = function(){
-
+    	console.log("fram3_list open")
+		var data = api.pageParam.data ;
+		console.log( 'list 要显示的数据   = ' + JSON.stringify(data)) ;   
+		
+		if (typeof(data) == "undefined") {    
+    		console.log( 'list 没有要显示的数据   = ' + JSON.stringify(data)) ;
+		}else{
+			for(var i=0 ; i<data.length ; i++ ){
+				var htmltext = '<div> data = ' ;
+				htmltext = htmltext + data[i].namecn + ' ; ' + data[i].namepy 
+				 htmltext = htmltext + '</div> ' ;
+				$api.append( $api.dom('#main'), htmltext );			
+			}
+		}
+			
+		
     }
+    
 </script>
 </html>
