@@ -73,14 +73,16 @@ function wtDB() {
 	var dataall = [
 			{ "filename":"a1", "namecn":"辉耀陨石佩剑", "namepy":"hyyspj", "nametype":"双刀", "weight":30, "panel":1843, "element":"fire", "profile":'{"暴击伤害":30,"攻击速度":13,"暴击率":15,"生命/击杀":172,"3秒持续伤害":600}' } ,
 			{ "filename":"a2", "namecn":"辉耀流星之弩", "namepy":"hylxzn", "nametype":"双弩", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击率":15,"暴击伤害":36,"3秒持续伤害":480,"生命/击杀":172,"攻击速度":13}' } ,
-			{ "filename":"a3", "namecn":"辉耀灼痕法杖", "namepy":"hyzhfz", "nametype":"法杖", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击伤害":36,"暴击率":15,"3秒持续伤害":480,"攻击速度":13,"生命/击杀":172}' }
+			{ "filename":"a3", "namecn":"辉耀灼痕法杖", "namepy":"hyzhfz", "nametype":"法杖", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击伤害":36,"暴击率":15,"3秒持续伤害":480,"攻击速度":13,"生命/击杀":172}' } ,
+			{ "filename":"a4", "namecn":"辉耀末世者佩剑", "namepy":"hymszpj", "nametype":"双刀", "weight":30, "panel":2528, "element":"fire", "profile":'{"3秒持续伤害":480,"暴击率":16,"生命/攻击":19,"技能伤害加成":11,"护甲加成":12.2}' } ,
+			{ "filename":"a5", "namecn":"辉耀烈焰宝石火弓", "namepy":"hylybshg", "nametype":"双弩", "weight":30, "panel":1994, "element":"fire", "profile":'{"生命/击杀":172,"3秒持续伤害":480,"攻击速度":13,"护甲加成":14.4,"暴击率":15}' } 
 	]
 
 	for (var i = 0; i < dataall.length; i++) {
 		var endstr = '), (' ;
 		if ( i == (dataall.length-1) ) {
 			endstr = ' )' ;
-		}		
+		}
 		dataWeapons = dataWeapons + '"' + dataall[i].filename + '"' + ', ' ;
 		dataWeapons = dataWeapons + '"' + dataall[i].namecn + '"' + ', ' ;
 		dataWeapons = dataWeapons + '"' + dataall[i].namepy + '"' + ', ' ;
@@ -88,7 +90,7 @@ function wtDB() {
 		dataWeapons = dataWeapons + dataall[i].weight + ', ' ;
 		dataWeapons = dataWeapons + dataall[i].panel  + ', ' ;
 		dataWeapons = dataWeapons + '"' + dataall[i].element + '"' + ', ' ;
-		dataWeapons = dataWeapons + "'" + dataall[i].profile + "'" + endstr ;		
+		dataWeapons = dataWeapons + "'" + dataall[i].profile + "'" + endstr ;
 	}
 	console.log('dataWeapons = ' + dataWeapons );
 

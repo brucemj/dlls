@@ -38,13 +38,9 @@
 	<div id="topbar"></div>
 	<div class="floatbox">
 		<!--<div class="item" tapmode="btnhover" onclick="">全部口味<img src="../image/icon_check.png" alt="" class="checkmark"></div>-->
-		<div class="item" onclick="togglebtn(this)">全部</div>
-		<div class="item" onclick="togglebtn(this)">持续伤害</div>
-		<div class="item" onclick="togglebtn(this)">暴击伤害</div>
-		<div class="item" onclick="togglebtn(this)">暴击率</div>
-		<div class="item" onclick="togglebtn(this)">晕眩几率</div>
-		<div class="item" onclick="togglebtn(this)">攻击速度</div>
-		<div class="item" onclick="togglebtn(this)">护甲加成</div>
+		<div class="select1_key">
+			<!--<div class="item" onclick="togglebtn(this)">暴击伤害</div>-->
+		</div>
 		<div class="clearfix"></div>
 		
 		<div class="actionbtn cleanslc" tapmode="btnhover" onclick="actionbtn(this)">清空</div>
@@ -71,6 +67,8 @@
 		var weaponslist = $api.getStorage("weaponslist");
 		var ret = [] ;
 		var ret_index = 0 ;
+		
+		var select1_key = $api.getStorage( "select1_key" ) ;
 		//console.info(datas["key"] != undefined); //此方式不严谨，如果key定义了 并就是赋值为undefined 则会出问题
         //console.info("key" in datas);
         //console.info(datas.hasOwnProperty("key"));     
@@ -80,8 +78,9 @@
         for(var i=0 ; i<weaponslist.length ; i++ ){
         	var ishit = false ;
         	for(var j=0 ; j<arrfilter.length ; j++){
+        		var k = arrfilter[j] ;
 //      		if( weaponslist[i].hasOwnProperty( arrfilter[j] ) ){
-				if( arrfilter[j] in weaponslist[i] ){
+				if( select1_key[k] in weaponslist[i] ){
         			ishit = true ;
         		}else{
         			ishit = false ;
@@ -157,6 +156,7 @@
             return mark;
         }
     }
+    
     apiready = function(){
     	var header = $api.byId('topbar');
     	$api.fixIos7Bar(header); 
@@ -174,6 +174,17 @@
             
 
         });
+        
+        var select1_key = {'暴击伤害':'暴击伤害', '暴击率':'暴击率', '护甲加成':'护甲加成', '持续伤害':'3秒持续伤害', '晕眩几率':'晕眩几率', 
+		'攻击速度':'攻击速度', '恐惧几率':'恐惧几率', '击退几率':'击退几率', '减速几率':'减速几率', '狂战伤害':'狂战伤害', 
+		'血怒几率':'血怒几率', '技能加成':'技能伤害加成', '生命/攻击':'生命/攻击', '生命/击杀':'生命/击杀', '通缉加成':'通缉挑战分数'		
+		}
+		$api.setStorage("select1_key", select1_key );
+		
+		for(var k in select1_key){
+			var htmltext = '<div class="item" onclick="togglebtn(this)">' + k + '</div>' ;
+			$api.append( $api.dom('.select1_key'), htmltext );
+		}
 
     }
 

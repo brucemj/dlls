@@ -1,12 +1,23 @@
-weapons  武器
-armors   防具
-skill    技能
+<p>	类型: 
+	<select name="item" >
+	   <option value="weapons">武器</option>
+	   <option value="armors">防具</option>
+	   <option value="skill">技能</option>
+	   <option value="pet">仆从</option>
+	   <option value="trinket">项链</option>
+	   <option value="materials">材料</option>    
+	</select>
+</p>
 
-darkness 黑暗
-fire     火
-light    光明
-nature   自然
-water    水
+<p>	元素: 
+	<select name="element" >
+	   <option value="darkness">黑暗</option>
+	   <option value="fire">火</option>
+	   <option value="light">光明</option>
+	   <option value="nature">自然</option>
+	   <option value="water">水</option>
+	</select>
+</p>
 
      10 3秒持续伤害
       6 减速几率
@@ -52,7 +63,8 @@ a20--辉耀雄鸡报晓劲弩--hyxjbxjn--双弩--负重=30--攻击=4147--护甲�
 { "filename":"a1", "namecn":"辉耀陨石佩剑", "namepy":"hyyspj", "nametype":"双刀", "weight":30, "panel":1843, "element":"fire", "profile":'{"暴击伤害":30,"攻击速度":13,"暴击率":15,"生命/击杀":172,"3秒持续伤害":600}' }
 { "filename":"a2", "namecn":"辉耀流星之弩", "namepy":"hylxzn", "nametype":"双弩", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击率":15,"暴击伤害":36,"3秒持续伤害":480,"生命/击杀":172,"攻击速度":13}' }
 { "filename":"a3", "namecn":"辉耀灼痕法杖", "namepy":"hyzhfz", "nametype":"法杖", "weight":30, "panel":1735, "element":"fire", "profile":'{"暴击伤害":36,"暴击率":15,"3秒持续伤害":480,"攻击速度":13,"生命/击杀":172}' }
-
+{ "filename":"a4", "namecn":"辉耀末世者佩剑", "namepy":"hymszpj", "nametype":"双刀", "weight":30, "panel":2528, "element":"fire", "profile":'{"3秒持续伤害":480,"暴击率":16,"生命/攻击":19,"技能伤害加成":11,"护甲加成":12.2}' }
+{ "filename":"a5", "namecn":"辉耀烈焰宝石火弓", "namepy":"hylybshg", "nametype":"双弩", "weight":30, "panel":1994, "element":"fire", "profile":'{"生命/击杀":172,"3秒持续伤害":480,"攻击速度":13,"护甲加成":14.4,"暴击率":15}' }
 
 
 
