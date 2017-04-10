@@ -36,7 +36,8 @@
       1 通缉挑战分数
 	  
 	  
-CREATE TABLE IF NOT EXISTS weapons (ID int , filename char(16) , namecn char(16) , namepy char(16), nametype char(6), weight int, panel int, element char(8), profile char(150)  )
+CREATE TABLE IF NOT EXISTS weapons (ID int , filename char(16) , namecn char(16) , 
+namepy char(16), item char(6), itemtype char(6), weight int, panel int, element char(8), profile char(150)  )
 
 a1--辉耀陨石佩剑--hyyspj--双刀--负重=30--攻击=1843--暴击伤害=30--攻击速度=13--暴击率=15--生命/击杀=172--3秒持续伤害=600
 a2--辉耀流星之弩--hylxzn--双弩--负重=30--攻击=1735--暴击率=15--暴击伤害=36--3秒持续伤害=480--生命/击杀=172--攻击速度=13

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>产品列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			#main {
+				padding: 0em 0;
+				position: relative;
+				background: #fff9ed;
+			}
+			.goods_price {
+				color: #c20000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
+					<!--<li onclick="openCommon('goods_detail', '商  品  详  情');" class="mui-table-view-cell mui-media">
+					<a href="javascript:;"> <img class="mui-media-object mui-pull-left cache" src="../../image/home_47.jpg">
+					<div class="mui-media-body">
+					<div class='mui-ellipsis'>
+					产品名称产品名称产品名称产品名称产品名称
+					</div>
+					<div class='mui-ellipsis goods_price'>
+					¥299
+					</div>
+					</div> </a>
+					</li>
+					<li onclick="openCommon('goods_detail', '商  品  详  情');" class="mui-table-view-cell mui-media">
+					<a href="javascript:;"> <img class="mui-media-object mui-pull-left cache" src="../../image/home_47.jpg">
+					<div class="mui-media-body">
+					<div class='mui-ellipsis'>
+					产品名称产品名称产品名称产品名称产品名称
+					</div>
+					<div class='mui-ellipsis goods_price'>
+					¥299
+					</div>
+					</div> </a>
+					</li>-->
+				</ul>
+				<div id="btnMore" class="mui-button-row" style="display:none;line-height:30px">
+					暂无更多内容
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../js/zepto.min.js"></script>
+	<script type="text/javascript">
+	// http://community.apicloud.com/bbs/forum.php?mod=viewthread&tid=20598
+		apiready = function() {
+			var header = $api.byId('header');
+			$api.setStorage("rexiao_index", 0);
+			load();
+			//上拉翻页
+			api.addEventListener({
+				name : 'scrolltobottom'
+			}, function(ret, err) {
+				$api.setStorage("rexiao_index", $api.getStorage("rexiao_index") - 0 + 1);
+				load();
+			});
+			$api.fixIos7Bar(header);
+		}
+
+		function load(first, index2) {
+			var index = $api.getStorage("rexiao_index");
+			if (index2 != null) {
+				index = index2;
+			}
+			var id = "rexiao";
+			var url = "/getGoodsTagList?tag=" + id + "&pageIndex=" + index + "&pageCount=20&key=" + key;
+			if (index == 0) {
+				//默认加载缓存
+				var folder = "getGoodsTagList";
+				doCache(folder, id, url, function(data) {
+					dealWithHtml(data, first, index);
+				});
+			} else {
+				//分页后不加载缓存
+				ajaxRequest(url, 'get', '', function(data) {
+					dealWithHtml(data, first, index);
+				});
+			}
+		}
+
+		function dealWithHtml(data, first, index) {
+			if (data.list == null) {
+				if (index != 0) {
+					document.getElementById('btnMore').style.display = "block";
+				} 
+			} else {
+				var mainhtml = "";
+				for (var i = 0; i < data.list.length; i++) {
+					mainhtml += "<li onclick=\"openCommon('goods_detail', '商  品  详  情'," + data.list[i]["goods_id"] + ");\" class=\"mui-table-view-cell mui-media\">";
+					mainhtml += "<a href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left cache\" src=\"" + machineurl + data.list[i]["goods_conver"] + "\">";
+					mainhtml += "<div class=\"mui-media-body\">";
+					mainhtml += "	<div class='mui-ellipsis'>";
+					mainhtml += "		" + data.list[i]["goods_name"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "	<div class='mui-ellipsis goods_price'>";
+					mainhtml += "		¥" + data.list[i]["goods_store_price"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "</div> </a>";
+					mainhtml += "</li>";
+				}
+				if (first == '1') {
+					document.getElementById('list').innerHTML = mainhtml;
+				} else {
+					document.getElementById('list').innerHTML += mainhtml;
+				}
+			}
+		}
+	</script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script>
+		mui.init();
+	</script>
+</html>
