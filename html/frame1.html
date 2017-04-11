@@ -39,19 +39,20 @@
 		.hightitem {
 			background-color: #fff;
 		}
-		.inwrap {
+		.titlebar {
 			padding-right: 15px;
 			padding-left: 15px;
+			margin : 15px ;
 		}
 	</style>
 </head>
 	<body>
 		<div id="firstHeader" class="titlebar activebar" onclick="search()">
-            攻 －－ 击
+           本地数据
           </div>
           
           <div id="firstHeader" class="titlebar activebar" onclick="search2()">
-            fangyu
+            API数据
           </div>
           
 	</body>
@@ -60,17 +61,6 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 	window.onload = function  () {
-		//				
-		//		var query = api.require('query');
-		//query.createQuery(function( ret, err ){
-		//  if( ret ){
-		//       alert( "ret" + JSON.stringify( ret ) );   
-		//  }else{
-		//       alert( "err" + JSON.stringify( err ) );
-		//  }
-		//});
-		
-		
 		
 		wuqiList2 = [ { title : ' 武器12 ; wuqi12 ' + '\n 攻击: 1112 ; 防御: 1112'	} ,
 					 { title : ' 武器22 ; wuqi22 ' + '\n 攻击: 1122 ; 防御: 1122'	} ,
@@ -201,13 +191,13 @@
 							for(var i = 0; i < ret.length; i++){
 								wuqiList[i] = {
 								// imgPath : ret[i].pic.url , 
-								title : ret[i].namecn + ' ; ' + ret[i].nameen
-									+ '\n 攻击: ' + ret[i].gongji + ' ; 防御: ' + ret[i].fangyu 
+								title : ret[i].namecn + ' ; ' + ret[i].namepy
+									+ '\n 攻击: ' + ret[i].panel  
 									, 
 								//subTitle : ret[i].gongji 
 								}								
 							}
-							showList(wuqiList) ;
+							//showList(wuqiList) ;
 							console.log( 'wuqilist=' + JSON.stringify(wuqiList)  )							
 							$api.setStorage('wuqilist', wuqiList );
 					});
@@ -259,26 +249,14 @@
 	}
 	
 	function showmessageList(){
-		var wuqiList1 = [{
-			title : ' 武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111' ,
-			//subTitle: ' 武器1 ; wuqi1 ' + ' \n 攻击: 111 ; 防御: 111',
-        	remark: '  武器1 ; wuqi1 ' + '\n 攻击: 111 ; 防御: 111 ' 
-        		+ '\n 攻击: 111 ; 防御: 111 '
-        		+ '\n 攻击: 111 ; 防御: 111 '
-        		+ '\n 攻击: 111 ; 防御: 111 '
-        	,
-        	
-		}, 
-		{
-			title : ' 武器2 ; wuqi2 ' + '\n 攻击: 112 ; 防御: 112'
-		}
-		] ;
+		mcmsend();
+		var wuqiList1 = $api.getStorage('wuqilist' );
 		
 		    var UIListView = api.require('UIListView') ;
 			UIListView.open({
 				rect : {
-					x : 80,
-					y : 100,
+					x : 0,
+					y : 80,
 					w : api.winWidth,
 					h : api.frameHeight
 				},
