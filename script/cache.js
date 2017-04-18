@@ -54,8 +54,8 @@ function writeFile(json, id, path) {
 }
 
 //缓存方法
-function doCache(folder, id, url, callback) {
-	readFile('/' + folder + '/' + id + '.json', function(ret, err) {
+function doCache( folder, clsname, callback ) {
+	readFile('/' + folder + '/' + clsname + '.json', function(ret, err) {
 		if (ret.status) {
 			//如果成功，说明有本地存储，读取时转换下数据格式
 			//拼装json代码

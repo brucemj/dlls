@@ -92,6 +92,7 @@
 </html>
 
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/cache.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
 <script type="text/javascript">
 	window.onload = function  () {
@@ -154,7 +155,17 @@
 		showmessageList() ; 
 	}
 	
-	function mcmsend(  ){
+	//读文件
+	function readFile(path, callBack) {
+		var cacheDir = api.cacheDir;
+		api.readFile({
+			path : cacheDir + path
+		}, function(ret, err) {
+			callBack(ret, err);
+		});
+	}
+	
+	function doCache( folder, clsname, callback ){
 			var model = api.require('model');
 			var query = api.require("query");
 			
@@ -171,10 +182,10 @@
 					});
 
 					model.findAll({
-						class: "weapons",
+						class: clsname,
 						qid: queryId
 					}, function(ret, err){							
-							console.log( JSON.stringify(ret)  ) ;							
+							console.log( JSON.stringify(ret)  ) ;
 							//for(var p in ret){ //遍历json数组时，这么写p为索引，0,1
 							var wuqiList = [] ;
 							for(var i = 0; i < ret.length; i++){
@@ -195,6 +206,27 @@
 			});
 	}
 	
+	function load(first, index2) {
+			var index = $api.getStorage("weapons_index");
+			if (index2 != null) {
+				index = index2;
+			}
+			var id = "weapon";
+			var url = "/getGoodsTagList?tag=" + id + "&pageIndex=" + index + "&pageCount=20&key=" + key;
+			if (index == 0) {
+				//默认加载缓存
+				var folder = "weapons";
+				doCache(folder, id, url, function(data) {
+					dealWithHtml(data, first, index);
+				});
+			} else {
+				//分页后不加载缓存
+				ajaxRequest(url, 'get', '', function(data) {
+					dealWithHtml(data, first, index);
+				});
+			}
+	}
+		
 	function showmessageList(){
 		mcmsend();
 		var wuqiList1 = $api.getStorage('wuqilist' );
@@ -219,13 +251,13 @@
 	
 	apiready = function() {
 			var header = $api.byId('main');
-			$api.setStorage("rexiao_index", 0);
+			$api.setStorage("weapons_index", 0);
 			load();
 			//上拉翻页
 			api.addEventListener({
 				name : 'scrolltobottom'
 			}, function(ret, err) {
-				$api.setStorage("rexiao_index", $api.getStorage("rexiao_index") - 0 + 1);
+				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
 				load();
 			});
 			$api.fixIos7Bar(header);
