@@ -44,16 +44,18 @@
 			padding-left: 15px;
 			margin : 15px ;
 		}
+		.mui-media {
+			margin : 10px ;
+			padding: 5px 10px;
+			width: 60%;			
+		}
+		.imgcache { float: left; }
 	</style>
 </head>
 	<body>
-		<div id="firstHeader" class="titlebar activebar" onclick="search()">
-           本地数据
-          </div>
-          
-          <div id="firstHeader" class="titlebar activebar" onclick="search2()">
-            API数据
-          </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="clearCache()"> 清除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="removefile()"> 删除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="showdata()"> showdata    </div>
           
           <div id="wrap">
 			<div id="main">
@@ -118,92 +120,20 @@
 					}
 				}
 				
-	}
+	}	
 	
-	function search(){
-		var UIListView = api.require('UIListView');
-			UIListView.open({
-				rect : {
-					x : 0,
-					y : 100,
-					w : api.winWidth,
-					h : api.frameHeight
-				},
-				data : [
-					{	rightBtns: [{
-					    bgColor: '#388e8e', //（可选项）字符串类型；按钮背景色，支持 rgb、rgba、#；默认：'#388e8e'
-					    activeBgColor: '',  //（可选项）字符串类型；按钮按下时的背景色，支持 rgb、rgba、#
-					    width: 70,          //（可选项）数字类型；按钮的宽度；默认：w / 4       
-					    title: '',          //（可选项）字符串类型；按钮标题，水平、垂直居中
-					    titleSize: 12,      //（可选项）数字类型；按钮标题文字大小；默认：12
-					    titleColor: '#fff', //（可选项）字符串类型；按钮标题文字颜色，支持 rgb、rgba、#；默认：'#ffffff'
-					    icon: '',           //（可选项）字符串类型；按钮标题前的图标路径（本地路径，支持fs://、widget://），水平、垂直居中，图标为正方形
-					    iconWidth: 20       //（可选项）数字类型；按钮标题前的图标宽度，图标为正方形；默认：20
-					}]
-										
-										}
-									] ,
-									
-									styles : styles ,
-									fixedOn : 'frame1'
-								}, function(ret, err) {
-									
-								});	
-	}
-	
-	function search2(){
-		showmessageList() ; 
-	}
-	
-	//读文件
-	function readFile(path, callBack) {
+	function removefile() {
 		var cacheDir = api.cacheDir;
-		api.readFile({
-			path : cacheDir + path
-		}, function(ret, err) {
-			callBack(ret, err);
-		});
+		var cachefile = '/dlls5/weapons.json' ;
+		console.log( cacheDir + cachefile )
+		removefs( cacheDir + cachefile ) ;
+		document.getElementById('list').innerHTML = '';
 	}
 	
-	function doCache( folder, clsname, callback ){
-			var model = api.require('model');
-			var query = api.require("query");
-			
-			model.config({
-	            appKey : '0D7660A8-5615-F246-E865-7CDD772B1653' 
-            });
-//			
-			query.createQuery(function(ret, err) {
-				if (ret ) {
-					var queryId = ret.qid;
-					query.limit({
-						qid:queryId,
-						value:"20"
-					});
-
-					model.findAll({
-						class: clsname,
-						qid: queryId
-					}, function(ret, err){							
-							console.log( JSON.stringify(ret)  ) ;
-							//for(var p in ret){ //遍历json数组时，这么写p为索引，0,1
-							var wuqiList = [] ;
-							for(var i = 0; i < ret.length; i++){
-								wuqiList[i] = {
-								// imgPath : ret[i].pic.url , 
-								imgPath: ret[i].filename1 ,
-								title : ret[i].namecn + ' ; ' + ret[i].namepy
-									+ '\n 攻击: ' + ret[i].panel  
-									, 								
-								//subTitle : ret[i].gongji 
-								}
-							}
-							//showList(wuqiList) ;
-							console.log( 'wuqilist=' + JSON.stringify(wuqiList)  )							
-							$api.setStorage('wuqilist', wuqiList );
-					});
-				}
-			});
+	function showdata(){
+		$api.setStorage("weapons_index", 0);
+		load();
+		//showmessageList() ; 
 	}
 	
 	function load(first, index2) {
@@ -211,42 +141,73 @@
 			if (index2 != null) {
 				index = index2;
 			}
-			var id = "weapon";
-			var url = "/getGoodsTagList?tag=" + id + "&pageIndex=" + index + "&pageCount=20&key=" + key;
+			
+			var clsname = 'weapons' ;
 			if (index == 0) {
 				//默认加载缓存
-				var folder = "weapons";
-				doCache(folder, id, url, function(data) {
-					dealWithHtml(data, first, index);
+				var folder = "dlls5";
+				doCache(folder, clsname, function(data) {
+					dealWithHtml(data, first, index);					
 				});
+				console.log("doCache finish");
 			} else {
 				//分页后不加载缓存
-				ajaxRequest(url, 'get', '', function(data) {
+				ajaxRequest(clsname, 'get', '', function(data) {
 					dealWithHtml(data, first, index);
 				});
 			}
 	}
+	
+	function dealWithHtml(data, first, index) {
+			if (data == null) {
+				console.log("data is null in dealWithHtml") ;
+				if (index != 0) {
+					document.getElementById('btnMore').style.display = "block";
+				} 
+			} else {
+				var mainhtml = "";
+				for (var i = 0; i < data.length; i++) {
+					mainhtml += "<li class=\"mui-table-view-cell mui-media\">";
+					mainhtml += "<a href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "<div class=\"mui-media-body\">";
+					mainhtml += "	<div class='mui-ellipsis'>";
+					mainhtml += "		" + data[i]["namepy"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "	<div class='mui-ellipsis goods_price'>";
+					mainhtml += "		¥" + data[i]["panel"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "</div> </a>";
+					mainhtml += "</li>";
+				}
+				
+				if (first == '1') {
+					document.getElementById('list').innerHTML = mainhtml;
+				} else {
+					document.getElementById('list').innerHTML += mainhtml;
+				}
+			}
+		}
 		
 	function showmessageList(){
-		mcmsend();
-		var wuqiList1 = $api.getStorage('wuqilist' );
-		
-		    var UIListView = api.require('UIListView') ;
-			UIListView.open({
-				rect : {
-					x : 0,
-					y : 80,
-					w : api.winWidth,
-					h : api.frameHeight
-				},
-				data : wuqiList1 ,
-				
-				styles : styles ,
-				fixedOn : 'frame1'
-			}, function(ret, err) {
-				
-			});
-		    
+//		mcmsend();
+//		var wuqiList1 = $api.getStorage('wuqilist' );
+//		
+//		    var UIListView = api.require('UIListView') ;
+//			UIListView.open({
+//				rect : {
+//					x : 0,
+//					y : 80,
+//					w : api.winWidth,
+//					h : api.frameHeight
+//				},
+//				data : wuqiList1 ,
+//				
+//				styles : styles ,
+//				fixedOn : 'frame1'
+//			}, function(ret, err) {
+//				
+//			});
+//		    
 	}
 	
 	apiready = function() {
@@ -254,12 +215,12 @@
 			$api.setStorage("weapons_index", 0);
 			load();
 			//上拉翻页
-			api.addEventListener({
-				name : 'scrolltobottom'
-			}, function(ret, err) {
-				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
-				load();
-			});
+//			api.addEventListener({
+//				name : 'scrolltobottom'
+//			}, function(ret, err) {
+//				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
+//				load();
+//			});
 			$api.fixIos7Bar(header);
 		}
 	</script>
