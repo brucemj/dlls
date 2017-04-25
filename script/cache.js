@@ -6,20 +6,22 @@ window.onerror = function() {
 	return true;
 }
 // function doCache( folder, clsname, callback )
-function ajaxRequest(clsname, method, datas, callBack) {
+function ajaxRequest(clsname, method, pagenum, callBack) {
 	var model = api.require('model');
 	var query = api.require("query");
 
 	model.config({
 		appKey : '0D7660A8-5615-F246-E865-7CDD772B1653'
 	});
+//	var pagesize = 5 ;
+//	var startskip = pagenum * pagesize ;
 	query.createQuery(function(ret, err) {
 		if (ret) {
 			var queryId = ret.qid;
-			query.limit({
-				qid : queryId,
-				value : "20"
-			});
+//			query.limit({
+//				qid : queryId,
+//				value : pagesize
+//			});
 
 			model.findAll({
 				class : clsname,
@@ -85,52 +87,71 @@ function writeFile(json, path) {
 }
 
 //缓存方法
-function doCache(folder, clsname, callback) {
+function doCache(folder, clsname, index, callback) {
 	var cachefile = '/' + folder + '/' + clsname + '.json' ;
-	console.log("doCache run");
-	readFile(cachefile, function(ret, err) {
+	var pagesize = 5 ;
+	var startskip = index*pagesize ;
+	console.log("doCache run index = " + index );
+	readFile(cachefile, function(ret, err) {		
 		if (ret.status) {
 			console.log('本地有缓存');
 			//如果成功，说明有本地存储，读取时转换下数据格式
 			//拼装json代码
 			//alert('取到缓存')
-			var cacheData = ret.data;
-			console.log( JSON.stringify(cacheData) );
-			//callback( JSON.parse( JSON.stringify(cacheData) ) );
-			callback(JSON.parse(cacheData));
+			var cacheData = JSON.parse(ret.data) ;
+			var arrayData = new Array();
+			for(var i=startskip ; i< startskip+pagesize ; i++){
+				if( cacheData[i]==null ){
+					break ;
+				}else{
+					arrayData[i-startskip] = cacheData[i] ;
+				}				
+			}			
+			console.log( JSON.stringify(arrayData) );			
+			callback( arrayData );
 			iCache($('.imgcache'));
 			//再远程取一下数据，防止有更新
-			ajaxRequest(clsname, 'GET', '', function(ret, err) {
-				if (ret) {
-					if (cacheData != JSON.stringify(ret)) {
-						//有更新处理返回数据
-						//alert('更新缓存')
-						callback(ret);
-						//缓存数据
-						writeFile(ret, cachefile);
-						iCache($('.cache'));
-					}
-				} else {
-					console.log('再远程取一下数据，防止有更新,数据获取失败！');
-				}
-			})
+//			ajaxRequest(clsname, 'GET', index, function(ret, err) {
+//				if (ret) {
+//					if (cacheData != JSON.stringify(ret)) {
+//						//有更新处理返回数据
+//						//alert('更新缓存')
+//						callback(ret);
+//						//缓存数据
+//						writeFile(ret, cachefile);
+//						iCache($('.imgcache'));
+//					}
+//				} else {
+//					console.log('再远程取一下数据，防止有更新,数据获取失败！');
+//				}
+//			})
 		} else {
 			console.log('远程取数据');
 			//如果失败则从服务器读取，利用上面的那个ajaxRequest方法从服务器GET数据
-			ajaxRequest(clsname, 'GET', '', function(ret, err) {
+			ajaxRequest(clsname, 'GET', index, function(ret, err) {
 				if (ret) {
-					//处理返回数据
-					//alert('没取到缓存')
-					callback(ret);
+					var cacheData = ret ;
+					var arrayData = new Array();
+					for(var i=startskip ; i< startskip+pagesize ; i++){
+						if( cacheData[i]==null ){
+							break ;
+						}else{
+							arrayData[i-startskip] = cacheData[i] ;
+						}				
+					}
+					console.log( JSON.stringify(arrayData) );			
+					callback( arrayData );
 					//缓存数据
 					writeFile(ret, cachefile);
-					iCache($('.cache'));
+					iCache($('.imgcache'));
 				} else {
 					console.log('远程取数据，数据获取失败！');
 				}
 			})
 		}
 	})
+	
+	console.log("doCache run end");
 }
 
 //缓存图片

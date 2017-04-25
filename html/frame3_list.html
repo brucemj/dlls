@@ -73,21 +73,21 @@
 	
 	
     apiready = function(){
-    	console.log("fram3_list open")
-		var data = api.pageParam.data ;
-		console.log( 'list 要显示的数据   = ' + JSON.stringify(data)) ;   
-		
-		if (typeof(data) == "undefined") {    
-    		console.log( 'list 没有要显示的数据   = ' + JSON.stringify(data)) ;
-		}else{
-			for(var i=0 ; i<data.length ; i++ ){
-				var htmltext = '<div> data = ' ;
-				htmltext = htmltext + data[i].namecn + ' ; ' + data[i].namepy 
-				 htmltext = htmltext + '</div> ' ;
-				$api.append( $api.dom('#main'), htmltext );			
-			}
-		}
-			
+//  	console.log("fram3_list open")
+//		var data = api.pageParam.data ;
+//		console.log( 'list 要显示的数据   = ' + JSON.stringify(data)) ;   
+//		
+//		if (typeof(data) == "undefined") {    
+//  		console.log( 'list 没有要显示的数据   = ' + JSON.stringify(data)) ;
+//		}else{
+//			for(var i=0 ; i<data.length ; i++ ){
+//				var htmltext = '<div> data = ' ;
+//				htmltext = htmltext + data[i].namecn + ' ; ' + data[i].namepy 
+//				 htmltext = htmltext + '</div> ' ;
+//				$api.append( $api.dom('#main'), htmltext );			
+//			}
+//		}
+//			
 		
     }
     

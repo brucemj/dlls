@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css" />
+	<style>
+		html, body {
+			width: 100%;
+			min-height: 100%;
+			/*background: #f0f0f0;*/
+		}
+		.h80 {
+			height: 80px;
+		}
+		.h40 {
+			height: 40px;
+		}
+		.h20 {
+			height: 20px;
+		}
+		.h10 {
+			height: 10px;
+			background: #f0f0f0;
+		}
+		.h1 {
+			height: 1px;
+			margin-left: 15px;
+			background: #f0f0f0;
+		}
+		.fr {
+			float: right;
+		}
+		.fl {
+			float: left;
+		}
+		.hightitem {
+			background-color: #fff;
+		}
+		.titlebar {
+			padding-right: 15px;
+			padding-left: 15px;
+			margin : 5px 15px ;
+			float: left;
+			
+		}
+		.mui-media {
+			margin : 10px ;
+			padding: 5px 10px;			
+			height: 140px ;	
+		}
+		.imgcache {  height: 140px ; float: left; }
+		.mui-media-body { height: 140px ; float: left; margin : 10px ;}
+	</style>
+</head>
+	<body>
+		<div id="firstHeader" class="titlebar activebar" onclick="clearCache()"> 清除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="removefile()"> 删除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="showdata()"> showdata    </div>
+		<div class="clearfix"></div>
+          
+          <div id="wrap">
+			<div id="main">
+				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
+					<!--<li onclick="openCommon('goods_detail', '商  品  详  情');" class="mui-table-view-cell mui-media">
+					<a href="javascript:;"> <img class="mui-media-object mui-pull-left cache" src="../../image/home_47.jpg">
+					<div class="mui-media-body">
+					<div class='mui-ellipsis'>
+					产品名称产品名称产品名称产品名称产品名称
+					</div>
+					<div class='mui-ellipsis goods_price'>
+					¥299
+					</div>
+					</div> </a>
+					</li>
+					<li onclick="openCommon('goods_detail', '商  品  详  情');" class="mui-table-view-cell mui-media">
+					<a href="javascript:;"> <img class="mui-media-object mui-pull-left cache" src="../../image/home_47.jpg">
+					<div class="mui-media-body">
+					<div class='mui-ellipsis'>
+					产品名称产品名称产品名称产品名称产品名称
+					</div>
+					<div class='mui-ellipsis goods_price'>
+					¥299
+					</div>
+					</div> </a>
+					</li>-->
+				</ul>
+				<div id="btnMore" class="mui-button-row" style="display:none;line-height:30px">
+					暂无更多内容
+				</div>
+			</div>
+		</div>
+		
+          
+	</body>
+</html>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/cache.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript">
+	window.onload = function  () {
+		styles = {
+					borderColor : '#3D2528',
+					item : {
+						bgColor : '#1A1E1C',
+						activeBgColor : '#24271F',
+						height : 150.0,
+						imgWidth : 250,
+						imgHeight : 140,
+						imgCorner : 4,
+						placeholderImg : '',
+						titleSize : 12.0,
+						titleColor : '#A09266',
+						subTitleSize : 12.0,
+						subTitleColor : '#A09266',
+						//subTitleLocation : 'right' ,
+						//remarkLocation : 'left' ,						
+						remarkColor : '#A09266',
+						remarkSize : 16,
+						remarkIconWidth : 30
+					}
+				}
+				
+	}	
+	
+	function removefile() {
+		var cacheDir = api.cacheDir;
+		var cachefile = '/dlls5/weapons.json' ;
+		console.log( cacheDir + cachefile )
+		removefs( cacheDir + cachefile ) ;
+		document.getElementById('list').innerHTML = '';
+	}
+	
+	function showdata(){
+		document.getElementById('list').innerHTML = '';
+		$api.setStorage("weapons_index", 0);
+		load(1);
+	}
+	
+	function load(first, index2) {
+			var index = $api.getStorage("weapons_index");
+			if (index2 != null) {
+				index = index2;
+			}
+			
+			var clsname = 'weapons' ;
+//			if (index == 0) {
+				//默认加载缓存
+				var folder = "dlls5";
+				doCache(folder, clsname, index, function(data) {
+					dealWithHtml(data, first, index);
+				});
+				console.log("doCache finish");
+//			} else {
+//				//分页后不加载缓存
+//				ajaxRequest(clsname, 'get', '', function(data) {
+//					dealWithHtml(data, first, index);
+//				});
+//			}
+	}
+	
+	function dealWithHtml(data, first, index) {
+			if (data == null) {
+				console.log("data is null in dealWithHtml") ;
+				if (index != 0) {
+					document.getElementById('btnMore').style.display = "block";
+				} 
+			} else {
+				var mainhtml = "";
+				for (var i = 0; i < data.length; i++) {
+					mainhtml += "<li class=\"mui-table-view-cell mui-media\">";
+					mainhtml += "<a href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "<div class=\"mui-media-body\">";
+					mainhtml += "	<div class='mui-ellipsis'>";
+					mainhtml += "		" + data[i]["namepy"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "	<div class='mui-ellipsis goods_price'>";
+					mainhtml += "		¥" + data[i]["panel"] + "";
+					mainhtml += "	</div>";
+					mainhtml += "</div> </a>";
+					mainhtml += "</li>";
+				}
+				
+				if (first == '1') {
+					document.getElementById('list').innerHTML = mainhtml;
+				} else {
+					document.getElementById('list').innerHTML += mainhtml;
+				}
+			}
+		}
+		
+	function showmessageList(){
+//		mcmsend();
+//		var wuqiList1 = $api.getStorage('wuqilist' );
+//		
+//		    var UIListView = api.require('UIListView') ;
+//			UIListView.open({
+//				rect : {
+//					x : 0,
+//					y : 80,
+//					w : api.winWidth,
+//					h : api.frameHeight
+//				},
+//				data : wuqiList1 ,
+//				
+//				styles : styles ,
+//				fixedOn : 'frame1'
+//			}, function(ret, err) {
+//				
+//			});
+//		    
+	}
+	
+	apiready = function() {
+			var header = $api.byId('main');
+			$api.fixIos7Bar(header);
+			
+			showdata();
+			//上拉翻页
+			api.addEventListener({
+				name : 'scrolltobottom'
+			}, function(ret, err) {
+				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
+				load();
+			});			
+		}
+	</script>
