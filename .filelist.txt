@@ -90,6 +90,7 @@
 /A6945538805012/res/weapons/fire/f1.jpg
 /A6945894366912/upload/picup.html
 /A6945894366912/image/btn/item1.jpg
+/A6945894366912/html/weapons/weaponWin.html
 /A6945538805012/launch/launch1080x1920.png
 /A6945538805012/script/api.js
 /A6945894366912/css/api.css

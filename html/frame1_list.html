@@ -215,16 +215,16 @@
 	}
 	
 	apiready = function() {
-			var header = $api.byId('main');
-			$api.fixIos7Bar(header);
-			
-			showdata();
-			//上拉翻页
-			api.addEventListener({
-				name : 'scrolltobottom'
-			}, function(ret, err) {
-				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
-				load();
-			});			
+//			var header = $api.byId('main');
+//			$api.fixIos7Bar(header);
+//			
+//			showdata();
+//			//上拉翻页
+//			api.addEventListener({
+//				name : 'scrolltobottom'
+//			}, function(ret, err) {
+//				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
+//				load();
+//			});			
 		}
 	</script>

@@ -34,7 +34,7 @@
         </ul>
     </header>
     <div id="main" class="flex-con">
-
+		<div class="items weapon" onclick="openWin( 'weapon' );" > 装备 </div>
     </div>
     <div id="footer" class="border-t">
         <ul class="flex-wrap" >
@@ -55,11 +55,9 @@
             style: 'dark',
             color: '#6ab494'
         });
-        funIniGroup();
-        
-        
-			
+        //funIniGroup();	
     }
+    
 
     function funIniGroup(){
         var eHeaderLis = $api.domAll('header li'),
@@ -107,6 +105,16 @@
         api.setFrameGroupIndex({
             name: 'group1',
             index: index
+        });
+    }
+    
+    function openWin( items ){
+    	api.openWin({
+            name: 'weapon',
+            url: './html/weapons/weaponWin.html',
+            pageParam: {
+                name: 'page'
+            }
         });
     }
 </script>
