@@ -102,7 +102,7 @@ var slc_keyarr = ['fire', 'nature', 'darkness', 'light', 'water'] ; // 提供的
 		var dlslc_arr = $api.domAll('.floatbox .' + dlslc );
 		
 		if( $api.hasCls(obj , 'cleanslc')){ // 清空
-			for(var i=0 ; i< dlslc1.length ; i++ ){
+			for(var i=0 ; i< dlslc_arr.length ; i++ ){
 				$api.removeCls(dlslc_arr[i], dlslc);
 			}			
 		}else if( $api.hasCls(obj , 'commitslc') ){ // 提交
