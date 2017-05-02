@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <title>HTML</title>
+  
+  <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+
+	<style>
+		html {width: 100%;height: 100%;background:transparent;}
+		body {background: rgba(0,0,0,0) ;width: 100%;height: 100%;overflow: hidden;}
+
+		/*.floatbox {position: relative; background: #fff; top: 100px; left: 10px; border: 1px solid #e0e0e0; width: 60%;}*/
+		.floatbox { background-color : #F6F4EC;  border: 1px solid #e0e0e0; width: 100%;}
+		.floatheader {height: 40px; line-height: 40px; font-size: 14px; color: #999; text-align: left; margin-left: 20px;}
+		.floatbody {border-bottom: 1px solid #D0D2D6;}
+		.floatbodybtn {width: 20px;height: 20px;background: #0fc;}
+		.floatfooter {height: 40px; line-height: 40px; font-size: 18px;}
+
+		/* 水平等宽样式 */
+		.floatbox .item { float: left ; width: 16% ; height: 50px;line-height: 50px;font-size: 12px; padding:3px; text-align:center ; color: #241A15 ;border-bottom: 1px solid #e0e0e0;}
+		.floatbox .actionbtn { float: right ; width: 40% ; height: 50px;line-height: 50px;font-size: 14px; padding:10px; text-align:center ; color: #241A15 ;border-bottom: 2px solid #e0e0e0;}
+		.floatbox .item:last-child {border-bottom: 0;}
+		.floatbox .checkmark {width: 20px; float: right; margin-top: 18px; margin-right: 10px;}
+		
+		/* 悬浮样式 */
+		.btnhover {background-color: #FF9600 ; color: #FFF;}
+		.dlslc {background-color: #FF9600 ; color: #FFF;}
+
+	</style>
+</head>
+
+<body>
+	<div id="topbar"></div>
+	<div class="floatbox">		
+		<div class="select_key">
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="actionbtn cleanslc" tapmode="btnhover" onclick="actionbtn(this)">清空</div>
+		<div class="actionbtn commitslc" tapmode="btnhover" onclick="actionbtn(this)">查询</div>
+		<div class="clearfix"></div>		
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/db.js"></script>
+<script>
+var navname = "weapon_nav1" ; // 本导航页面名
+var listFramename = "weaponList" ; // 列表 frame 名字
+var select_key = "select_key" ; // key的 div类名
+var dlslc = "dlslc" ; // 选中的选项  类名  样式匹配
+var slc_keyarr = {'暴击伤害':'暴击伤害', '暴击率':'暴击率', '护甲加成':'护甲加成', '持续伤害':'3秒持续伤害', '晕眩几率':'晕眩几率', 
+		'攻击速度':'攻击速度', '恐惧几率':'恐惧几率', '击退几率':'击退几率', '减速几率':'减速几率', '狂战伤害':'狂战伤害', 
+		'血怒几率':'血怒几率', '技能加成':'技能伤害加成', '生命/攻击':'生命/攻击', '生命/击杀':'生命/击杀', '通缉加成':'通缉挑战分数'		
+		} ; // 提供的选项
+
+
+	function emptyopt () {
+	}
+	
+	function togglebtn(obj){
+		$api.toggleCls( obj , dlslc ) ;
+	}
+	
+	// 处理数据
+	function filterData( arrfilter ){
+		var weaponslist = $api.getStorage("weapon_allitems");
+		var ret = [] ;
+		var ret_index = 0 ;		
+		//console.info(datas["key"] != undefined); //此方式不严谨，如果key定义了 并就是赋值为undefined 则会出问题
+        //console.info("key" in datas);
+        //console.info(datas.hasOwnProperty("key"));     
+        //console.log( 'weaponslist 所有 = ' + JSON.stringify(weaponslist)) ;   
+        console.log( navname + ' 过滤条件   = ' + JSON.stringify(arrfilter)) ;   
+        
+        for(var i=0 ; i<weaponslist.length ; i++ ){
+        	var ishit = false ;
+        	for(var j=0 ; j<arrfilter.length ; j++){
+        		var k = arrfilter[j] ;
+				// if( weaponslist[i].hasOwnProperty( arrfilter[j] ) ){
+				// if( select1_key[k] in weaponslist[i] ){
+				if( weaponslist[i]['profile'].indexOf( slc_keyarr[k] ) != -1 ){
+        			ishit = true ;
+        		}else{
+        			ishit = false ;
+        			break;
+        		}
+        	}
+        	
+        	if(ishit){
+        		ret[ret_index] = weaponslist[i] ;
+        		ret_index ++ ;
+        	}
+        }
+        console.log( 'nav1  filterData  = ' + JSON.stringify(ret)) ;
+        return ret ;
+	}
+	
+	function actionbtn( obj ){ // 按键的动作处理
+		var dlslc_arr = $api.domAll('.floatbox .' + dlslc );
+		
+		if( $api.hasCls(obj , 'cleanslc')){ // 清空
+			for(var i=0 ; i< dlslc1.length ; i++ ){
+				$api.removeCls(dlslc_arr[i], dlslc);
+			}			
+		}else if( $api.hasCls(obj , 'commitslc') ){ // 提交
+			change_commit(dlslc_arr) ;
+		}		
+	}
+	
+	function change_commit(dlslc_arr){ // 根据过滤条件，过滤数据，并刷新 listframe
+		api.setFrameAttr({name: api.frameName , hidden:true}); // 隐藏选择界面
+			
+		var arrfilter = [] ; // 选中的条件 text 数组
+		for(var i=0 ; i< dlslc_arr.length ; i++ ){
+				var text = $api.html( dlslc_arr[i] );
+				arrfilter[i] = text
+				//console.log( text )
+		}
+		// 根据条件，过滤数据  如果没有过滤条件，则不穿数据
+		if( arrfilter.length > 0 ){
+			var data = filterData( arrfilter ) ;
+			var data_length = data.length ;
+		}else{
+			var data_length = 0 ;
+		}		
+		api.openFrame({
+			name : listFramename ,
+			//url : 'weaponList.html',				
+			reload : true ,
+			pageParam : {
+				name : 'test' , 
+				num : data_length ,
+				data : data
+			}
+		});		
+	}
+
+	function match(src, target)
+    {
+        var mark = false;
+        if(src === target){
+            mark = true;
+            return mark;
+        }else{
+            do{
+                src = src.parentNode;
+                if(src === target){
+                    mark = true;
+                    return mark;
+                }
+            }while(src !== document.body && src !== document.documentElement);
+
+            return mark;
+        }
+    }
+    
+    function build_optionhtml(){
+    	for(var k in slc_keyarr){
+			var htmltext = '<div class="item" onclick="togglebtn(this)">' + k + '</div>' ;
+			$api.append( $api.dom( '.' + select_key ), htmltext );
+		}
+    }
+    apiready = function(){
+    	var header = $api.byId('topbar');
+    	$api.fixIos7Bar(header); 
+
+        var body = $api.dom('body');
+        $api.addEvt(body,'touchend',function(e){
+            var main = $api.dom('.floatbox');            
+            if(!match(e.target, main))
+            {
+                //api.closeFrame({name:'floatlist01'});
+                api.setFrameAttr({name: api.frameName , hidden:true});
+            }
+        });        
+        		
+		build_optionhtml() ;
+    }
+
+
+</script>
+</html>

@@ -9,3 +9,4 @@ header ul li { height: 30px; line-height: 30px; text-align: center; display: non
 header ul li.active{ display: block; }
 
 #footer{  background : #274043 url(../image/bg/bg_1.jpg) repeat fixed center ; }
+.imgcache {  margin: 5px 10px ; height: 200px ; }

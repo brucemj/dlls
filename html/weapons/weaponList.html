@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/dllsmj.css"/>
+	<style>
+		html, body {
+			width: 100%;
+			min-height: 100%;
+			/*background: #f0f0f0;*/
+		}
+		.titlebar {
+			float: left;
+			margin-left: 10px ;
+		}		
+		
+		
+	</style>
+</head>
+	<body>
+		<div id="firstHeader" class="titlebar activebar" onclick="clearCache()"> 清除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="removefile()"> 删除缓存     </div>
+		<div id="firstHeader" class="titlebar activebar" onclick="showdata()"> showdata    </div>
+		<div class="clearfix"></div>
+          
+          <div id="wrap">
+			<div id="main">
+				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
+					
+					<a href="javascript:;"> <img class="mui-media-object mui-pull-left imgcache" 
+					src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531"></a>
+					<div class="clearfix"></div>
+				</ul>
+				<div id="btnMore" class="mui-button-row" style="display:none;line-height:30px">
+					暂无更多内容
+				</div>
+			</div>
+		</div>
+		
+          
+	</body>
+</html>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/cache.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript">
+	window.onload = function  () {
+		styles = {
+					borderColor : '#3D2528',
+					item : {
+						bgColor : '#1A1E1C',
+						activeBgColor : '#24271F',
+						height : 150.0,
+						imgWidth : 250,
+						imgHeight : 140,
+						imgCorner : 4,
+						placeholderImg : '',
+						titleSize : 12.0,
+						titleColor : '#A09266',
+						subTitleSize : 12.0,
+						subTitleColor : '#A09266',
+						//subTitleLocation : 'right' ,
+						//remarkLocation : 'left' ,						
+						remarkColor : '#A09266',
+						remarkSize : 16,
+						remarkIconWidth : 30
+					}
+				}
+				
+	}	
+	
+	function removefile() {
+		var cacheDir = api.cacheDir;
+		var cachefile = '/dlls5/weapons.json' ;
+		console.log( cacheDir + cachefile )
+		removefs( cacheDir + cachefile ) ;
+		document.getElementById('list').innerHTML = '';
+	}
+	
+	function showdata(){
+		document.getElementById('list').innerHTML = '';
+		$api.setStorage("weapons_index", 0);
+		load(1);
+	}
+	
+	function load(first, index2) {
+			var index = $api.getStorage("weapons_index");
+			if (index2 != null) {
+				index = index2;
+			}
+			
+			var clsname = 'weapons' ;
+//			if (index == 0) {
+				//默认加载缓存
+				var folder = "dlls5";
+				doCache(folder, clsname, index, function(data) {
+					dealWithHtml(data, first, index);
+				});
+				console.log("doCache finish");
+//			} else {
+//				//分页后不加载缓存
+//				ajaxRequest(clsname, 'get', '', function(data) {
+//					dealWithHtml(data, first, index);
+//				});
+//			}
+	}
+	
+	function dealWithHtml(data, first, index) {
+			if (data == null) {
+				console.log("data is null in dealWithHtml") ;
+				if (index != 0) {
+					document.getElementById('btnMore').style.display = "block";
+				} 
+			} else {
+				var mainhtml = "";
+				for (var i = 0; i < data.length; i++) {
+					mainhtml += "<a href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "</a>";
+					mainhtml += "<div class=\"clearfix\"></div>" ;
+				}
+				
+				if (first == '1') {
+					document.getElementById('list').innerHTML = mainhtml;
+				} else {
+					document.getElementById('list').innerHTML += mainhtml;
+				}
+			}
+		}
+		
+
+	
+	apiready = function() {
+		//var header = $api.byId('main');
+		//$api.fixIos7Bar(header);
+		var data = api.pageParam.data ;
+		if (typeof(data) == "undefined"){ 
+			$api.setStorage("weapons_index" , 0 );
+			load();    
+	  		//上拉翻页
+			api.addEventListener({
+				name : 'scrolltobottom'
+			}, function(ret, err) {
+				$api.setStorage("weapons_index", $api.getStorage("weapons_index") - 0 + 1);
+				load();
+			});	  		
+		}else{
+			console.log( ' 传递data = ' + JSON.stringify(data)) ;
+			dealWithHtml(data, 1) ;
+			iCache($('.imgcache'));
+		}
+	}
+	
+</script>

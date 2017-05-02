@@ -41,9 +41,9 @@
 			
 			<!-- framegroup 头部指示块 -->
 		    <nav class="navbar">
-		        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist01')">属性</a><div class="vdvidider"></div>
-		        <a id="navbar-item-rank" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist02')">元素</a><div class="vdvidider"></div>
-		        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型</a>
+		        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav1')">属性</a><div class="vdvidider"></div>
+		        <a id="navbar-item-rank" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('nav2')">元素</a><div class="vdvidider"></div>
+		        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav3')">类型</a>
 		        <!--<a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型<img src="../image/pager_tab_menu_indicator.png" alt=""></a>-->
 		    </nav>
 			
@@ -60,11 +60,30 @@
 			// 关闭当前窗口
 			console.log('closeWin = ' + api.winName)
 		}
-
+		
+		// nav 条件选择
+		function openNewFrame (type) {
+	        api.openFrame({
+	            name: 'weapon_' + type,
+	            url: type + '.html',
+	            rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'},
+	            bounces:false,
+	            delay:100
+	        })
+	    }
+	    
+	    // open weaponList
+	    function open_weaponList(){
+	    	api.openFrame({
+				name : 'weaponList',
+				url : 'weaponList.html',
+				rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'}
+			});	
+	    }
 		
 		// 页面初始化
 		apiready = function() {
-						
+			open_weaponList() ;
 		}
 		
 		

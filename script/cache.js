@@ -99,6 +99,7 @@ function doCache(folder, clsname, index, callback) {
 			//拼装json代码
 			//alert('取到缓存')
 			var cacheData = JSON.parse(ret.data) ;
+			$api.setStorage("weapon_allitems", cacheData );
 			var arrayData = new Array();
 			for(var i=startskip ; i< startskip+pagesize ; i++){
 				if( cacheData[i]==null ){
@@ -131,6 +132,7 @@ function doCache(folder, clsname, index, callback) {
 			ajaxRequest(clsname, 'GET', index, function(ret, err) {
 				if (ret) {
 					var cacheData = ret ;
+					$api.setStorage("weapon_allitems", cacheData );
 					var arrayData = new Array();
 					for(var i=startskip ; i< startskip+pagesize ; i++){
 						if( cacheData[i]==null ){
