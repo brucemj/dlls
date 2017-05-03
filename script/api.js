@@ -268,7 +268,7 @@
     };
     u.removeCls = function(el, cls){
         if(!u.isElement(el)){
-            console.warn('$api.removeCls Function need el param, el param must be DOM Element');
+            //console.warn('$api.removeCls Function need el param, el param must be DOM Element');
             return;
         }
         if('classList' in el){

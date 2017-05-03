@@ -15,21 +15,28 @@
 		body {background: rgba(0,0,0,0) ;width: 100%;height: 100%;overflow: hidden;}
 
 		/*.floatbox {position: relative; background: #fff; top: 100px; left: 10px; border: 1px solid #e0e0e0; width: 60%;}*/
-		.floatbox { background-color : #F6F4EC;  border: 1px solid #e0e0e0; width: 100%;}
+		.floatbox { background-color : #f6f4ec;  border: 1px solid #e0e0e0; width: 100%; }
 		.floatheader {height: 40px; line-height: 40px; font-size: 14px; color: #999; text-align: left; margin-left: 20px;}
 		.floatbody {border-bottom: 1px solid #D0D2D6;}
 		.floatbodybtn {width: 20px;height: 20px;background: #0fc;}
 		.floatfooter {height: 40px; line-height: 40px; font-size: 18px;}
 
 		/* 水平等宽样式 */
-		.floatbox .item { float: left ; width: 16% ; height: 50px;line-height: 50px;font-size: 12px; padding:3px; text-align:center ; color: #241A15 ;border-bottom: 1px solid #e0e0e0;}
-		.floatbox .actionbtn { float: right ; width: 40% ; height: 50px;line-height: 50px;font-size: 14px; padding:10px; text-align:center ; color: #241A15 ;border-bottom: 2px solid #e0e0e0;}
+		.floatbox .item { float: left ; width: 16% ; height: 35px;line-height: 35px;
+			font-size: 12px; padding:3px; text-align:center ; color: #241a15; }
+		.floatbox .actionbtn { float: right ; width: 40% ; font-size: 13px; padding:10px; text-align:center ; color: #241A15 ;border-bottom: 2px solid #e0e0e0;}
 		.floatbox .item:last-child {border-bottom: 0;}
 		.floatbox .checkmark {width: 20px; float: right; margin-top: 18px; margin-right: 10px;}
 		
 		/* 悬浮样式 */
 		.btnhover {background-color: #FF9600 ; color: #FFF;}
 		.dlslc {background-color: #FF9600 ; color: #FFF;}
+		
+		/*遮罩层效果*/
+		.blankbot {width:100%; height:100%; background-color:#000; z-index:2; opacity:0.3;
+    		/*兼容IE8及以下版本浏览器*/
+    		filter: alpha(opacity=30);
+    	}
 
 	</style>
 </head>
@@ -45,6 +52,7 @@
 		<div class="actionbtn commitslc" tapmode="btnhover" onclick="actionbtn(this)">查询</div>
 		<div class="clearfix"></div>		
 	</div>
+	<!--<div class="blankbot"></div>-->
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/db.js"></script>
@@ -104,7 +112,7 @@ var slc_keyarr = {'暴击伤害':'暴击伤害', '暴击率':'暴击率', '护�
 		var dlslc_arr = $api.domAll('.floatbox .' + dlslc );
 		
 		if( $api.hasCls(obj , 'cleanslc')){ // 清空
-			for(var i=0 ; i< dlslc1.length ; i++ ){
+			for(var i=0 ; i< dlslc_arr.length ; i++ ){
 				$api.removeCls(dlslc_arr[i], dlslc);
 			}			
 		}else if( $api.hasCls(obj , 'commitslc') ){ // 提交
@@ -113,7 +121,10 @@ var slc_keyarr = {'暴击伤害':'暴击伤害', '暴击率':'暴击率', '护�
 	}
 	
 	function change_commit(dlslc_arr){ // 根据过滤条件，过滤数据，并刷新 listframe
-		api.setFrameAttr({name: api.frameName , hidden:true}); // 隐藏选择界面
+		var nav_arr = $api.getStorage("weapons_nav_index") ;
+        api.setFrameAttr({name: api.frameName , hidden:true});  // 隐藏选择界面
+        nav_arr[api.frameName] = false ;
+        $api.setStorage("weapons_nav_index" , nav_arr );
 			
 		var arrfilter = [] ; // 选中的条件 text 数组
 		for(var i=0 ; i< dlslc_arr.length ; i++ ){
@@ -175,7 +186,10 @@ var slc_keyarr = {'暴击伤害':'暴击伤害', '暴击率':'暴击率', '护�
             if(!match(e.target, main))
             {
                 //api.closeFrame({name:'floatlist01'});
+                var nav_arr = $api.getStorage("weapons_nav_index") ;
                 api.setFrameAttr({name: api.frameName , hidden:true});
+                nav_arr[api.frameName] = false ;
+                $api.setStorage("weapons_nav_index" , nav_arr );
             }
         });        
         		

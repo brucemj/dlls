@@ -10,29 +10,45 @@
 		html, body {
 			width: 100%;
 			min-height: 100%;
-			/*background: #f0f0f0;*/
+			background : #867661 ;
 		}
 		.titlebar {
 			float: left;
 			margin-left: 10px ;
-		}		
+			display:none;
+		}
+		.listitem { background : #f6f4ec ; text-align:center ; }
+		.itembottom { border-bottom:1px solid #d2ccc8 ; margin: 0 3px; padding-top: 3px  }
+		.imgcache { border: 4px solid #63584b ;  width:80% ; height:auto ;}		
 		
 		
 	</style>
 </head>
 	<body>
-		<div id="firstHeader" class="titlebar activebar" onclick="clearCache()"> 清除缓存     </div>
-		<div id="firstHeader" class="titlebar activebar" onclick="removefile()"> 删除缓存     </div>
-		<div id="firstHeader" class="titlebar activebar" onclick="showdata()"> showdata    </div>
+		<div class="titlebar activebar" onclick="clearCache()"> 清除缓存     </div>
+		<div class="titlebar activebar" onclick="removefile()"> 删除缓存     </div>
+		<div class="titlebar activebar" onclick="showdata()"> showdata    </div>
 		<div class="clearfix"></div>
           
           <div id="wrap">
 			<div id="main">
 				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
 					
-					<a href="javascript:;"> <img class="mui-media-object mui-pull-left imgcache" 
-					src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531"></a>
-					<div class="clearfix"></div>
+					<div class="listitem" href="javascript:;">
+						<img class="mui-media-object mui-pull-left imgcache" 
+						src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">
+						<div class="itembottom"></div>
+					</div>
+					
+					
+					<div class="listitem" href="javascript:;"> 
+						<img class="mui-media-object mui-pull-left imgcache" 
+						src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">
+						<div class="itembottom"></div>
+					</div>
+					
+					
+					
 				</ul>
 				<div id="btnMore" class="mui-button-row" style="display:none;line-height:30px">
 					暂无更多内容
@@ -118,9 +134,9 @@
 			} else {
 				var mainhtml = "";
 				for (var i = 0; i < data.length; i++) {
-					mainhtml += "<a href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
-					mainhtml += "</a>";
-					mainhtml += "<div class=\"clearfix\"></div>" ;
+					mainhtml += "<div class=\"listitem\" href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "<div class=\"itembottom\"></div> </div>";
+					
 				}
 				
 				if (first == '1') {

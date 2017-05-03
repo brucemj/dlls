@@ -15,14 +15,11 @@
 						
 			/* weaponWin  搜索栏样式 */
 	        .navbar {display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 40px; box-sizing: border-box; 
-	        	background: #3F4147; border-bottom: 1px solid #e0e0e0; }
+	        	background: #f6f4ec; border-bottom: 1px solid #e0e0e0; }
 	        .navbar-item {display: block; -webkit-box-flex: 1; width: 100%; line-height: 40px; /*color: rgb(148,127,119); color: #7E7E7E;*/ 
-	        	font-size: 16px; text-align: center;color: #AAA; position: relative;}
-	        .navbar-item img {width: 8px; position: absolute; bottom: 4px;right: 5px;}
+	        	font-size: 19px; text-align: center;color: #241a15; position: relative;}
+	        .navbar-item-active { color:#ff9600; }
 	        
-	        /*.navbar-item-hov {color: #fff; }*/
-			.navbar-item { color:#C2B4A5 ; background : url('../image/btn/item0.jpg') repeat-x 0 0 }
-	        .navbar-item-active { color:#37322c; background : url('../image/btn/item1.jpg') repeat-x 0 0 }
 	        #navmark {position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; background-color: #3993CF;height: 3px;}
 	  
 	        .vdvidider {height: 30px;width: 1px;background-color: #55575D;margin-top: 10px;}
@@ -41,9 +38,9 @@
 			
 			<!-- framegroup 头部指示块 -->
 		    <nav class="navbar">
-		        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav1')">属性</a><div class="vdvidider"></div>
-		        <a id="navbar-item-rank" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('nav2')">元素</a><div class="vdvidider"></div>
-		        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav3')">类型</a>
+		        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav1', this)">属性</a><div class="vdvidider"></div>
+		        <a id="navbar-item-rank" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav2',this)">元素</a><div class="vdvidider"></div>
+		        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav3',this)">类型</a>
 		        <!--<a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型<img src="../image/pager_tab_menu_indicator.png" alt=""></a>-->
 		    </nav>
 			
@@ -52,6 +49,7 @@
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/db.js"></script>
 	<script type="text/javascript">
+		
 		window.onload = function() {
 			//console.log(  )
 		}
@@ -62,14 +60,40 @@
 		}
 		
 		// nav 条件选择
-		function openNewFrame (type) {
-	        api.openFrame({
-	            name: 'weapon_' + type,
-	            url: type + '.html',
-	            rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'},
-	            bounces:false,
-	            delay:100
-	        })
+		function openNewFrame (type , obj) {
+			var objs = $api.domAll('.navbar-item');
+			for(var i in objs){
+				$api.removeCls( objs[i] , "navbar-item-active");
+			}
+					
+		
+			var nav_arr = $api.getStorage("weapons_nav_index");
+			for(var k in nav_arr){
+				if( k == 'weapon_'+type ){
+					if( nav_arr[k] ){ // frame已经打开
+						api.setFrameAttr({name: k , hidden:true});
+						nav_arr[k] = false ;
+						$api.setStorage("weapons_nav_index" , nav_arr );
+					}else{   // frame 没有打开
+						api.openFrame({
+				            name: 'weapon_' + type,
+				            url: type + '.html',
+				            rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'},
+				            bounces:false,				            
+				            delay:100
+				        })
+				        //api.lockSlidPane();
+				        nav_arr[k] = true ;
+				        $api.setStorage("weapons_nav_index" , nav_arr );
+				        $api.addCls( obj , "navbar-item-active" ) ;
+					}
+				}else{
+					api.setFrameAttr({name: k , hidden:true});
+					nav_arr[k] = false ;
+					$api.setStorage("weapons_nav_index" , nav_arr );
+				}
+				
+			}	        
 	    }
 	    
 	    // open weaponList
@@ -84,6 +108,8 @@
 		// 页面初始化
 		apiready = function() {
 			open_weaponList() ;
+			var nav_arr = {"weapon_nav1":false , "weapon_nav2":false , "weapon_nav3":false} ; //导航栏 名字 数组 以及打开状态
+			$api.setStorage("weapons_nav_index", nav_arr );
 		}
 		
 		
