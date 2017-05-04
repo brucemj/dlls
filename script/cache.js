@@ -5,6 +5,35 @@ var key = "xxxxxx";
 window.onerror = function() {
 	return true;
 }
+
+function ajaxAllitems( ) { // 为搜索准备提示数据
+	var model = api.require('model');
+	var query = api.require("query");
+	model.config({		appKey : '0D7660A8-5615-F246-E865-7CDD772B1653' 	});
+
+	query.createQuery(function(ret, err) {
+		if (ret) {
+			var queryId = ret.qid;
+
+			query.justFields({
+			    qid: queryId,
+			    value: ['namecn' , 'namepy']
+			});
+
+			model.findAll({
+				class : "weapons",
+				qid : queryId
+			}, function(ret, err) {
+				if (ret) {
+					$api.setStorage("weapons_nav_index", ret );
+				} else {					
+					console.warn('ajaxAllitems 错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode) ;					
+				}
+			});
+		}
+	});	
+}
+
 // function doCache( folder, clsname, callback )
 function ajaxRequest(clsname, method, pagenum, callBack) {
 	var model = api.require('model');

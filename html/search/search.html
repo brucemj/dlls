@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>search</title>
+		<link rel="stylesheet" type="text/css" href="../../css/search/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/search/demo.css">
+		<link rel="stylesheet" href="../../css/search/style.css">
+		<style>			
+        	.search-bak {float:left ; height: 42px;}
+        	.showhide {display:none}
+        	.tipitem {margin: 5px 10px ; color:#00FFCC ; font-size:medium; }
+		</style>
+	</head>
+	<body>
+		<div id="firstHeader" class="titlebar activebar">
+			<div class="search d2">					
+					<button onclick="gobak()" id="searchback"></button>
+					<input id="searchinput" oninput="search_oninput(this)" type="text" placeholder="搜索从这里开始...">
+					<button id="searchgo"></button>
+			</div>
+			
+			<div class="clearfix"></div>
+			
+			<div id="keyTip" class="showhide"></div>			
+			
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/db.js"></script>
+	<script type="text/javascript">
+		
+		window.onload = function() {
+			//console.log(  )
+		}
+		function gobak() {
+			api.closeWin();
+		}
+		
+		function search_oninput(obj){			
+			var inputtxt = $api.val(obj) ;	
+			inputtxt = $api.trim(inputtxt);	
+			inputtxt = inputtxt.replace(/'/g,'');// 替换中文输入法的 '			
+				
+			var ret = findTip( inputtxt ) ;
+			
+			if( inputtxt=="" || ret==[] ){
+				document.getElementById('keyTip').innerHTML = "" ;
+				$api.addCls( $api.byId("keyTip") , "showhide");
+				return ;
+			}
+			
+			console.log( "inputtxt = " + inputtxt)
+			console.log( "tipkey = " + JSON.stringify(ret) )
+			buildTip( ret ) ;
+		}
+		
+		function findTip( inputtxt ){ // 查找提示，返回提示数组
+			//var arrkey = ["aa", "bc", "a123", "123", "bbca" ] ;
+			var arrkey = $api.getStorage("weapons_nav_index" );
+			
+			var ret = [] ;
+			var ret_index = 0 ;
+			for(var k in arrkey){
+				if( ( arrkey[k]['namepy'].indexOf( inputtxt ) != -1) || 
+					( arrkey[k]['namecn'].indexOf( inputtxt ) != -1 ) )
+				{
+					ret[ret_index] = arrkey[k] ;
+					ret_index = ret_index + 1 ;
+				}
+			}
+			return ret ;
+		}
+		
+		function buildTip( ret ){ // 根据提示数组 生成提示栏
+			var tiplist = "" ;
+			for(var k in ret){
+				tiplist += '<div class="tipitem" onclick="findhandle(this)">' ;
+				tiplist += ret[k]['namecn'] ;
+				tiplist += '</div>' ;
+			}
+			
+			document.getElementById('keyTip').innerHTML = tiplist;
+			$api.removeCls( $api.byId("keyTip") , "showhide");
+		}
+		
+		function findhandle(obj){
+			var inputtxt = $api.val(obj) ;	
+			inputtxt = $api.trim(inputtxt);
+			
+			$api.setStorage("weapons_nav_index", ret );
+			
+		}
+		
+		// open searchList
+	    function open_searchList(data){
+	    	var data_length = 0;
+	    	data_length = data.length ;
+	    	
+	    	api.openFrame({
+				name : 'searchList',
+				url : 'searchList.html',
+				rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'},
+				
+				reload : true ,
+				pageParam : {
+					name : 'test' , 
+					num : data_length ,
+					data : data
+				}			
+			});	
+	    }		
+				
+		// 页面初始化
+		apiready = function() {			
+			
+			$api.addEvt( $api.dom('body') ,'touchend',function(e){            
+                $api.addCls( $api.byId("keyTip") , "showhide");
+                document.getElementById('keyTip').innerHTML = "" ;            
+        	});  
+			
+		}
+		
+		
+	</script>
+</html>

@@ -21,6 +21,8 @@
         #footer ul li:nth-child(2).active{ background-image: url(./image/bottombtn0202.png); }
         #footer ul li:nth-child(3).active{ background-image: url(./image/bottombtn0302.png); }
         #footer ul li:nth-child(4).active{ background-image: url(./image/bottombtn0402.png); }
+        
+        .items { font-size: 23px ; margin: 15px }
     </style>
 </head>
 <body>
@@ -35,6 +37,7 @@
     </header>
     <div id="main" class="flex-con">
 		<div class="items weapon" onclick="openWin( 'weapon' );" > 装备 </div>
+		<div class="items search" onclick="openWin( 'search' );" > 搜索 </div>
     </div>
     <div id="footer" class="border-t">
         <ul class="flex-wrap" >
@@ -48,6 +51,7 @@
 </body>
 </html>
 <script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/cache.js"></script>
 <script type="text/javascript">
     apiready = function () {
         $api.fixStatusBar( $api.dom('header') );
@@ -55,7 +59,10 @@
             style: 'dark',
             color: '#6ab494'
         });
-        //funIniGroup();	
+        //funIniGroup()	
+        ajaxAllitems( ) ; // 为搜索准备提示数据
+        
+        
     }
     
 
@@ -109,12 +116,69 @@
     }
     
     function openWin( items ){
-    	api.openWin({
-            name: 'weapon',
-            url: './html/weapons/weaponWin.html',
-            pageParam: {
-                name: 'page'
-            }
-        });
+    	if( items == "weapon" ){
+    		api.openWin({
+	            name: 'weapon',
+	            url: './html/weapons/weaponWin.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}else if( items == "search" ){
+    		//openSearch() ;
+    		api.openWin({
+	            name: 'search',
+	            url: './html/search/search.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}
+    }
+    
+    function openSearch(){
+    	var UISearchBar = api.require('UISearchBar');
+		UISearchBar.open({
+		    placeholder: '请输入搜索关键字',
+		    historyCount: 10,
+		    showRecordBtn: true,
+		    texts: {
+		        cancelText: '取消',
+		        clearText: '清除搜索记录'
+		    },
+		    styles: {
+		        navBar: {
+		            bgColor: '#FFFFFF',
+		            borderColor: '#ccc'
+		        },
+		        searchBox: {
+		            bgImg: '',
+		            color: '#000',
+		            height: 44
+		        },
+		        cancel: {
+		            bg: 'rgba(0,0,0,0)',
+		            color: '#D2691E',
+		            size: 16
+		        },
+		        list: {
+		            color: '#696969',
+		            bgColor: '#FFFFFF',
+		            borderColor: '#eee',
+		            size: 16
+		        },
+		        clear: {
+		            color: '#000000',
+		            borderColor: '#ccc',
+		            size: 16
+		        }
+		    }
+		}, function(ret, err) {
+		    if (ret) {
+		        alert(JSON.stringify(ret));
+		    } else {
+		        alert(JSON.stringify(err));
+		    }
+		});
     }
 </script>
