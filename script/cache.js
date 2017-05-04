@@ -15,17 +15,17 @@ function ajaxAllitems( ) { // 为搜索准备提示数据
 		if (ret) {
 			var queryId = ret.qid;
 
-			query.justFields({
-			    qid: queryId,
-			    value: ['namecn' , 'namepy']
-			});
+//			query.justFields({
+//			    qid: queryId,
+//			    value: ['namecn' , 'namepy']
+//			});
 
 			model.findAll({
 				class : "weapons",
 				qid : queryId
 			}, function(ret, err) {
 				if (ret) {
-					$api.setStorage("weapons_nav_index", ret );
+					$api.setStorage("allitems", ret );
 				} else {					
 					console.warn('ajaxAllitems 错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode) ;					
 				}

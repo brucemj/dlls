@@ -58,15 +58,15 @@
 		
 		function findTip( inputtxt ){ // 查找提示，返回提示数组
 			//var arrkey = ["aa", "bc", "a123", "123", "bbca" ] ;
-			var arrkey = $api.getStorage("weapons_nav_index" );
+			var allitems = $api.getStorage("allitems" );
 			
 			var ret = [] ;
 			var ret_index = 0 ;
-			for(var k in arrkey){
-				if( ( arrkey[k]['namepy'].indexOf( inputtxt ) != -1) || 
-					( arrkey[k]['namecn'].indexOf( inputtxt ) != -1 ) )
+			for(var k in allitems){
+				if( ( allitems[k]['namepy'].indexOf( inputtxt ) != -1) || 
+					( allitems[k]['namecn'].indexOf( inputtxt ) != -1 ) )
 				{
-					ret[ret_index] = arrkey[k] ;
+					ret[ret_index] = allitems[k] ;
 					ret_index = ret_index + 1 ;
 				}
 			}
@@ -86,10 +86,23 @@
 		}
 		
 		function findhandle(obj){
-			var inputtxt = $api.val(obj) ;	
+			var inputtxt = $api.text(obj) ;	
 			inputtxt = $api.trim(inputtxt);
+			console.log("call findhandle ; input=" + inputtxt)
+			var allitems = $api.getStorage("allitems" );
 			
-			$api.setStorage("weapons_nav_index", ret );
+			var ret = [] ;
+			var ret_index = 0 ;
+			for(var k in allitems){
+				if( ( allitems[k]['namepy'].indexOf( inputtxt ) != -1) || 
+					( allitems[k]['namecn'].indexOf( inputtxt ) != -1 ) )
+				{
+					ret[ret_index] = allitems[k] ;
+					ret_index = ret_index + 1 ;
+				}
+			}
+		
+			open_searchList(ret) ;
 			
 		}
 		
@@ -114,11 +127,11 @@
 				
 		// 页面初始化
 		apiready = function() {			
-			
-			$api.addEvt( $api.dom('body') ,'touchend',function(e){            
-                $api.addCls( $api.byId("keyTip") , "showhide");
-                document.getElementById('keyTip').innerHTML = "" ;            
-        	});  
+//			
+//			$api.addEvt( $api.dom('body') ,'touchend',function(e){            
+//              $api.addCls( $api.byId("keyTip") , "showhide");
+//              document.getElementById('keyTip').innerHTML = "" ;            
+//      	});  
 			
 		}
 		
