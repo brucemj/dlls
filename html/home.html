@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css"/>
+    <style>     
+        .items { font-size: 23px ; margin: 15px }
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header>
+    	<div class="">
+	        <div class="items weapon" onclick="openWin( 'weapon' );" > 装备 </div>
+			<div class="items search" onclick="openWin( 'search' );" > 搜索 </div>
+			<div class="clearfix"></div>
+		</div>
+    </header>
+    
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+    }
+    
+    function openWin( items ){
+    	if( items == "weapon" ){
+    		api.openWin({
+	            name: 'weapon',
+	            url: './weapons/weaponWin.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}else if( items == "search" ){
+    		//openSearch() ;
+    		api.openWin({
+	            name: 'search',
+	            url: './search/search.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}
+    }    
+        
+</script>

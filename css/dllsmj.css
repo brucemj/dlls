@@ -1,10 +1,11 @@
 html,body{
-            /* background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center ; */
-            background : #274043 repeat fixed center ;
+            background : #274043 url(../image/bg/bg_2.jpg) repeat fixed center ;
+            /* background : #274043 repeat fixed center ; */
             color: #F6DF99;
         }
 
-header { background : #274043 url(../image/bg/bg_1.jpg) repeat fixed center ; }
+/* header { background : #274043 url(../image/bg/bg_1.jpg) repeat fixed center ; } */
+
 header ul li { height: 30px; line-height: 30px; text-align: center; display: none; color: #F6DF99; position: relative;font-size: 18px;  }
 header ul li.active{ display: block; }
 

@@ -10,7 +10,7 @@
 		<style>			
         	.search-bak {float:left ; height: 42px;}
         	.showhide {display:none}
-        	.tipitem {margin: 5px 10px ; color:#00FFCC ; font-size:medium; }
+        	#keyTip {margin: 5px 10px ; color:#00FFCC ; font-size:medium; background:#867661 }
 		</style>
 	</head>
 	<body>
@@ -23,7 +23,7 @@
 			
 			<div class="clearfix"></div>
 			
-			<div id="keyTip" class="showhide"></div>			
+			<div id="keyTip" class="showhide"></div>	
 			
 		</div>
 	</body>
@@ -62,12 +62,14 @@
 			
 			var ret = [] ;
 			var ret_index = 0 ;
+			var ret_index_max = 5 ;
 			for(var k in allitems){
 				if( ( allitems[k]['namepy'].indexOf( inputtxt ) != -1) || 
 					( allitems[k]['namecn'].indexOf( inputtxt ) != -1 ) )
 				{
 					ret[ret_index] = allitems[k] ;
 					ret_index = ret_index + 1 ;
+					if( ret_index > ret_index_max ){ break; }
 				}
 			}
 			return ret ;
