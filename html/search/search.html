@@ -17,7 +17,8 @@
 		<div id="firstHeader" class="titlebar activebar">
 			<div class="search d2">					
 					<button onclick="gobak()" id="searchback"></button>
-					<input id="searchinput" oninput="search_oninput(this)" type="text" placeholder="搜索从这里开始...">
+					<input id="searchinput" oninput="search_oninput(this)" onfocus="search_onfocus()"
+						 type="text" placeholder="搜索从这里开始...">
 					<button id="searchgo"></button>
 			</div>
 			
@@ -37,6 +38,10 @@
 		function gobak() {
 			api.closeWin();
 		}
+		
+		 function search_onfocus(){
+		 	api.setFrameAttr({name: "searchList" , hidden:true});
+		 }
 		
 		function search_oninput(obj){			
 			var inputtxt = $api.val(obj) ;	
@@ -69,7 +74,7 @@
 				{
 					ret[ret_index] = allitems[k] ;
 					ret_index = ret_index + 1 ;
-					if( ret_index > ret_index_max ){ break; }
+					if( ret_index >= ret_index_max ){ break; }
 				}
 			}
 			return ret ;
