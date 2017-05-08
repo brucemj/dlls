@@ -40,6 +40,7 @@
 		}
 		
 		 function search_onfocus(){
+		 	search_oninput( $api.byId("searchinput") )
 		 	api.setFrameAttr({name: "searchList" , hidden:true});
 		 }
 		
@@ -93,9 +94,10 @@
 		}
 		
 		function findhandle(obj){
+			$api.addCls( $api.byId("keyTip") , "showhide");
 			var inputtxt = $api.text(obj) ;	
 			inputtxt = $api.trim(inputtxt);
-			console.log("call findhandle ; input=" + inputtxt)
+			//console.log("call findhandle ; input=" + inputtxt)
 			var allitems = $api.getStorage("allitems" );
 			
 			var ret = [] ;

@@ -8,32 +8,42 @@
     <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <link rel="stylesheet" type="text/css" href="./css/dllsmj.css"/>
-    <style>    	
-        /*header{ background-color: #f2f2f2; }*/
-        
-        #footer ul li{  padding-top: 36px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
-        #footer ul li.active{ color: #6ab494; }
-        #footer ul li:nth-child(1){ background-image: url(./image/bottombtn0101.png); }
-        #footer ul li:nth-child(2){ background-image: url(./image/bottombtn0201.png); }
-        #footer ul li:nth-child(3){ background-image: url(./image/bottombtn0301.png); }
-        #footer ul li:nth-child(4){ background-image: url(./image/bottombtn0401.png); }
-        #footer ul li:nth-child(1).active{ background-image: url(./image/bottombtn0102.png); }
-        #footer ul li:nth-child(2).active{ background-image: url(./image/bottombtn0202.png); }
-        #footer ul li:nth-child(3).active{ background-image: url(./image/bottombtn0302.png); }
-        #footer ul li:nth-child(4).active{ background-image: url(./image/bottombtn0402.png); }
+    <style>   	
         
         .items { font-size: 23px ; margin: 15px }
-    </style>
+        
+        .autoaa {    position: relative; width: auto; height:51px;}
+        .menu-bar { display: block; position: absolute;    margin: 8px 15px;float: left;}
+        .menu-bar span { display: block; width: 35px; height: 4px; background: #fff; margin: 6px 0; border-radius: 5px; }
+        
+        .logo {text-align: center; float: none!important; vertical-align: middle;}
+
+        .he-co-right { vertical-align: middle; position: absolute; top: 0; right: 0; float: none!important; 
+        	    padding: 10px 15px;
+        	    }        	    
+        .h-c-lang-title img {width: 30px; height: auto; vertical-align: middle; }
+        
+		    </style>
 </head>
 <body>
+	
 <div id="wrap" class="flex-wrap flex-vertical">
-    <header>
-        <ul>
+
+    <header>    
+        <!--<ul>        
             <li class="border-b active" >DLLS V</li>
-            <li class="border-b" >装备</li>
-            <li class="border-b" >开发</li>
-            <li class="border-b" >文档</li>
-        </ul>
+        </ul>-->
+        <div class="autoaa">
+			<div class="menu-bar"><span></span><span></span><span></span></div>
+			
+			<div class="logo fl"><img src="icon/logo_dh5.png" width="53" height="51" alt="" title="Dungeon Hunter 5"></div>
+			
+			<div class="he-co-right fr co-white">
+				<div class="h-c-lang-title bp-rel">
+					<img src="icon/flag_zh.png" width="27" height="27" alt="" title="">
+				</div>
+			</div>
+		</div>
     </header>
     <!--<div id="main" class="flex-con">
 		<div class="items weapon" onclick="openWin( 'weapon' );" > 装备 </div>
@@ -56,7 +66,7 @@
     apiready = function () {
     	ajaxAllitems( ) ; // 为搜索准备提示数据
     	
-        $api.fixStatusBar( $api.dom('header') );
+        //$api.fixStatusBar( $api.dom('header') );
         api.setStatusBarStyle({
             style: 'dark',
             color: '#6ab494'
@@ -91,11 +101,11 @@
 		    rect: {x: 0, y: $api.dom('header').offsetHeight, w: api.winWidth, h: picHeight },
 		    data: {
 		        paths: [
-		            'widget://res/gamepic/1.jpg',
-		            'widget://res/gamepic/2.jpg',
-		            'widget://res/gamepic/3.jpg',
-		            'widget://res/gamepic/4.jpg',
-		            'widget://res/gamepic/5.jpg',
+		            'widget://image/gameshow/1.jpg',
+		            'widget://image/gameshow/2.jpg',
+		            'widget://image/gameshow/3.jpg',
+		            'widget://image/gameshow/4.jpg',
+		            'widget://image/gameshow/5.jpg',
 		        ]
 		    },
 		    styles: {
