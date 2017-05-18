@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>head</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/dllsmj.css"/>
+    <style>        
+        .items { font-size: 23px ; margin: 15px }        
+        .autoaa {    position: relative; width: auto; height:51px;}
+        .menu-bar { display: block; position: absolute;    margin: 8px 15px;float: left;}
+        .menu-bar span { display: block; width: 35px; height: 4px; background: #fff; margin: 6px 0; border-radius: 5px; }
+        
+        .logo {text-align: center; float: none!important; vertical-align: middle;}
+
+        .he-co-right { vertical-align: middle; position: absolute; top: 0; right: 0; float: none!important; 
+        	    padding: 10px 15px;
+        	    }
+        .h-c-lang-title img {width: 30px; height: auto; vertical-align: middle; }
+        
+	</style>
+</head>
+<body>
+	
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header>    
+        <div class="autoaa">
+			<div class="menu-bar" onclick="openSlide()"><span></span><span></span><span></span></div>
+			
+			<div class="logo fl"><img src="../icon/logo_dh5.png" width="53" height="51" alt="" title="Dungeon Hunter 5"></div>
+			
+			<div class="he-co-right fr co-white">
+				<div class="h-c-lang-title bp-rel">
+					<img src="../icon/flag_zh.png" width="27" height="27" alt="" title="">
+				</div>
+			</div>
+		</div>
+    </header>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+    
+    }
+    
+    function openSlide () {
+        api.openSlidPane ({
+            type: 'left'
+        });
+    }
+    
+</script>

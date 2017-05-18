@@ -7,8 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="../../css/search/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="../../css/search/demo.css">
 		<link rel="stylesheet" href="../../css/search/style.css">
-		<style>			
-        	.search-bak {float:left ; height: 42px;}
+		<style>						
+        	#searchback {float:left ; height: 42px;}
         	.showhide {display:none}
         	#keyTip {margin: 5px 10px ; color:#00FFCC ; font-size:medium; background:#867661 }
 		</style>
@@ -16,9 +16,10 @@
 	<body>
 		<div id="firstHeader" class="titlebar activebar">
 			<div class="search d2">					
-					<button onclick="gobak()" id="searchback"></button>
+					<!--<button onclick="gobak()" id="searchback"></button>-->
+					<img onclick="gobak()" id="searchback" src="../../icon/logo_dh5.png" />
 					<input id="searchinput" oninput="search_oninput(this)" onfocus="search_onfocus()"
-						 type="text" placeholder="搜索从这里开始...">
+						 type="text" placeholder="拼音首字母，智能补全 ...">
 					<button id="searchgo"></button>
 			</div>
 			
@@ -46,8 +47,9 @@
 		
 		function search_oninput(obj){			
 			var inputtxt = $api.val(obj) ;	
-			inputtxt = $api.trim(inputtxt);	
-			inputtxt = inputtxt.replace(/'/g,'');// 替换中文输入法的 '			
+			inputtxt = $api.trim(inputtxt);
+			inputtxt = inputtxt.replace(/'/g,'');// 替换中文输入法的 '
+			inputtxt = str.toLowerCase(inputtxt); // 大写转小写			
 				
 			var ret = findTip( inputtxt ) ;
 			

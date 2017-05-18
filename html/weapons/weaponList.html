@@ -17,10 +17,12 @@
 			margin-left: 10px ;
 			display:none;
 		}
-		.listitem { background : #f6f4ec ; text-align:center ; }
+		.listitem { background : #f6f4ec ; text-align:center ; width:80% ; height:auto ; }
 		.itembottom { border-bottom:1px solid #d2ccc8 ; margin: 0 3px; padding-top: 3px  }
-		.imgcache { border: 4px solid #63584b ;  width:80% ; height:auto ;}		
-		
+		.imgcache { border: 4px solid #63584b ;  width:80% ; height:auto ;}	
+		.imgnote { width:30% ; height:auto ; position : absolute; top: 13px ; left: 55%;}
+		.savebtn { width:30% ; height:auto ; position : absolute; top: 44px ; left: 55%;}
+		.showhide {display:none}		
 		
 	</style>
 </head>
@@ -34,20 +36,17 @@
 			<div id="main">
 				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
 					
-					<div class="listitem" href="javascript:;">
+					<div class="listitem" onclick="showbt(this)" style="position : relative;">
+						
+						<div class="note showhide">
+    						<img class="imgnote" src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/facb1f9e78046eefae819df3a890d320"/>
+    						<img class="savebtn" src="../../icon/btn_1.png"/>
+  						</div>
 						<img class="mui-media-object mui-pull-left imgcache" 
 						src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">
+  
 						<div class="itembottom"></div>
 					</div>
-					
-					
-					<div class="listitem" href="javascript:;"> 
-						<img class="mui-media-object mui-pull-left imgcache" 
-						src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">
-						<div class="itembottom"></div>
-					</div>
-					
-					
 					
 				</ul>
 				<div id="btnMore" class="mui-button-row" style="display:none;line-height:30px">
@@ -134,7 +133,7 @@
 			} else {
 				var mainhtml = "";
 				for (var i = 0; i < data.length; i++) {
-					mainhtml += "<div class=\"listitem\" href=\"javascript:;\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "<div class=\"listitem\" onclick=\"showbt(this)\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
 					mainhtml += "<div class=\"itembottom\"></div> </div>";
 					
 				}
@@ -147,7 +146,77 @@
 			}
 		}
 		
+	function showbt( obj ){
+		console.log('showbt');
+		var note = $api.first(obj,'.note');
+		$api.toggleCls(note, 'showhide');
+		showtips()
+	}
+	
+	
+	function showtips(){
+		var dialogBox = api.require('dialogBox');
+		dialogBox.tips({
+		    rect: {
+		        w: 360
+		    },
 
+		    buttons: [{
+		        normal: 'widget://image/bottombtn0202.png',
+		        text: '微信'
+		    }, {
+		        text: '奖杯'
+		    }, {
+		        normal: 'widget://image/bottombtn0301.png',
+		        text: '人民币'
+		    }],
+		    styles: {
+		        bg: '#FFF',
+		        topImage: {
+		            path: 'widget://image/gameshow/2.jpg',
+		            w: 320,
+		            h: 200
+		        },
+		        title: {
+		            color: '#000',
+		            size: 14,
+		            marginT: 15
+		        },
+		        content: {
+		            color: '#000',
+		            size: 12,
+		            marginT: 15
+		        },
+		        border: {
+		            color: '#eee',
+		            width: 2,
+		            marginT: 10
+		        },
+		        buttons: [{
+		            iconSize: 30,
+		            textColor: '#000',
+		            textSize: 12,
+		            marginT: 15
+		        }, {
+		            iconSize: 30,
+		            textColor: '#000',
+		            textSize: 12,
+		            marginT: 15
+		        }, {
+		            iconSize: 30,
+		            textColor: '#000',
+		            textSize: 12,
+		            marginT: 15
+		        }]
+		    }
+		}, function(ret) {
+		    console.log(JSON.stringify(ret));
+		    if( ret.index == 2 ){
+		    	dialogBox.close();
+		    }
+		});
+	
+	}
 	
 	apiready = function() {
 		//var header = $api.byId('main');

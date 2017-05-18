@@ -1,4 +1,5 @@
 /A6945894366912/image/gameshow/2.jpg
+/A6945894366912/html/headItems.html
 /A6945538805012/upload/webuploader.js
 /A6945894366912/script/doT.min.js
 /A6945894366912/res/gamepic/1.jpg
@@ -39,6 +40,7 @@
 /A6945894366912/script/public.js
 /A6945894366912/icon/flag_zh.png
 /A6945894366912/script/缓存demo/common.js
+/A6945894366912/image/3.jpg
 /A6945894366912/res/element/element_nature.png
 /A6945894366912/html/weapons/weaponList.html
 /A6945894366912/image/bottombtn0101.png
@@ -104,6 +106,7 @@
 /A6945538805012/script/doT.min.js
 /A6945894366912/config.xml
 /A6945538805012/html/frame0.html
+/A6945894366912/html/head.html
 /A6945894366912/res/gamepic/5.jpg
 /A6945894366912/script/缓存demo/zepto.min.js
 /A6945894366912/image/bottombtn0401.png
@@ -119,6 +122,7 @@
 /A6945894366912/icon/icon150x150.png
 /A6945894366912/image/loading_more.gif
 /A6945894366912/index.html
+/A6945894366912/icon/btn_1.png
 /A6945894366912/icon/logo_banner_dh5.png
 /A6945894366912/upload/new_file.txt
 /A6945894366912/icon/element/element_fire.png
@@ -127,11 +131,13 @@
 /A6945894366912/image/btn/item1.jpg
 /A6945894366912/css/search/fonts/fontawesome-webfont.woff2
 /A6945894366912/html/weapons/weaponWin.html
+/A6945894366912/html/homeItems.html
 /A6945894366912/res/element/element_darkness.jpg
 /A6945894366912/image/gameshow/4.jpg
 /A6945538805012/launch/launch1080x1920.png
 /A6945538805012/script/api.js
 /A6945894366912/css/search/demo.css
+/A6945894366912/html/user.html
 /A6945894366912/html/search/search.html
 /A6945894366912/css/api.css
 /A6945894366912/icon/element/element_nature.png
@@ -144,5 +150,6 @@
 /A6945894366912/image/bg/bg_2.jpg
 /A6945894366912/script/zepto.min.js
 /A6945894366912/css/search/normalize.css
+/A6945894366912/res/devplan.txt
 /A6945894366912/image/bottombtn0202.png
 /A6945894366912/html/weapons/nav2.html

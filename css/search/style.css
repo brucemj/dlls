@@ -1,6 +1,6 @@
 * {box-sizing: border-box;}
 body{margin: 0;}
-div.search {padding: 0 0}
+/*div.search {padding: 5px 5px }*/
 
 .d2 {background: #DABB52; text-align: center; }
 .d2 input, .d2 button {
@@ -9,23 +9,20 @@ div.search {padding: 0 0}
   border-radius: 3px;
 }
 .d2 input {
-  width: 60%;
-  height: 42px;
+  width: 75%;
+  height: 38px;
   background: #F9F0DA;
-  padding-left: 15px;
+  padding-left: 10px;
+  margin: auto auto;  
 }
 .d2 button { 
   font-family: FontAwesome;
   color: #F9F0DA;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   background: #F15B42;
   margin-top: 8px;
   cursor: pointer;
-}
-#searchback:before {
-  content: "\f104";
-  
 }
 #searchgo:before {
   content: "\f105";
