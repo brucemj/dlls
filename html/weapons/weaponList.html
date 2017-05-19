@@ -17,11 +17,9 @@
 			margin-left: 10px ;
 			display:none;
 		}
-		.listitem { background : #f6f4ec ; text-align:center ; width:80% ; height:auto ; }
+		.listitem { background : #867661 ; text-align:center ; width:100% ; height:auto ; }
 		.itembottom { border-bottom:1px solid #d2ccc8 ; margin: 0 3px; padding-top: 3px  }
 		.imgcache { border: 4px solid #63584b ;  width:80% ; height:auto ;}	
-		.imgnote { width:30% ; height:auto ; position : absolute; top: 13px ; left: 55%;}
-		.savebtn { width:30% ; height:auto ; position : absolute; top: 44px ; left: 55%;}
 		.showhide {display:none}		
 		
 	</style>
@@ -34,17 +32,10 @@
           
           <div id="wrap">
 			<div id="main">
-				<ul id="list" class="mui-table-view" style="background: #fff9ec;">
-					
-					<div class="listitem" onclick="showbt(this)" style="position : relative;">
-						
-						<div class="note showhide">
-    						<img class="imgnote" src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/facb1f9e78046eefae819df3a890d320"/>
-    						<img class="savebtn" src="../../icon/btn_1.png"/>
-  						</div>
+				<ul id="list" class="mui-table-view">	
+					<div class="listitem" onclick="showTips(this )">		
 						<img class="mui-media-object mui-pull-left imgcache" 
-						src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">
-  
+							src="http://7ygrri.com1.z0.glb.clouddn.com/apicloud/cbe5f9cea550f09720f43378d39e0531">  
 						<div class="itembottom"></div>
 					</div>
 					
@@ -61,31 +52,10 @@
 
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/cache.js"></script>
+<script type="text/javascript" src="../../script/public.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript">
-	window.onload = function  () {
-		styles = {
-					borderColor : '#3D2528',
-					item : {
-						bgColor : '#1A1E1C',
-						activeBgColor : '#24271F',
-						height : 150.0,
-						imgWidth : 250,
-						imgHeight : 140,
-						imgCorner : 4,
-						placeholderImg : '',
-						titleSize : 12.0,
-						titleColor : '#A09266',
-						subTitleSize : 12.0,
-						subTitleColor : '#A09266',
-						//subTitleLocation : 'right' ,
-						//remarkLocation : 'left' ,						
-						remarkColor : '#A09266',
-						remarkSize : 16,
-						remarkIconWidth : 30
-					}
-				}
-				
+	window.onload = function  () {				
 	}	
 	
 	function removefile() {
@@ -133,7 +103,8 @@
 			} else {
 				var mainhtml = "";
 				for (var i = 0; i < data.length; i++) {
-					mainhtml += "<div class=\"listitem\" onclick=\"showbt(this)\"> <img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
+					mainhtml += "<div class=\"listitem\" onclick=\"showTips(this , '" + data[i]["filename"] + "' )\" > " ;
+					mainhtml += "<img class=\"mui-media-object mui-pull-left imgcache\" src=\"" + data[i]["filename1"] + "\">";
 					mainhtml += "<div class=\"itembottom\"></div> </div>";
 					
 				}
@@ -146,74 +117,93 @@
 			}
 		}
 		
-	function showbt( obj ){
-		console.log('showbt');
-		var note = $api.first(obj,'.note');
-		$api.toggleCls(note, 'showhide');
-		showtips()
+	function showTips( obj , filename ){
+		console.log('showTips = ' + filename)
+		var imgcache = $api.first(obj,'.imgcache');
+		var imgurl = $api.attr(imgcache, 'src');
+		buildTips( imgurl , filename )
 	}
 	
 	
-	function showtips(){
+	function buildTips( imgurl , filename ){
+		var winW = api.winWidth * 0.9 ;
+		var imgH = winW * DLLSItemPicScale ;
+		var actionBtn1 = "";
+		
+		var storeSt = isStore(filename);
+		if(storeSt){
+			actionBtn1 = 'widget://icon/tips/cm2_mlogo2_sina.png'
+		}else{
+			actionBtn1 = 'widget://icon/tips/cm2_mlogo2_qzone.png'
+		}
+		
 		var dialogBox = api.require('dialogBox');
 		dialogBox.tips({
-		    rect: {
-		        w: 360
+			rect: {
+		        w: winW
 		    },
-
 		    buttons: [{
-		        normal: 'widget://image/bottombtn0202.png',
-		        text: '微信'
+		        normal: actionBtn1
+		    }, {		    
+		    	normal: 'widget://icon/tips/cm2_mlogo_qq.png'
 		    }, {
-		        text: '奖杯'
-		    }, {
-		        normal: 'widget://image/bottombtn0301.png',
-		        text: '人民币'
+		        normal: 'widget://icon/tips/cm2_mlogo2_tencent.png'
 		    }],
 		    styles: {
 		        bg: '#FFF',
 		        topImage: {
-		            path: 'widget://image/gameshow/2.jpg',
-		            w: 320,
-		            h: 200
+		            //path: 'widget://image/a010.jpg',
+		            path: imgurl ,
+		            w: winW,
+		            h: winW * DLLSItemPicScale,
+		            marginT: 3
 		        },
 		        title: {
 		            color: '#000',
 		            size: 14,
-		            marginT: 15
+		            marginT: 1
 		        },
 		        content: {
 		            color: '#000',
 		            size: 12,
-		            marginT: 15
+		            marginT: 1
 		        },
 		        border: {
 		            color: '#eee',
 		            width: 2,
-		            marginT: 10
+		            marginT: 1
 		        },
 		        buttons: [{
-		            iconSize: 30,
+		            iconSize: 50,
 		            textColor: '#000',
-		            textSize: 12,
-		            marginT: 15
+		            textSize: 4,
+		            marginT: 2,
+		            space : 25 
 		        }, {
-		            iconSize: 30,
+		            iconSize: 50,
 		            textColor: '#000',
-		            textSize: 12,
-		            marginT: 15
+		            textSize: 4,
+		            marginT: 2,
+		            space : 25
 		        }, {
-		            iconSize: 30,
+		            iconSize: 50,
 		            textColor: '#000',
-		            textSize: 12,
-		            marginT: 15
+		            textSize: 4,
+		            marginT: 2,
+		            space : 25
 		        }]
 		    }
 		}, function(ret) {
 		    console.log(JSON.stringify(ret));
-		    if( ret.index == 2 ){
-		    	dialogBox.close();
+		    if( ret.index == 0 ){
+		    	itemStore(filename , storeSt);		    	
+		    }else if(ret.index == 1){
+		    	shareQQImg( imgurl );
+		    }else if( ret.index == 2 ){		    
+		    	
 		    }
+		    
+		    dialogBox.close();
 		});
 	
 	}

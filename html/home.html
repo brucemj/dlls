@@ -9,8 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     <link rel="stylesheet" type="text/css" href="../css/dllsmj.css"/>
     <style>        
-        .items { font-size: 23px ; margin: 15px }        
-        .autoaa {    position: relative; width: auto; height:51px;}
+        .homehead {    position: relative; width: auto; height:51px;}
         .menu-bar { display: block; position: absolute;    margin: 8px 15px;float: left;}
         .menu-bar span { display: block; width: 35px; height: 4px; background: #fff; margin: 6px 0; border-radius: 5px; }
         
@@ -21,31 +20,30 @@
         	    }        	    
         .h-c-lang-title img {width: 30px; height: auto; vertical-align: middle; }
         
-		    </style>
+	</style>
 </head>
 <body>
+	<header></header>
 </body>
 </html>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/cache.js"></script>
 <script type="text/javascript" src="../script/public.js"></script>
 <script type="text/javascript">
-    apiready = function () {
-    	ajaxAllitems( ) ; // 为搜索准备提示数据    	
-        //$api.fixStatusBar( $api.dom('header') );
+    apiready = function () {    	
+    	// 构建header
+    	var headhtml = homeHead();
+    	var headerel = $api.dom('header')
+    	$api.html(headerel , headhtml );
+        $api.fixStatusBar( headerel );
         
-        api.setStatusBarStyle({
-            style: 'dark',
-            color: '#6ab494'
-        });
-        
-        openHead();
-        var headh = $api.getStorage("API_headHeight" );
-        
+        // 打开 pic 和 items frame        
+        var headerPos = $api.offset( $api.dom('header') );
         var picHeight = 200 ;
-        openGamepic(headh , picHeight);
         
-        openHomeItems( parseInt(headh)+picHeight );       
+        openGamepic(headerPos.h , picHeight);        
+        openHomeItems( parseInt(headerPos.h)+picHeight );
+        
     }
     
     function openGamepic( y , picHeight ){

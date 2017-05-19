@@ -31,30 +31,41 @@
 		</style>
 	</head>
 	<body>
-		<div id="firstHeader" class="titlebar activebar">
-			<div class="header1-bak" onclick="gobak()"><img src="../../icon/logo_dh5.png" alt=""> </div>
-			<div class="egret-header topbar normalHeader">				
-				<div class="header1-title">	武 器 </div>
+		<header>
+			<div id="firstHeader" class="titlebar activebar">
+				<div class="header1-bak" onclick="gobak()"><img src="../../icon/logo_dh5.png" alt=""> </div>
+				<div class="egret-header topbar normalHeader">				
+					<div class="header1-title">	武 器 </div>
+				</div>
+				<div class="clearfix"></div>
+				
+				<!-- framegroup 头部指示块 -->
+			    <nav class="navbar">
+			        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav1', this)">属性</a><div class="vdvidider"></div>
+			        <a id="navbar-item-rank" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav2',this)">元素</a><div class="vdvidider"></div>
+			        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav3',this)">类型</a>
+			        <!--<a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型<img src="../image/pager_tab_menu_indicator.png" alt=""></a>-->
+			    </nav>
+				
 			</div>
-			<div class="clearfix"></div>
-			
-			<!-- framegroup 头部指示块 -->
-		    <nav class="navbar">
-		        <a id="navbar-item-recommend" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav1', this)">属性</a><div class="vdvidider"></div>
-		        <a id="navbar-item-rank" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav2',this)">元素</a><div class="vdvidider"></div>
-		        <a id="navbar-item-all" class="navbar-item" tapmode="navbar-item-hov" onclick="openNewFrame('nav3',this)">类型</a>
-		        <!--<a id="navbar-item-all" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist03')">类型<img src="../image/pager_tab_menu_indicator.png" alt=""></a>-->
-		    </nav>
-			
-		</div>
+		</header>
 	</body>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/db.js"></script>
-	<script type="text/javascript">
-		
+	<script type="text/javascript">		
 		window.onload = function() {
 			//console.log(  )
 		}
+		
+		apiready = function() {
+			var headerel = $api.dom('header')
+			$api.fixStatusBar( headerel );
+			
+			open_weaponList() ;
+			var nav_arr = {"weapon_nav1":false , "weapon_nav2":false , "weapon_nav3":false} ; //导航栏 名字 数组 以及打开状态
+			$api.setStorage("weapons_nav_index", nav_arr );
+		}
+		
 		function gobak() {
 			api.closeWin();
 			// 关闭当前窗口
@@ -66,8 +77,7 @@
 			var objs = $api.domAll('.navbar-item');
 			for(var i in objs){
 				$api.removeCls( objs[i] , "navbar-item-active");
-			}
-					
+			}					
 		
 			var nav_arr = $api.getStorage("weapons_nav_index");
 			for(var k in nav_arr){
@@ -103,17 +113,9 @@
 	    	api.openFrame({
 				name : 'weaponList',
 				url : 'weaponList.html',
-				rect:{x:0,y: $api.dom('#firstHeader').offsetHeight ,w:'auto',h:'auto'}
+				rect:{x:0,y: $api.dom('header').offsetHeight ,w:'auto',h:'auto'}
 			});	
-	    }
-		
-		// 页面初始化
-		apiready = function() {
-			open_weaponList() ;
-			var nav_arr = {"weapon_nav1":false , "weapon_nav2":false , "weapon_nav3":false} ; //导航栏 名字 数组 以及打开状态
-			$api.setStorage("weapons_nav_index", nav_arr );
-		}
-		
+	    }		
 		
 	</script>
 </html>

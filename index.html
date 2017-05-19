@@ -27,8 +27,21 @@
 
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/cache.js"></script>
+<script type="text/javascript" src="./script/public.js"></script>
 <script type="text/javascript">
-    apiready = function  () {
+    apiready = function  () {    		
+    	ajaxAllitems( ) ; // 为搜索准备提示数据    
+    	initStorage() ; // 初始化  $api.setStorage
+    	// 设置状态栏样式
+    	api.setStatusBarStyle({
+            style: 'light',
+            color: '#867661'
+        });
+        
+        //showINFO()
+        
+        
         api.openSlidLayout({
             type:'left',
             fixedPane:{
@@ -42,7 +55,21 @@
         }, function(ret) {
             /* 暂时不需要做任何事. */
 
-        });
+        });    
+        
+        showINFO()    
+        
     }
+    
+    function showINFO(){
+    	var infotxt = "  ==== show info ==== \n"
+    	infotxt += "appname=" + api.appName + " , appversion=" + api.appVersion + "\n"
+    	infotxt += "systemType=" + api.systemType + " , systemVersion=" + api.systemVersion + "\n"
+    	infotxt += "screenWidth=" + api.screenWidth + " , screenHeight=" + api.screenHeight + " , winHeight=" + api.winHeight + "\n"
+    	infotxt += "channel=" + api.channel + " , jailbreak=" + api.jailbreak + "\n"
+    	infotxt += "deviceModel=" + api.deviceModel + " , deviceName=" + api.deviceName + "\n"    	
+    	console.log( infotxt )
+    }
+    
 </script>
 </html>

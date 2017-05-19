@@ -1,5 +1,6 @@
 /A6945894366912/image/gameshow/2.jpg
 /A6945894366912/html/headItems.html
+/A6945894366912/icon/tips/cm2_mlogo2_renren.png
 /A6945538805012/upload/webuploader.js
 /A6945894366912/script/doT.min.js
 /A6945894366912/res/gamepic/1.jpg
@@ -26,6 +27,7 @@
 /A6945894366912/html/search/searchList.html
 /A6945894366912/image/bottombtn0201.png
 /A6945894366912/res/b1.png
+/A6945894366912/icon/tips/cm2_mlogo2_tencent.png
 /A6945538805012/image/bottombtn0201.png
 /A6945538805012/image/loading_more.gif
 /A6945894366912/image/home/cm2_list_icn_arr.png
@@ -96,6 +98,8 @@
 /A6945894366912/ui/Screenshot_2017-03-31-10-57-11.png
 /A6945894366912/css/search/fonts/fontawesome-webfont.woff
 /A6945894366912/image/gameshow/1.jpg
+/A6945894366912/icon/tips/cm2_mlogo_qq.png
+/A6945894366912/icon/tips/cm2_mlogo2_sina.png
 /A6945538805012/res/weapons/fire/f3.jpg
 /A6945894366912/image/btn/item0.jpg
 /A6945894366912/html/weapons/nav1.html
@@ -107,13 +111,17 @@
 /A6945894366912/config.xml
 /A6945538805012/html/frame0.html
 /A6945894366912/html/head.html
+/A6945894366912/icon/tips/cm2_mlogo2_weixin.png
+/A6945894366912/icon/tips/cm2_mlogo2_douban.png
 /A6945894366912/res/gamepic/5.jpg
 /A6945894366912/script/缓存demo/zepto.min.js
 /A6945894366912/image/bottombtn0401.png
 /A6945894366912/script/db.js
+/A6945894366912/icon/tips/cm2_mlogo2_qzone.png
 /A6945894366912/html/home.html
 /A6945894366912/upload/webuploader.js
 /A6945894366912/res/gamepic/4.jpg
+/A6945894366912/image/a010.jpg
 /A6945894366912/res/element/element_water.png
 /A6945538805012/res/weapons/fire/f2.jpg
 /A6945538805012/icon/icon150x150.png

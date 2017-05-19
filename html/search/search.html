@@ -14,27 +14,33 @@
 		</style>
 	</head>
 	<body>
-		<div id="firstHeader" class="titlebar activebar">
-			<div class="search d2">					
-					<!--<button onclick="gobak()" id="searchback"></button>-->
-					<img onclick="gobak()" id="searchback" src="../../icon/logo_dh5.png" />
-					<input id="searchinput" oninput="search_oninput(this)" onfocus="search_onfocus()"
-						 type="text" placeholder="拼音首字母，智能补全 ...">
-					<button id="searchgo"></button>
+		<header>
+			<div id="firstHeader" class="titlebar activebar">
+				<div class="search d2">					
+						<!--<button onclick="gobak()" id="searchback"></button>-->
+						<img onclick="gobak()" id="searchback" src="../../icon/logo_dh5.png" />
+						<input id="searchinput" oninput="search_oninput(this)" onfocus="search_onfocus()"
+							 type="text" placeholder="拼音首字母，智能补全 ...">
+						<button id="searchgo"></button>
+				</div>
+				
+				<div class="clearfix"></div>
+				
+				<div id="keyTip" class="showhide"></div>	
+				
 			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div id="keyTip" class="showhide"></div>	
-			
-		</div>
+		</header>
 	</body>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/db.js"></script>
-	<script type="text/javascript">
-		
+	<script type="text/javascript">		
 		window.onload = function() {
 			//console.log(  )
+		}
+		// 页面初始化
+		apiready = function() {
+			var headerel = $api.dom('header')
+			$api.fixStatusBar( headerel );
 		}
 		function gobak() {
 			api.closeWin();
@@ -134,18 +140,7 @@
 					data : data
 				}			
 			});	
-	    }		
-				
-		// 页面初始化
-		apiready = function() {			
-//			
-//			$api.addEvt( $api.dom('body') ,'touchend',function(e){            
-//              $api.addCls( $api.byId("keyTip") , "showhide");
-//              document.getElementById('keyTip').innerHTML = "" ;            
-//      	});  
-			
-		}
-		
+	    }			
 		
 	</script>
 </html>
