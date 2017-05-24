@@ -20,12 +20,18 @@ function ajaxAllitems( ) { // 为搜索准备提示数据
 //			    value: ['namecn' , 'namepy']
 //			});
 
+			query.limit({
+				qid : queryId,
+				value : 50
+			});
+
 			model.findAll({
 				class : "weapons",
 				qid : queryId
 			}, function(ret, err) {
 				if (ret) {
 					$api.setStorage("allitems", ret );
+					console.log("allitems = " + JSON.stringify(ret) )
 				} else {					
 					console.warn('ajaxAllitems 错误码：' + err.code + '；错误信息：' + err.msg + '网络状态码：' + err.statusCode) ;					
 				}
@@ -51,6 +57,10 @@ function ajaxRequest(clsname, method, pagenum, callBack) {
 //				qid : queryId,
 //				value : pagesize
 //			});
+			query.limit({
+				qid : queryId,
+				value : 50
+			});
 
 			model.findAll({
 				class : clsname,

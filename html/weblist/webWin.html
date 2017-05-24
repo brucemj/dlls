@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>文章攻略</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/dllsmj.css" />
+		<style>
+			/* weaponWin  标题栏部样式 */	
+			.topbar {   display: flex; justify-content:center; align-items:center; height: 42px;}	
+			#headbak { text-align: left; color: #F6DF99; display: block; float: left; }			
+			/*#firstHeader { background: #274043 url(../../image/bg/bg_1.jpg) repeat fixed center; }*/
+			.header1-bak img { height: 42px;padding: 0 5px;float: left; }
+			.header1-title { text-align: center; font-size: 23px ; }			
+						
+			/* weaponWin  搜索栏样式 */
+	        .navbar {display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 40px; box-sizing: border-box; 
+	        	background: #f6f4ec; border-bottom: 1px solid #e0e0e0; }
+	        .navbar-item {display: block; -webkit-box-flex: 1; width: 100%; line-height: 40px; /*color: rgb(148,127,119); color: #7E7E7E;*/ 
+	        	font-size: 19px; text-align: center;color: #241a15; position: relative;}
+	        .navbar-item-active { color:#ff9600; }
+	        
+	        #navmark {position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; background-color: #3993CF;height: 3px;}
+	  
+	        .vdvidider {height: 30px;width: 1px;background-color: #55575D;margin-top: 10px;}
+	        /* 悬浮样式 */
+	        .itemhover {background-color: #eee !important;}
+	        .headerhover {background-color: #36A8DC;}
+	        /* 文章列表 */
+	        .article {font-size: 13px; text-align: left;color: #F6DF99; margin: 15px 15px;}
+	        .articleread {color: #FF9600; }
+        
+		</style>
+	</head>
+	<body>
+		<header>
+			<div id="firstHeader" class="titlebar activebar">
+				<div class="header1-bak" onclick="gobak()"><img src="../../icon/logo_dh5.png" alt=""> </div>
+				<div class="egret-header topbar normalHeader">				
+					<div class="header1-title">	最新文章</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</header>
+		
+		<div id="weblist" >
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/db.js"></script>
+	<script type="text/javascript">		
+		var urllist = {
+			"地牢猎手5-【主流要塞仆从攻略（上）】": "http://mp.weixin.qq.com/s?__biz=MzI2MjQ3MDI0OA==&mid=100000036&idx=1&sn=ae19c373152f37f20ba0e61c428f2f8d&chksm=6a4bee235d3c67356b74c8e97a19ee4c4a13a0827ea8d05f03d180937b068b738daab53d9016&scene=18#rd" ,
+			"韩国最美脸蛋长得都一样！不信你看！": "http://mp.weixin.qq.com/s?__biz=MzA4NTkwMjkzNw==&mid=2662916961&idx=1&sn=1f1394406f4ca7144aa24afce6bca813#rd" ,
+			"用户数量和用户质量，哪个重要？" : "http://mp.weixin.qq.com/s/Y4ixbh2LBUM1Ae41cQpsqg" ,
+			"交易猫" : "http://www.jiaoyimao.com/" ,
+			"网盘赞" : "http://www.wangpanzan.com/" ,			
+		}
+		 
+		apiready = function() {
+			var headerel = $api.dom('header')
+			$api.fixStatusBar( headerel );			
+			loadWeblist()
+		}
+		
+		function gobak() {
+			api.closeWin();
+		}
+		
+		function loadWeblist(){			
+			var weblistDom = $api.dom('#weblist');
+			var listhtml = ""
+			
+			for(var k in urllist){
+				//listhtml += '<div class="article" onclick="webBrowsertest2(\''+ urllist[k] + '\' , \'' + k +'\' )">' + k
+				listhtml += '<div class="article" onclick="UIWebBrowsertest(\''+ urllist[k] + '\' , \'' + k +'\' , this )">' + k ;
+				//listhtml += '<div class="article">' 
+				//listhtml += '<a href="'+ urllist[k] +'">' + k + '</a>'
+				listhtml += '</div>' ; 
+			}			
+			listhtml += '<br/>' ;			 
+			
+			$api.html(weblistDom, listhtml);
+		}
+		
+		function webBrowsertest(url , title ){
+			if(!url){ return;	}
+			var title = title ? title : '无名文章';
+			var browser = api.require('webBrowser');
+			browser.open({
+			    url: url
+			});
+			
+			$api.addEvt( $api.dom('html'), 'click', function(){
+				//do something
+				console.log('html click addEvt')
+			});
+		}
+		
+		function webBrowsertest2(url , title ){
+			if(!url){ return;	}
+			var title = title ? title : '无名文章';
+//			var browser = api.require('webBrowser');
+			
+			api.openFrame({
+				name : 'webView',
+				url : 'webView.html',
+				rect:{x:0,y: $api.dom('header').offsetHeight ,w:'auto',h:'auto'},
+				
+				//reload : true ,
+				pageParam : {
+					url : url, 
+					title : title 
+				}			
+			});
+		}
+		
+		function onBroserStateChange(){
+		
+		}
+		
+		function UIWebBrowsertest(url , title , obj ){
+			if(!url){ return;	}
+			var title = title ? title : '无名文章';
+			
+			$api.addCls(obj, 'articleread');
+			
+	    	var obj = api.require('UIWebBrowser');
+			obj.open({
+			    rect: {
+			        x: 0,
+			        y:  $api.dom('header').offsetHeight,
+			        w: api.screenWidth,
+			        h: api.screenWidth
+			    },
+			    path: url,
+			    fixedOn: api.frameName,
+			    fixed: true,
+			    button: {
+			        normal: 'widget://res/UIWebBrowser/b1.png',
+			        highlight: 'widget://res/UIWebBrowser/b2.png',
+			        selected: 'widget://res/UIWebBrowser/gobak.png',
+			        title: 'test',
+			        width: api.screenWidth ,  // 底部图片需要定制
+			        height: 40,
+			        position: 'bottom'
+			    }
+			}, function(ret) {
+				if( ret.eventType=="click"){
+					obj.close();
+				}
+			});
+    
+    }   	
+		
+	</script>
+</html>

@@ -53,27 +53,43 @@ function openSlide () {
     
 // QQ 
 function shareQQImg( imgurl ){
-		var qq = api.require('QQPlus');
+		//var qq = api.require('QQPlus');
+		var qq = api.require('qq');
 		
 		qq.installed(function(ret, err) {
 		    if (ret.status) {
-		    	qq.shareImage({
-				    //type : 'QZone',
-				    type : 'QFriend',    
-				    imgPath: imgurl
-				},function(ret,err){
-				  if (ret.status){
-				    console.log("分享成功！");
-				  } else {
-				    console.log( JSON.stringify(err) );
-				  }
+		    	qq.login(function(ret, err) {
+		    		if (ret.status) {
+		    			console.log("qq登录成功，准备分享图片" );
+		    			shareImage(qq)
+		    		}else{
+		    			console.log("qq登录失败" );
+		    		}				    
 				});
+		    	
 		    } else {
-		    	console.log(JSON.stringify("没有安装"));
+		    	console.log("QQ没有安装");
 		    }
 		});	
 		
 	}
+	
+function shareImage(qq){
+		qq.shareImage({
+				    //type : 'QZone',
+				    //title: '新闻分享',
+    				//description: '新闻描述',
+				    type : 'QFriend',    
+				    imgPath: "http://community.apicloud.com/bbs/static/image/common/banzhu.png"
+				},function(ret,err){
+					console.log("shareImage bak")
+				  if (ret.status){
+				    console.log("分享成功！");
+				  } else {
+				    console.log( JSON.stringify(ret) + ' ; ' + JSON.stringify(err) );
+				  }
+				});
+}
 
 function isStore(filename){
 	var storeJson = $api.getStorage("API_itemStore");

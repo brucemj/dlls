@@ -60,11 +60,28 @@
 			<img src="../image/home/search.jpg" alt="" class="listcover">
 			<div class="listtitle">search</div>
 		</div>
-		<div class="col" onclick="openMusicList()">
-			<div class="listcoverbar"><span class="fr">49万</span><img src="../image/home/cm2_list_detail_icn_music_sm.png" alt="" class="earphone fr"></div>
+		<div class="col" onclick="openWin( 'weblist' );">
+			<div class="listcoverbar"><span class="fr">weblist</span><img src="../image/home/cm2_list_detail_icn_music_sm.png" alt="" class="earphone fr"></div>
 			<img src="../image/home/skill.jpg" alt="" class="listcover">
-			<div class="listtitle">skill</div>
+			<div class="listtitle">weblist</div>
 		</div>
+	</div>
+	
+	<div class="row">		
+		<div class="col" onclick="openWin( 'webdemo' );">
+			<div class="listcoverbar"><span class="fr">webdemo</span><img src="../image/home/cm2_list_detail_icn_music_sm.png" alt="" class="earphone fr"></div>
+			<img src="../image/home/zhuangbei.jpg" alt="" class="listcover">
+			<div class="listtitle">webdemo</div>
+		</div>
+		
+		<div class="col" onclick="openWin( 'video' );">
+			<div class="listcoverbar"><span class="fr">video</span><img src="../image/home/cm2_list_detail_icn_music_sm.png" alt="" class="earphone fr"></div>
+			<img src="../image/home/zhuangbei.jpg" alt="" class="listcover">
+			<div class="listtitle">video</div>
+		</div>
+		
+		<div class="col" onclick="openWin( 'webdemo' );"></div>
+		
 	</div>
 
 </div>
@@ -93,7 +110,35 @@
 	                name: 'page'
 	            }
 	        });
+    	}else if( items == "weblist" ){
+    		api.openWin({
+	            name: 'weblist',
+	            url: './weblist/webWin.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}else if( items == "webdemo" ){
+    		api.openWin({
+	            name: 'weblistdemo',
+	            url: './weblistdemo.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
+    	}else if( items == "video" ){
+    		api.openWin({
+	            name: 'video',
+	            url: './video.html',
+	            pageParam: {
+	                name: 'page'
+	            }
+	        });
     	}
-    }    
+    	
+    	
+    }
+    
+    
         
 </script>

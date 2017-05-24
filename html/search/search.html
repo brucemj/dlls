@@ -55,7 +55,7 @@
 			var inputtxt = $api.val(obj) ;	
 			inputtxt = $api.trim(inputtxt);
 			inputtxt = inputtxt.replace(/'/g,'');// 替换中文输入法的 '
-			inputtxt = str.toLowerCase(inputtxt); // 大写转小写			
+			inputtxt = inputtxt.toLowerCase(inputtxt); // 大写转小写			
 				
 			var ret = findTip( inputtxt ) ;
 			
