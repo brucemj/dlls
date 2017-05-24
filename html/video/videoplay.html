@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>视频</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/dllsmj.css" />
+		<style>
+			/* weaponWin  标题栏部样式 */	
+			.topbar {   display: flex; justify-content:center; align-items:center; height: 42px;}	
+			#headbak { text-align: left; color: #F6DF99; display: block; float: left; }			
+			/*#firstHeader { background: #274043 url(../../image/bg/bg_1.jpg) repeat fixed center; }*/
+			.header1-bak img { height: 42px;padding: 0 5px;float: left; }
+			.header1-title { text-align: center; font-size: 23px ; }			
+						
+			/* weaponWin  搜索栏样式 */
+	        .navbar {display: -webkit-box; -webkit-box-orient: horizontal; position: relative; height: 40px; box-sizing: border-box; 
+	        	background: #f6f4ec; border-bottom: 1px solid #e0e0e0; }
+	        .navbar-item {display: block; -webkit-box-flex: 1; width: 100%; line-height: 40px; /*color: rgb(148,127,119); color: #7E7E7E;*/ 
+	        	font-size: 19px; text-align: center;color: #241a15; position: relative;}
+	        .navbar-item-active { color:#ff9600; }
+	        
+	        #navmark {position: absolute; left: 0px; bottom: 0px; -webkit-transition: 300ms; text-align: center; background-color: #3993CF;height: 3px;}
+	  
+	        .vdvidider {height: 30px;width: 1px;background-color: #55575D;margin-top: 10px;}
+	        /* 悬浮样式 */
+	        .itemhover {background-color: #eee !important;}
+	        .headerhover {background-color: #36A8DC;}
+	        /* 文章列表 */
+	        .article {font-size: 13px; text-align: left;color: #F6DF99; margin: 15px 15px;}
+	        .articleread {color: #FF9600; }
+        
+		</style>
+	</head>
+	<body>
+		<div class="playvideo">
+			<iframe src='http://player.youku.com/embed/XMjc3MTU3MTA2MA==' frameborder=0 'allowfullscreen'></iframe>
+		</div>		
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/db.js"></script>
+	<script type="text/javascript">
+	 
+		apiready = function() {
+			//var headerel = $api.dom('header')
+			//$api.fixStatusBar( headerel );			
+			//loadWeblist()
+		}
+		
+		function addEnt(){
+			var body = $api.dom('body');
+	        $api.addEvt(body,'touchend',function(e){
+	            var main = $api.dom('.floatbox');            
+	            if(!match(e.target, main))
+	            {
+	                //api.closeFrame({name:'floatlist01'});
+	                var nav_arr = $api.getStorage("weapons_nav_index") ;
+	                api.setFrameAttr({name: api.frameName , hidden:true});
+	                nav_arr[api.frameName] = false ;
+	                $api.setStorage("weapons_nav_index" , nav_arr );
+	            }
+	        });
+		
+		}
+		
+		function gobak() {
+			api.closeWin();
+		}
+		
+		
+      	
+		
+	</script>
+</html>

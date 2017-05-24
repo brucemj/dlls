@@ -38,6 +38,7 @@
 /A6945894366912/ui/Screenshot_2017-03-31-10-57-19.png
 /A6945894366912/css/box.css
 /A6945894366912/upload/SHA1.js
+/A6945894366912/html/video/videoplay.html
 /A6945894366912/image/home/zhuangbei.jpg
 /A6945894366912/html/frame3_nav1.html
 /A6945894366912/script/cache.js

@@ -16,8 +16,8 @@
   <permission name="location"/>  
   <permission name="internet"/>  
   <access origin="*"/>  
-  <feature name="qq"> 
-    <param name="urlScheme" value="tencent101064640"/>  
-    <param name="apiKey" value="101064640"/> 
+  <feature name="QQPlus"> 
+    <param name="urlScheme" value="tencent1106108091"/>  
+    <param name="apiKey" value="1106108091"/> 
   </feature> 
 </widget>

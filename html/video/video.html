@@ -44,18 +44,21 @@
 			</div>
 		</header>
 		
+		<!--<iframe height=498 width=510 src='http://player.youku.com/embed/XMjc3MTU3MTA2MA==' frameborder=0 'allowfullscreen'></iframe>-->
+		<!--<embed src='http://player.youku.com/player.php/sid/XMjc3MTU3MTA2MA==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>-->
+		<div onclick="callframe()"> html播放测试 </div> <br/>
 		<div id="weblist" >
+			
 		</div>
 	</body>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/db.js"></script>
 	<script type="text/javascript">		
-		var urllist = {
-			"地牢猎手5-【主流要塞仆从攻略（上）】": "http://mp.weixin.qq.com/s?__biz=MzI2MjQ3MDI0OA==&mid=100000036&idx=1&sn=ae19c373152f37f20ba0e61c428f2f8d&chksm=6a4bee235d3c67356b74c8e97a19ee4c4a13a0827ea8d05f03d180937b068b738daab53d9016&scene=18#rd" ,
-			"韩国最美脸蛋长得都一样！不信你看！": "http://mp.weixin.qq.com/s?__biz=MzA4NTkwMjkzNw==&mid=2662916961&idx=1&sn=1f1394406f4ca7144aa24afce6bca813#rd" ,
-			"用户数量和用户质量，哪个重要？" : "http://mp.weixin.qq.com/s/Y4ixbh2LBUM1Ae41cQpsqg" ,
-			"交易猫" : "http://www.jiaoyimao.com/" ,
-			"网盘赞" : "http://www.wangpanzan.com/" ,			
+		var urllist = {			
+			"视频1_mp4" :  'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4' ,
+			"视频2_html" :  'http://player.youku.com/embed/XMjc3MTU3MTA2MA==' ,
+			"视频3_flash" :  'http://player.youku.com/player.php/sid/XMjc3MTU3MTA2MA==/v.swf' ,
+			
 		}
 		 
 		apiready = function() {
@@ -74,7 +77,7 @@
 			
 			for(var k in urllist){
 				//listhtml += '<div class="article" onclick="webBrowsertest2(\''+ urllist[k] + '\' , \'' + k +'\' )">' + k
-				listhtml += '<div class="article" onclick="UIWebBrowsertest(\''+ urllist[k] + '\' , \'' + k +'\' , this )">' + k ;
+				listhtml += '<div class="article" onclick="callqCloudVODPlayer(\''+ urllist[k] + '\' , \'' + k +'\' , this )">' + k ;
 				//listhtml += '<div class="article">' 
 				//listhtml += '<a href="'+ urllist[k] +'">' + k + '</a>'
 				listhtml += '</div>' ; 
@@ -84,19 +87,37 @@
 			$api.html(weblistDom, listhtml);
 		}
 		
-		function webBrowsertest(url , title ){
-			if(!url){ return;	}
-			var title = title ? title : '无名文章';
-			var browser = api.require('webBrowser');
-			browser.open({
-			    url: url
-			});
-			
-			$api.addEvt( $api.dom('html'), 'click', function(){
-				//do something
-				console.log('html click addEvt')
+		function callframe(url , title ){
+			api.openFrame({
+				name : 'videoplay',
+				url : 'videoplay.html',
+				rect:{x:0,y: $api.dom('header').offsetHeight ,w:'auto',h:'auto'},
+				
+				//reload : true ,
+				pageParam : {
+					url : url, 
+					title : title 
+				}			
 			});
 		}
+		
+		function calltencentPlayer(url , title ){
+			var tencentPlayer = api.require('tencentPlayer');
+				tencentPlayer.play({
+				    path: url
+				});
+		}
+		
+		function callqCloudVODPlayer(url , title ){
+				var qCloudVODPlayer = api.require('qCloudVODPlayer');
+				var param = {
+				    //videoUrl : "http://200000365.vod.myqcloud.com/200000365_b0986b3c984e11e598b435610f6d541b.f20.mp4" ,
+				    videoUrl : url ,
+				};
+				qCloudVODPlayer.playInNewWin(param);
+		}
+		
+
 		
 		function webBrowsertest2(url , title ){
 			if(!url){ return;	}

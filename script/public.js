@@ -53,36 +53,46 @@ function openSlide () {
     
 // QQ 
 function shareQQImg( imgurl ){
-		//var qq = api.require('QQPlus');
-		var qq = api.require('qq');
+		var qq = api.require('QQPlus');
+		//var qq = api.require('qq');
 		
 		qq.installed(function(ret, err) {
 		    if (ret.status) {
-		    	qq.login(function(ret, err) {
-		    		if (ret.status) {
-		    			console.log("qq登录成功，准备分享图片" );
-		    			shareImage(qq)
-		    		}else{
-		    			console.log("qq登录失败" );
-		    		}				    
-				});
 		    	
+		    	//if( qqlogin(qq) ){
+		    		shareImage(qq , imgurl)
+		    	//}
+//		    	
 		    } else {
 		    	console.log("QQ没有安装");
 		    }
 		});	
 		
 	}
-	
-function shareImage(qq){
+function qqlogin(qq){
+	qq.login(function(ret, err) {
+		    		if (ret.status) {
+		    			console.log("qq登录成功，准备分享图片" );
+		    			return true
+		    		}else{
+		    			console.log("qq登录失败" +  JSON.stringify(ret) + ' ; ' + JSON.stringify(err) );
+		    			return false
+		    		}				    
+	});
+}
+function shareImage(qq , imgurl){
 		qq.shareImage({
-				    //type : 'QZone',
+				   //type : 'QZone',
 				    //title: '新闻分享',
     				//description: '新闻描述',
 				    type : 'QFriend',    
-				    imgPath: "http://community.apicloud.com/bbs/static/image/common/banzhu.png"
+				    imgPath: imgurl
 				},function(ret,err){
 					console.log("shareImage bak")
+					qq.getUserInfo(function(ret, err) {
+						console.log( JSON.stringify(ret) + JSON.stringify(err) );
+    
+					});
 				  if (ret.status){
 				    console.log("分享成功！");
 				  } else {
