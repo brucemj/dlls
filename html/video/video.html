@@ -47,6 +47,15 @@
 		<!--<iframe height=498 width=510 src='http://player.youku.com/embed/XMjc3MTU3MTA2MA==' frameborder=0 'allowfullscreen'></iframe>-->
 		<!--<embed src='http://player.youku.com/player.php/sid/XMjc3MTU3MTA2MA==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>-->
 		<div onclick="callframe()"> html播放测试 </div> <br/>
+		
+		<div onclick="calldl()"> downloadManager  </div> <br/>
+		<div onclick="showdl()"> 打开 downloadManager</div> <br/>
+		
+		
+		<div onclick="callapidl()"> api.download </div> <br/>
+		
+		<a href="http://wxpic.wangpanzan.com/com.iyuba.voa.apk" > 下载测试a  </a>
+		
 		<div id="weblist" >
 			
 		</div>
@@ -99,6 +108,64 @@
 					title : title 
 				}			
 			});
+		}
+		
+		function calldl(){
+			var downloadManager = api.require('downloadManager');
+			
+			api.toast({ msg:'开始下载' });
+			
+			downloadManager.enqueue({
+			    url: 'http://wxpic.wangpanzan.com/com.iyuba.voa.apk',
+			    savePath: '',
+			    cache: true,
+			    allowResume: true,
+			    title: '教程',
+			    networkTypes: 'all'
+			}, function(ret, err) {
+			    if (ret) {
+			        console.log(JSON.stringify(ret));
+			        api.installApp({  appUri: ret.savePath });
+			    } else {
+			        console.log(JSON.stringify(err));
+			    }
+			});
+		}
+		
+		function showdl(){
+			var downloadManager = api.require('downloadManager');
+			
+			downloadManager.openManagerView({
+			}, function(ret, err) {
+			    if (ret) {
+			    	console.log(JSON.stringify(ret));
+			        api.installApp({  appUri: ret.savePath });
+			    } else {
+			        console.log( '打开下载管理失败： ' + JSON.stringify(ret));
+			    }
+			});
+		}
+		
+		function callapidl(){
+			api.download({
+			     url : 'http://wxpic.wangpanzan.com/com.iyuba.voa.apk',
+			     savePath : '',
+			     encode : false,
+			     report : true,
+			     cache : true,
+			     allowResume : true
+			    }, function(ret, err) {
+				     if (ret.state == 1) {
+				      	console.log( '下载成功 : ' + JSON.stringify(err) + JSON.stringify(ret) );
+				      	api.installApp({
+						    appUri: ret.savePath
+						});
+				      	//下载成功
+				     } else {
+				     	console.log( '下载失败 : ' + JSON.stringify(err) + JSON.stringify(ret) );
+				     
+				     }
+			    });
 		}
 		
 		function calltencentPlayer(url , title ){

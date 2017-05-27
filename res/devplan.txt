@@ -12,3 +12,37 @@
 需统一 head，装备head，搜索head
 
 完成搜索框的大小写转换功能
+
+
+http://wxpic.wangpanzan.com/test.so   14K
+
+http://wxpic.wangpanzan.com/com.iyuba.voa.apk
+http://wxpic.wangpanzan.com/com.iyuba.voa.apk?attname=
+
+http://wxpic.wangpanzan.com/dlls5_20170525.apk
+
+
+######################## CDN 测试
+dlls5app.itcomeon.com
+120.25.252.143
+com.iyuba.voa.apk  dlls5_20170525.apk
+
+2017-5-25-17:00  文件有下载 在 172.21.5.116
+http://www.itcomeon.com/dllsapk/com.iyuba.voa.apk
+http://itcomeon.com/dllsapk/com.iyuba.voa.apk
+
+http://www.itcomeon.com/dllsapk/dlls5_20170525.apk
+
+
+第一次下载 130KB 左右
+第二次下载 8M 左右
+
+http://dlls5app.itcomeon.com/dllsapk/com.iyuba.voa.apk
+http://dlls5app.itcomeon.com/dllsapk/dlls5_20170525.apk
+
+http://dlls5app.itcomeon.com/dllsapk/1Mtest.so
+
+dllsoss.itcomeon.com
+
+http://dlls5.oss-cn-shenzhen.aliyuncs.com/com.iyuba.voa.apk
+
